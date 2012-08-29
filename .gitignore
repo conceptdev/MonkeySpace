@@ -4,3 +4,12 @@ obj
 
 # mstest test results
 TestResults
+
+.DS_Store
+
+*.userprefs
+
+*.pidb
+
+*/Resource.Designer.cs
+*/*/Resource.Designer.cs
