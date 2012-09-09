@@ -17,11 +17,11 @@ namespace Monospace11
 		static UIImage favorited = UIImage.FromFile ("Images/favorited.png");
 		UILabel bigLabel, smallLabel;
 		UIButton button;
-		Monospace.Core.Session session;
+		MonkeySpace.Core.Session session;
 		const int ImageSpace = 32;
 		const int Padding = 8;
 		
-		public SessionCell (UITableViewCellStyle style, NSString ident, Monospace.Core.Session session, string big, string small) : base (style, ident)
+		public SessionCell (UITableViewCellStyle style, NSString ident, MonkeySpace.Core.Session session, string big, string small) : base (style, ident)
 		{
 			SelectionStyle = UITableViewCellSelectionStyle.Blue;
 			
@@ -44,10 +44,10 @@ namespace Monospace11
 			ContentView.Add (button);
 		}
 		
-		public void UpdateCell (Monospace.Core.Session session, string big, string small)
+		public void UpdateCell (MonkeySpace.Core.Session session, string big, string small)
 		{
 			this.session = session;
-			UpdateImage (AppDelegate.UserData.IsFavorite (session.Code));
+			UpdateImage (AppDelegate.UserData.IsFavorite (session.Id.ToString ()));
 			
 			bigLabel.Font = big.Length > 35 ? midFont : bigFont;
 			bigLabel.Text = big;
@@ -100,19 +100,19 @@ namespace Monospace11
 	// Renders a session
 	public class SessionElement : Element {
 		static NSString key = new NSString ("sessionElement");
-		//public event NSAction Tapped;
-		Monospace.Core.Session session;
+
+		MonkeySpace.Core.Session session;
 		string subtitle;
 		
-		public SessionElement (Monospace.Core.Session session) : base (session.Title)
+		public SessionElement (MonkeySpace.Core.Session session) : base (session.Title)
 		{
 			this.session = session;
-			if(String.IsNullOrEmpty(session.Room))
+			if(String.IsNullOrEmpty(session.Location))
 				subtitle = String.Format ("{0}", session.GetSpeakerList ());
 			else if (String.IsNullOrEmpty(session.GetSpeakerList()))
-				subtitle = String.Format("{0} room", session.Room);
+				subtitle = String.Format("{0}", session.LocationDisplay);
 			else
-				subtitle = String.Format ("{0} room; {1}", session.Room, session.GetSpeakerList ());
+				subtitle = String.Format ("{0}; {1}", session.LocationDisplay, session.GetSpeakerList ());
 
 		}
 		

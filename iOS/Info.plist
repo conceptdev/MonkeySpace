@@ -3,16 +3,20 @@
 <plist version="1.0">
 <dict>
 	<key>CFBundleDisplayName</key>
-	<string>Monospace12</string>
+	<string>MonkeySpace</string>
 	<key>CFBundleIconFiles</key>
 	<array>
-		<string>icon_57.png</string>
-		<string>icon_114.png</string>
+		<string>Resources/icon_57.png</string>
+		<string>Resources/icon_114.png</string>
+		<string>Resources/icon_72.png</string>
+		<string>Resources/icon_29.png</string>
+		<string>Resources/icon_58.png</string>
+		<string>Resources/icon_50.png</string>
 	</array>
 	<key>CFBundleIdentifier</key>
-	<string>com.confapp.monospace11</string>
+	<string>com.confapp.monkeyspace</string>
 	<key>CFBundleVersion</key>
-	<string>2.0</string>
+	<string>1.0</string>
 	<key>MinimumOSVersion</key>
 	<string>5.0</string>
 	<key>SBUsesNetwork</key>

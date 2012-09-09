@@ -28,8 +28,8 @@ namespace Monospace11
 		{
 			var favs = AppDelegate.UserData.GetFavoriteCodes();
 			var root = 	new RootElement ("Favorites") {
-						from s in AppDelegate.ConferenceData.Sessions
-							where favs.Contains(s.Code)
+				from s in MonkeySpace.Core.ConferenceManager.Sessions.Values.ToList () //AppDelegate.ConferenceData.Sessions
+							where favs.Contains(s.Code )
 							group s by s.Start.Ticks into g
 							orderby g.Key
 							select new Section (HomeViewController.MakeCaption ("", new DateTime (g.Key))) {

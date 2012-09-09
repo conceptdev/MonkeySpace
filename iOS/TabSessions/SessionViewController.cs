@@ -5,25 +5,27 @@ using System.Text;
 using MonoTouch.Foundation;
 using MonoTouch.UIKit;
 using System.Diagnostics;
+using System.Linq;
+using MonoTouch.Twitter;
 
 namespace Monospace11
 {
 	public class SessionViewController : WebViewControllerBase
 	{
-		public Monospace.Core.Session DisplaySession;
+		public MonkeySpace.Core.Session DisplaySession;
 		public bool IsFromFavoritesView = false;
-		public SessionViewController (Monospace.Core.Session session) : base()
+		public SessionViewController (MonkeySpace.Core.Session session) : base()
 		{
 			DisplaySession = session;
 		}
-		public SessionViewController (Monospace.Core.Session session, bool isFromFavs) : this (session)
+		public SessionViewController (MonkeySpace.Core.Session session, bool isFromFavs) : this (session)
 		{
 			IsFromFavoritesView = isFromFavs;
 			DisplaySession = session;
 		}
 		public SessionViewController (string sessionCode) : base()
 		{
-			foreach (var s in AppDelegate.ConferenceData.Sessions)
+			foreach (var s in MonkeySpace.Core.ConferenceManager.Sessions.Values.ToList () ) //AppDelegate.ConferenceData.Sessions)
 			{
 				if (s.Code == sessionCode)
 				{	
@@ -34,7 +36,7 @@ namespace Monospace11
 		}
 		public void Update (string sessionCode) 
 		{
-			foreach (var s in AppDelegate.ConferenceData.Sessions)
+			foreach (var s in MonkeySpace.Core.ConferenceManager.Sessions.Values.ToList () ) //AppDelegate.ConferenceData.Sessions)
 			{
 				if (s.Code == sessionCode)
 				{
@@ -44,7 +46,7 @@ namespace Monospace11
 			if (DisplaySession != null) LoadHtmlString(FormatText()); 
 		}
 
-		public void Update (Monospace.Core.Session session) 
+		public void Update (MonkeySpace.Core.Session session) 
 		{
 			DisplaySession = session;
 			LoadHtmlString(FormatText());
@@ -59,7 +61,13 @@ namespace Monospace11
 				if (navigationType == UIWebViewNavigationType.LinkClicked)
 				{
 					string path = request.Url.Path.Substring(1);
-					if (request.Url.Host == "add.MIX10.app")
+					if (request.Url.Host == "tweet.MIX10.app")
+					{
+						var tweet = new TWTweetComposeViewController();
+						tweet.SetInitialText ("I'm in '" + this.DisplaySession.Title + "' at #monkeyspace" );
+						PresentModalViewController(tweet, true);
+
+					} else if (request.Url.Host == "add.MIX10.app")
 					{
 						AppDelegate.UserData.AddFavoriteSession(path);
 						this.Update(this.DisplaySession);
@@ -92,6 +100,11 @@ namespace Monospace11
 			StringBuilder sb = new StringBuilder();
 			sb.Append(StyleHtmlSnippet);
 			sb.Append("<h2>"+DisplaySession.Title+"</h2>"+ Environment.NewLine);
+
+			if (TWTweetComposeViewController.CanSendTweet) {
+				sb.Append ("<p><a href='http://tweet.MIX10.app/' style='font-weight:normal'>tweet</a></p>");
+			}
+
 			if (AppDelegate.UserData.IsFavorite(DisplaySession.Code))
 			{	// okay this is a little bit of a HACK:
 				sb.Append(@"<nobr><a href=""http://remove.MIX10.app/"+DisplaySession.Code+@"""><img src='Images/favorited.png' align='right' border='0'/></a></nobr>");
@@ -111,18 +124,18 @@ namespace Monospace11
 					+ DisplaySession.Start.ToString(timeFormat)+" - " 
 					+ DisplaySession.End.ToString(timeFormat) +"</span><br />"+ Environment.NewLine);
 
-			if (!String.IsNullOrEmpty (DisplaySession.Room))
+			if (!String.IsNullOrEmpty (DisplaySession.Location))
 			{
-				sb.Append("<span class='sessionroom'>"+DisplaySession.Room+" room</span><br />"+ Environment.NewLine);
+				sb.Append("<span class='sessionroom'>"+DisplaySession.LocationDisplay+"</span><br />"+ Environment.NewLine);
 				sb.Append("<br />"+ Environment.NewLine);
 			}
-			sb.Append("<span class='body'>"+DisplaySession.Brief+"</span>"+ Environment.NewLine);
+			sb.Append("<span class='body'>"+DisplaySession.Abstract+"</span>"+ Environment.NewLine);
 
-			if (DisplaySession.Tags.Count > 0)
-			{
-				sb.Append("<br /><br />"+ Environment.NewLine);
-				sb.Append("Tags: <span class='sessiontag'>"+DisplaySession.GetTagList()+"</span>"+ Environment.NewLine);
-			}
+//			if (DisplaySession.Tags.Count > 0)
+//			{
+//				sb.Append("<br /><br />"+ Environment.NewLine);
+//				sb.Append("Tags: <span class='sessiontag'>"+DisplaySession.GetTagList()+"</span>"+ Environment.NewLine);
+//			}
 				
 			return sb.ToString();
 		}

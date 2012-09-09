@@ -22,7 +22,8 @@ namespace Monospace11
 			
 			for (int i = 0; i <= days; i++)
 			{
-				DayStarts [i] = new DateTime (2011, 7, 23+i);
+				//DayStarts [i] = new DateTime (2011, 7, 23+i);
+				DayStarts [i] = new DateTime (2012, 10, 17+i);
 			}
 		}
 		
@@ -39,9 +40,11 @@ namespace Monospace11
 			}
 			return date.ToString ("dddd");
 		}
-		
-		// Pretifies a caption to show a nice time relative to the current time.
-		public static string MakeCaption (string caption, DateTime start)
+
+		/// <summary>
+		/// Pretifies a caption to show a nice time relative to the current time.
+		/// </summary>
+		public static string MakeCaption (string caption, DateTime start, bool includeDayName)
 		{
 			string date;
 			var now = DateTime.Now;
@@ -53,11 +56,37 @@ namespace Monospace11
 				else if (start.Day == now.Day+1)
 					date = "tomorrow at";
 				else
-					date = start.ToString ("MMM dd");
+					if (includeDayName)
+						date = start.ToString ("ddd MMM dd");
+					else
+						date = start.ToString ("MMM dd");
 			} else
-				date = start.ToString ("MMM dd");
+				if (includeDayName)
+					date = start.ToString ("ddd MMM dd");
+				else
+					date = start.ToString ("MMM dd");
 			
 			return String.Format ("{0}{1} {2} {3}", caption, caption != "" ? " " : "", date, start.ToString ("H:mm"));
+		}
+		// Pretifies a caption to show a nice time relative to the current time.
+		public static string MakeCaption (string caption, DateTime start)
+		{
+			return MakeCaption (caption, start, false);
+//			string date;
+//			var now = DateTime.Now;
+//			
+//			if (start.Year == now.Year && start.Month == now.Month)
+//			{
+//				if (start.Day == now.Day)
+//					date = ""; 
+//				else if (start.Day == now.Day+1)
+//					date = "tomorrow at";
+//				else
+//					date = start.ToString ("MMM dd");
+//			} else
+//				date = start.ToString ("MMM dd");
+//			
+//			return String.Format ("{0}{1} {2} {3}", caption, caption != "" ? " " : "", date, start.ToString ("H:mm"));
 		}
 		
 		// Fills out the schedule for a given day
@@ -65,7 +94,7 @@ namespace Monospace11
 		{	// Added .ToString/Convert.ToDateTime 
 			// to avoid System.ExecutionEngineException: Attempting to JIT compile method 'System.Collections.Generic.GenericEqualityComparer`1<System.DateTime>:.ctor ()' while running with --aot-only.
 		
-			var sections = from s in AppDelegate.ConferenceData.Sessions
+			var sections = from s in MonkeySpace.Core.ConferenceManager.Sessions.Values.ToList () //AppDelegate.ConferenceData.Sessions
 				where s.Start.Day == d.Day 
 				orderby s.Start ascending
 				group s by s.Start.ToString() into g
@@ -81,18 +110,18 @@ namespace Monospace11
 		}
 		
 		// Appends the favorites
-		void AppendFavorites (Section section, IEnumerable<Monospace.Core.Session> list)
+		void AppendFavorites (Section section, IEnumerable<MonkeySpace.Core.Session> list)
 		{
 			var favs = AppDelegate.UserData.GetFavoriteCodes ();
 			var favsessions = from s in list 
-				where favs.Contains (s.Code) 
+				where favs.Contains (s.Id.ToString ()) 
 				select (Element) new SessionElement (s);
 			
 			section.Add (favsessions);
 		}
 		
 		// Appends a section to the list.
-		public bool AppendSection (RootElement root, IEnumerable<Monospace.Core.Session> list, string title)
+		public bool AppendSection (RootElement root, IEnumerable<MonkeySpace.Core.Session> list, string title)
 		{
 			if (list == null || list.Count () == 0)
 				return false;
@@ -136,18 +165,18 @@ namespace Monospace11
 			var nextStart = nowStart.AddMinutes (29); // possible fix to (within 30 minutes bug)
 			nextStart = nextStart.AddSeconds(-nextStart.Second);
 			
-			var happeningNow = from s in AppDelegate.ConferenceData.Sessions
+			var happeningNow = from s in MonkeySpace.Core.ConferenceManager.Sessions.Values.ToList () //AppDelegate.ConferenceData.Sessions
 				where s.Start <= now && now < s.End && (s.Start.Minute == 0 || s.Start.Minute == 30) // fix for short-sessions (which start at :05 after the hour)
 				select s;
 			 
-			var root = new RootElement ("Monospace11");
+			var root = new RootElement ("MonkeySpace");
 
 			// Commented out because of post-conference no-upcoming-data-bug
-			if (DateTime.Now < new DateTime(2011,7,25,16,0,0))
+			if (DateTime.Now < new DateTime(2012,10,19,16,0,0))
 			{
 				// Added .ToString/Convert.ToDateTime 
 				// to avoid System.ExecutionEngineException: Attempting to JIT compile method 'System.Collections.Generic.GenericEqualityComparer`1<System.DateTime>:.ctor ()' while running with --aot-only.
-				var allUpcoming = from s in AppDelegate.ConferenceData.Sessions
+				var allUpcoming = from s in MonkeySpace.Core.ConferenceManager.Sessions.Values.ToList () //AppDelegate.ConferenceData.Sessions
 					where s.Start >= nextStart && 
 						(s.Start.Minute == 0 || s.Start.Minute ==30 || s.Start.Minute == 15 || s.Start.Minute == 45)
 					orderby s.Start.Ticks

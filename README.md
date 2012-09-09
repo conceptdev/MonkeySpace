@@ -1,4 +1,6 @@
-Monospace12
-===========
+MonkeySpace 2012
+================
 
-Conference app for Monospace 2012 in Boston
+Conference app for MonkeySpace 2012 in Boston.
+
+See [monkeyspace.org](http://monkeyspace.org) for conference details.

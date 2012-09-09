@@ -54,7 +54,7 @@ namespace Monospace11
 				return "<style>" +
 				"body {background-image:url('Background.png'); background-color:#F0F0F0; }"+
 				"body,b,i,p,h2{font-family:Helvetica;}" +
-				"h1,h2{color:#F09402;}" +
+				"h1,h2{color:#BC1718;}" +
 				"h1,h2{margin-bottom:0px;}" +
 				".footnote{font-size:small;}" +
 				".sessionspeaker{color:#444444;font-weight:bold;}" +
@@ -70,7 +70,7 @@ namespace Monospace11
         {
             base.ViewDidLoad ();
 			basedir = Environment.GetFolderPath (System.Environment.SpecialFolder.Personal);
-			basedir = basedir.Replace("Documents", "Monospace11.app");
+			basedir = System.IO.Path.Combine(basedir, "..", "iOS.app");
 			// no XIB !
 			webView = new UIWebView()
 			{

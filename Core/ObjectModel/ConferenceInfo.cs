@@ -1,6 +1,6 @@
 using System;
 
-namespace Monospace.Core
+namespace MonkeySpace.Core
 {
 	public class ConferenceInfo
 	{

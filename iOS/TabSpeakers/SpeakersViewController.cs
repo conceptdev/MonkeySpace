@@ -10,17 +10,17 @@ using System.Linq;
 namespace Monospace11
 {
 	/// <summary>
-	/// First view that users see - lists the top level of the hierarchy xml
+	/// Lists Speakers
 	/// </summary>
 	/// <remarks>
-	/// LOADS data from the xml files into public properties (deserialization)
-	/// then we pass around references to the MainViewController so other
-	/// ViewControllers can access the data.</remarks>
+	/// LOADS data from the json file
+	/// </remarks>
 	[Register]
 	public class SpeakersViewController : UIViewController
 	{
 		private UITableView tableView;
-		private List<Monospace.Core.Speaker> _speakerData;
+	
+		private List<MonkeySpace.Core.Speaker> speakerData;
 
 		/// <remarks>
 		/// Background image idea from 
@@ -29,14 +29,14 @@ namespace Monospace11
 		public override void ViewDidLoad ()
 		{
 			base.ViewDidLoad ();
-			_speakerData = AppDelegate.ConferenceData.Speakers;
+			//_speakerData = AppDelegate.ConferenceData.Speakers;
+			speakerData = MonkeySpace.Core.ConferenceManager.Speakers.Values.ToList ();
 			
 			UIImageView imageView = new UIImageView (UIImage.FromFile ("Background.png"));
 			imageView.Frame = new RectangleF (0, 0, this.View.Frame.Width, this.View.Frame.Height);
 			imageView.UserInteractionEnabled = true;
-			
-			// no XIB !
-			tableView = new UITableView { Source = new TableViewSource (this, _speakerData), AutoresizingMask = UIViewAutoresizing.FlexibleHeight | UIViewAutoresizing.FlexibleWidth, BackgroundColor = UIColor.Clear, Frame = new RectangleF (0, 0, this.View.Frame.Width, this.View.Frame.Height - 100) };
+
+			tableView = new UITableView { Source = new TableViewSource (this, speakerData), AutoresizingMask = UIViewAutoresizing.FlexibleHeight | UIViewAutoresizing.FlexibleWidth, BackgroundColor = UIColor.Clear, Frame = new RectangleF (0, 0, this.View.Frame.Width, this.View.Frame.Height - 100) };
 			
 			imageView.AddSubview (tableView);
 			this.View.AddSubview (imageView);
@@ -45,13 +45,13 @@ namespace Monospace11
 		private class TableViewSource : UITableViewSource
 		{
 			private SpeakersViewController _svc;
-			private List<Monospace.Core.Speaker> _speakers;
+			private List<MonkeySpace.Core.Speaker> _speakers;
 
 			List<string> sectionTitles;
 			// for index
-			private SortedDictionary<int, List<Monospace.Core.Speaker>> sectionElements = new SortedDictionary<int, List<Monospace.Core.Speaker>> ();
+			private SortedDictionary<int, List<MonkeySpace.Core.Speaker>> sectionElements = new SortedDictionary<int, List<MonkeySpace.Core.Speaker>> ();
 			// for index
-			public TableViewSource (SpeakersViewController controller, List<Monospace.Core.Speaker> speakers)
+			public TableViewSource (SpeakersViewController controller, List<MonkeySpace.Core.Speaker> speakers)
 			{
 				_svc = controller;
 				_speakers = speakers;
@@ -76,7 +76,7 @@ namespace Monospace11
 						sectionElements[sectionNum].Add (element);
 					} else {
 						// first time that letter has appeared, create new List<Element> in the SortedDictionary
-						sectionElements.Add (sectionNum, new List<Monospace.Core.Speaker> { element });
+						sectionElements.Add (sectionNum, new List<MonkeySpace.Core.Speaker> { element });
 					}
 				}
 			}
@@ -94,7 +94,7 @@ namespace Monospace11
 
 			public override void RowSelected (UITableView tableView, NSIndexPath indexPath)
 			{
-				Monospace.Core.Speaker s = sectionElements[indexPath.Section][indexPath.Row];
+				MonkeySpace.Core.Speaker s = sectionElements[indexPath.Section][indexPath.Row];
 				if (bioVC == null)
 					bioVC = new SpeakerBioViewController (s);
 				else

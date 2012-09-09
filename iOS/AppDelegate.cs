@@ -5,12 +5,11 @@ using System.Linq;
 using System.IO;
 using System.Xml.Serialization;
 using System.Collections.Generic;
-using ConceptDevelopment;
-using Monospace.Core;
 using System.Drawing;
 using MonoTouch.ObjCRuntime;
 using System.Threading;
 using System.Diagnostics;
+using MonkeySpace.Core;
 
 namespace Monospace11
 {
@@ -60,10 +59,7 @@ namespace Monospace11
 		
 		TabBarController tabBarController;
 		public static UserDatabase UserData {get; private set;} 
-		public static Conference ConferenceData {get;private set;}
-		public static Conference2 ConferenceData2 {get;private set;}
-		/// <summary>conf.xml</summary>
-		public static string XmlDataFilename = "conf.xml";
+
 		/// <summary>userdata.db</summary>
 		public static string SqliteDataFilename = "userdata.db";
 		
@@ -84,75 +80,13 @@ namespace Monospace11
 			UserData = new UserDatabase(Path.Combine (basedir, SqliteDataFilename));
 
 			#region Get All Session data...
-			
-			string xmlPath = XmlDataFilename; // the 'built in' version
 
-				// version 2
-				xmlPath = XmlDataFilename; // the 'built in' version
-				if (File.Exists(Path.Combine(basedir, XmlDataFilename)))
-				{	// load a newer copy
-					xmlPath = Path.Combine(basedir, XmlDataFilename);
-				}
-	
-				long start = DateTime.Now.Ticks;
-				using (TextReader reader = new StreamReader(xmlPath))
-				{
-					XmlSerializer serializer = new XmlSerializer(typeof(Conference2));
-					ConferenceData2 = (Conference2)serializer.Deserialize(reader);
-					
-					// Version 2 'flat' data structure
-					var sessDic2 = (from s2 in ConferenceData2.Sessions
-								select s2).ToDictionary(item => item.Code);
-					var speaDic2 = (from s3 in ConferenceData2.Speakers
-								select s3).ToDictionary(item => item.Name);
-//					var tagDic2 = (from s3 in ConferenceData2.Tags
-//								select s3).ToDictionary(item => item.Value);
-		
-					// dictionaries to re-constitute version 1 data structure
-					var speaDic1 = new Dictionary<string, Monospace.Core.Speaker>();
-					var sessDic1 = new Dictionary<string, Monospace.Core.Session>();
-					var tagDic1  = new Dictionary<string, Monospace.Core.Tag>();
-					
-					// create version 1 speakers
-					foreach (var sp2 in speaDic2)
-					{
-						Monospace.Core.Speaker sp1 = sp2.Value as Monospace.Core.Speaker;
-						speaDic1.Add(sp1.Name, sp1);
-					}
-					// create version 1 sessions
-					// add sessions to version 1 tags
-					// add sessions to version 1 speakers
-					foreach (var se2 in sessDic2.Values)
-					{
-						Monospace.Core.Session se1 = se2 as Monospace.Core.Session;
-						sessDic1.Add(se1.Code, se1);
-						foreach (var ta2 in se2.TagStrings)
-						{
-							if (!tagDic1.Keys.Contains(ta2))
-							{
-								tagDic1.Add(ta2,new Tag{Value=ta2});
-							}
-							tagDic1[ta2].Sessions.Add(se1);
-							se1.Tags.Add(tagDic1[ta2]);
-						}
-						// add speakers to version 1 sessions
-						foreach (var spn in se2.SpeakerNames)
-						{ Console.WriteLine(spn);
-							se1.Speakers.Add(speaDic1[spn]);
-							speaDic1[spn].Sessions.Add(se1);
-						}
-					}
-					// push into version 1 data structure, which rest of the app uses
-					ConferenceData = new Conference(ConferenceData2);
-					ConferenceData.Speakers = speaDic1.Values.ToList();
-					ConferenceData.Sessions = sessDic1.Values.ToList();
-					ConferenceData.Tags = tagDic1.Values.ToList();
-				}
-			
+			MonkeySpace.Core.ConferenceManager.LoadFromFile();
+
 			#endregion
 			
 			// Create the tab bar
-			tabBarController = new Monospace11.TabBarController ();
+			tabBarController = new TabBarController ();
 			// Create the main window and add the navigation controller as a subview
 			window = new UIWindow (UIScreen.MainScreen.Bounds);
 			window.AddSubview(tabBarController.View);

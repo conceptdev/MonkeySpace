@@ -18,7 +18,7 @@ namespace Monospace11
 				, navScheduleController
 				, navFavoritesController;
 		
-		UIColor HeaderColor = new UIColor(0.94f, 0.58f, 0.02f, 1f);
+		UIColor HeaderColor = new UIColor(188/255f, 23/255f, 24/255f, 1f);
 		
 		/// <summary>
 		/// Create the ViewControllers that we are going to use for the tabs:
@@ -54,7 +54,7 @@ namespace Monospace11
 			navSessionController.PushViewController(ssvc, false);
 			navSessionController.NavigationBar.BarStyle = UIBarStyle.Black;
 			navSessionController.NavigationBar.TintColor = HeaderColor;
-			navSessionController.TopViewController.Title ="Sessions by tag";
+			navSessionController.TopViewController.Title ="Sessions";
 			navSessionController.TabBarItem = new UITabBarItem("Sessions", UIImage.FromFile("Images/124-bullhorn.png"), 2);
 			
 			var mvc = new MapFlipViewController();

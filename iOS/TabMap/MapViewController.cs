@@ -6,8 +6,9 @@ using MonoTouch.Foundation;
 using MonoTouch.UIKit;
 using MonoTouch.MapKit;  // required
 using MonoTouch.CoreLocation;  // required
-using Monospace.Core;
 using System.Diagnostics;
+
+using MonkeySpace.Core;
 
 namespace Monospace11
 {
@@ -20,16 +21,15 @@ namespace Monospace11
 		private CLLocationManager locationManager;
 
 		private MapFlipViewController _mfvc;
-		private Conference conf;
 
 		public MapViewController (MapFlipViewController mfvc):base()
 		{
-			conf = AppDelegate.ConferenceData;
 			_mfvc = mfvc;
-			ConferenceLocation = conf.Location.Location.To2D();
+			var l = new MonkeySpace.Core.MapLocation() {Title="MonkeySpace", Location=new MonkeySpace.Core.Point{X=-71.08363940740965,Y=42.36100515974955}};
+			ConferenceLocation = l.Location.To2D();
 		}
 		
-		public void SetLocation (MapLocation toLocation)
+		public void SetLocation (MonkeySpace.Core.MapLocation toLocation)
 		{
 			var targetLocation = toLocation.Location.To2D();
 			if (toLocation.Location.X == 0 && toLocation.Location.Y == 0)
@@ -45,7 +45,7 @@ namespace Monospace11
 					mapView.AddAnnotationObject(a); 
 				}
 			}
-			else if (toLocation.Title == conf.Location.Title)
+			else if (toLocation.Title == "MonkeySpace")
 			{
 				// no need to drop anything
 			}
@@ -106,8 +106,8 @@ namespace Monospace11
 			mapView.SetRegion(region, true);
 			
 			ConferenceAnnotation a = new ConferenceAnnotation(ConferenceLocation
-                                , conf.Location.Title 
-                                , conf.Location.Subtitle 
+                                , "MonkeySpace"
+                                , "NERD Center"
                               );
 			mapView.AddAnnotationObject(a); 
 			
@@ -194,7 +194,7 @@ namespace Monospace11
 				//_mapview.SetRegion(region, true);
 				double distanceToConference = MapHelper.Distance (new Coordinate(_appd.ConferenceLocation), new Coordinate(newLocation.Coordinate), UnitsOfLength.Miles);
 				_appd.labelDistance.TextAlignment = UITextAlignment.Center;
-				_appd.labelDistance.Text = String.Format("{0} miles from Monospace!", Math.Round(distanceToConference,0));
+				_appd.labelDistance.Text = String.Format("{0} miles from MonkeySpace!", Math.Round(distanceToConference,0));
 				Debug.WriteLine("Distance: {0}", distanceToConference);
 				
 				// only use the first result

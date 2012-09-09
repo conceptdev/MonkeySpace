@@ -1,4 +1,4 @@
-using Monospace.Core;
+
 using MonoTouch.UIKit;
 using System;
 using System.Drawing;
@@ -18,7 +18,7 @@ namespace Monospace11
 			this.View.AddSubview(mapView.View);
 		}
 		
-		public void Flip(MapLocation toLocation)
+		public void Flip(MonkeySpace.Core.MapLocation toLocation)
 		{
 			mapView.SetLocation(toLocation); // assume not null, since it's created in ViewDidLoad ??
 			

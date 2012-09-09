@@ -4,6 +4,7 @@ using System.Drawing;
 using System.Text;
 using MonoTouch.Foundation;
 using MonoTouch.UIKit;
+using MonoTouch.Twitter;
 
 namespace Monospace11
 {
@@ -12,13 +13,13 @@ namespace Monospace11
 	/// </remarks>
 	public class SpeakerBioViewController : WebViewControllerBase
 	{
-		Monospace.Core.Speaker _speaker;
+		MonkeySpace.Core.Speaker _speaker;
 
-		public SpeakerBioViewController (Monospace.Core.Speaker speaker) : base()
+		public SpeakerBioViewController (MonkeySpace.Core.Speaker speaker) : base()
 		{
 			_speaker = speaker;
 		}
-		public void Update (Monospace.Core.Speaker speaker)
+		public void Update (MonkeySpace.Core.Speaker speaker)
 		{
 			_speaker = speaker;
 			LoadHtmlString (FormatText ());
@@ -42,11 +43,19 @@ namespace Monospace11
 			{
 				if (navigationType == UIWebViewNavigationType.LinkClicked) {
 					string path = request.Url.Path.Substring (1);
-					if (sessVC == null)
-						sessVC = new SessionViewController (path);
-					else
-						sessVC.Update (path);
-					_c.NavigationController.PushViewController (sessVC, true);
+					var pathArray = path.Split ('/');
+					if (pathArray[0] == "tweet") {
+						string handle = pathArray[1];
+						var tweet = new TWTweetComposeViewController();
+						tweet.SetInitialText ("@" + handle + " #monkeyspace" );
+						_c.PresentModalViewController(tweet, true);
+					} else {
+						if (sessVC == null)
+							sessVC = new SessionViewController (path);
+						else
+							sessVC.Update (path);
+						_c.NavigationController.PushViewController (sessVC, true);
+					}
 				}
 				return true;
 			}
@@ -59,10 +68,16 @@ namespace Monospace11
 			
 			sb.Append (StyleHtmlSnippet);
 			sb.Append ("<h2>" + _speaker.Name + "</h2>" + Environment.NewLine);
-			
+
+			if (TWTweetComposeViewController.CanSendTweet) {
+				sb.Append ("<p><a href='http://MIX10.app/tweet/"+_speaker.TwitterHandle +"' style='font-weight:normal'>@" + _speaker.TwitterHandle + "</a></p>");
+			}
+
+			if (!string.IsNullOrEmpty (_speaker.HeadshotUrl)) {
+				sb.Append ("<img height=160 width=160 align=right src='http://monkeyspace.org" + _speaker.HeadshotUrl + "'>" + Environment.NewLine);
+			}
 			if (!string.IsNullOrEmpty (_speaker.Bio)) {
 				sb.Append ("<span class='body'>" + _speaker.Bio + "</span><br/>" + Environment.NewLine);
-				
 			}
 			sb.Append ("<br />");
 			foreach (var session in _speaker.Sessions) {

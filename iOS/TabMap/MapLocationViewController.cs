@@ -1,4 +1,4 @@
-using Monospace.Core;
+
 using MonoTouch.Foundation;
 using MonoTouch.UIKit;
 using System;
@@ -11,17 +11,16 @@ namespace Monospace11
 	public class MapLocationViewController : TableViewControllerBase
 	{
 		private UINavigationBar navBar;
-		private List<MapLocation> _locations;
+		private List<MonkeySpace.Core.MapLocation> _locations;
 		public MapFlipViewController FlipController = null;
-
-		private Conference conf;
 
 		public MapLocationViewController (MapFlipViewController mfvc) : base()
 		{
-			conf = AppDelegate.ConferenceData;
 			FlipController = mfvc;
-			_locations = conf.Locations; // locations from Xml
-			_locations.Add(new MapLocation{Title="My location", Location=new Monospace.Core.Point{X=0,Y=0}});
+			_locations = new List<MonkeySpace.Core.MapLocation> () {
+				new MonkeySpace.Core.MapLocation{Title="MonkeySpace", Location=new MonkeySpace.Core.Point{X=-71.08363940740965,Y=42.36100515974955}}
+			};
+			_locations.Add(new MonkeySpace.Core.MapLocation{Title="My location", Location=new MonkeySpace.Core.Point{X=0,Y=0}});
 		}
 		
 		public override void ViewDidLoad ()
@@ -39,8 +38,8 @@ namespace Monospace11
         private class TableViewSource : UITableViewSource
         {
 			private MapLocationViewController _dvc;
-			private List<MapLocation> _locations;
-            public TableViewSource(MapLocationViewController controller, List<MapLocation> locations)
+			private List<MonkeySpace.Core.MapLocation> _locations;
+			public TableViewSource(MapLocationViewController controller, List<MonkeySpace.Core.MapLocation> locations)
             {
 				_dvc = controller;
 				_locations = locations;

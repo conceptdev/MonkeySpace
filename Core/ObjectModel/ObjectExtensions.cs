@@ -1,7 +1,7 @@
 using System;
 using MonoTouch.CoreLocation;
 
-namespace Monospace.Core
+namespace MonkeySpace.Core
 {
 	public static class ObjectExtensions
 	{
@@ -9,7 +9,7 @@ namespace Monospace.Core
 		{
 			return new CLLocationCoordinate2D(point.Y, point.X);
 		}
-		public static CLLocationCoordinate2D To2D (this Monospace.Core.Point point)
+		public static CLLocationCoordinate2D To2D (this MonkeySpace.Core.Point point)
 		{
 			return new CLLocationCoordinate2D(point.Y, point.X);
 		}
