@@ -56,14 +56,9 @@
     <Compile Include="Activities\SessionsActivity.cs" />
     <Compile Include="Activities\SpeakerActivity.cs" />
     <Compile Include="Activities\SpeakersActivity.cs" />
-    <Compile Include="Activities\TagsActivity.cs" />
     <Compile Include="Adapters\FavouritesAdapter.cs" />
-    <Compile Include="Adapters\Sessions2Adapter.cs" />
-    <Compile Include="Adapters\TagsAdapter.cs" />
-    <Compile Include="Adapters\SessionsAdapter.cs" />
     <Compile Include="Adapters\SpeakersAdapter.cs" />
     <Compile Include="Adapters\HomeAdapter.cs" />
-    <Compile Include="Main.cs" />
     <Compile Include="Resources\Resource.Designer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ApplicationLayer\DayConferenceViewModel.cs" />
@@ -72,12 +67,6 @@
     </Compile>
     <Compile Include="..\Core\ObjectModel\Constants.cs">
       <Link>Core\ObjectModel\Constants.cs</Link>
-    </Compile>
-    <Compile Include="..\Core\ObjectModel\Objects.cs">
-      <Link>Core\ObjectModel\Objects.cs</Link>
-    </Compile>
-    <Compile Include="..\Core\ObjectModel\Objects2.cs">
-      <Link>Core\ObjectModel\Objects2.cs</Link>
     </Compile>
     <Compile Include="..\Core\ObjectModel\ConferenceManager.cs">
       <Link>Core\ObjectModel\ConferenceManager.cs</Link>
@@ -100,9 +89,11 @@
     <Compile Include="..\Core\Database\SQLite.cs">
       <Link>Core\Database\SQLite.cs</Link>
     </Compile>
+    <Compile Include="Application" />
+    <Compile Include="Adapters\SessionsSimpleAdapter.cs" />
+    <Compile Include="Adapters\SessionsAdapter.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Resources\AboutResources.txt" />
     <AndroidResource Include="Resources\Layout\WindowTitle.axml">
       <SubType>Designer</SubType>
     </AndroidResource>

@@ -8,22 +8,22 @@ namespace MonkeySpace
 {
     public class FavouritesAdapter : BaseAdapter
     {
-        private List<MonkeySpace.Core.Session> _favourites;
-        private Activity _context;
+        private List<MonkeySpace.Core.Session> favourites;
+        private Activity context;
 
         public FavouritesAdapter(Activity context, List<MonkeySpace.Core.Session> sessions)
         {
-            _context = context;
-            _favourites = sessions;
+            this.context = context;
+            favourites = sessions;
         }
 
         public override View GetView(int position, View convertView, ViewGroup parent)
         {
             var view = (convertView
-                            ?? _context.LayoutInflater.Inflate(
+                            ?? context.LayoutInflater.Inflate(
                                     Resource.Layout.FavouritesItem, parent, false)
                         ) as LinearLayout;
-            var row = _favourites.ElementAt(position);
+            var row = favourites.ElementAt(position);
 
             view.FindViewById<TextView>(Resource.Id.Time).Text = row.DateTimeQuickJumpDisplay;
             view.FindViewById<TextView>(Resource.Id.Title).Text = row.Title;
@@ -36,12 +36,12 @@ namespace MonkeySpace
 
         public override int Count
         {
-            get { return _favourites.Count(); }
+            get { return favourites.Count(); }
         }
 
         public MonkeySpace.Core.Session GetRow(int position)
         {
-            return _favourites.ElementAt(position);
+            return favourites.ElementAt(position);
         }
 
         public override Java.Lang.Object GetItem(int position)

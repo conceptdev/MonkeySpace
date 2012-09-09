@@ -7,18 +7,16 @@ using Android.Content;
 using Android.OS;
 using Android.Views;
 using Android.Widget;
-using Monospace;
 
 namespace MonkeySpace
 {
     [Activity(Label = "Speaker")]
     public class SpeakerActivity : BaseActivity
     {
-        string _name;
-        MonkeySpace.Core.Speaker _speaker;
-        List<MonkeySpace.Core.Session> _sessions;
-        ListView _list;
-
+        string name;
+        MonkeySpace.Core.Speaker currentSpeaker;
+        List<MonkeySpace.Core.Session> sessions;
+        ListView list;
 
         protected override void OnCreate(Bundle bundle)
         {
@@ -28,27 +26,27 @@ namespace MonkeySpace
             SetContentView(Resource.Layout.Speaker);
             Window.SetFeatureInt(WindowFeatures.CustomTitle, Resource.Layout.WindowTitle); // http://www.londatiga.net/it/how-to-create-custom-window-title-in-android/
 
-            _name = Intent.GetStringExtra("Name");
+            name = Intent.GetStringExtra("Name");
             
-			var _speaker = (from speaker in MonkeySpace.Core.ConferenceManager.Speakers.Values.ToList ()
-                    where speaker.Name == _name
+			currentSpeaker = (from speaker in MonkeySpace.Core.ConferenceManager.Speakers.Values.ToList ()
+                    where speaker.Name == name
                     select speaker).FirstOrDefault();
 
-            if (_speaker.Name != "")
+			if (currentSpeaker.Name != "")
             {
-                FindViewById<TextView>(Resource.Id.Name).Text = _speaker.Name;
+				FindViewById<TextView>(Resource.Id.Name).Text = currentSpeaker.Name;
 
-                if (!String.IsNullOrEmpty(_speaker.Bio))
-                    FindViewById<TextView>(Resource.Id.Bio).Text = _speaker.Bio;
+				if (!String.IsNullOrEmpty(currentSpeaker.Bio))
+					FindViewById<TextView>(Resource.Id.Bio).Text = currentSpeaker.Bio;
                 else
                 {
                     var tv = FindViewById<TextView>(Resource.Id.Bio);
                     tv.Text = "no speaker bio available";
                 }
-                _sessions = _speaker.Sessions;
+				sessions = currentSpeaker.Sessions;
 
-                _list = FindViewById<ListView>(Resource.Id.SessionList);
-				_list.ItemClick += new EventHandler<AdapterView.ItemClickEventArgs>(_list_ItemClick);
+                list = FindViewById<ListView>(Resource.Id.SessionList);
+				list.ItemClick += new EventHandler<AdapterView.ItemClickEventArgs>(_list_ItemClick);
             }
         }
         protected override void OnResume()
@@ -58,12 +56,12 @@ namespace MonkeySpace
         }
         private void refreshSpeaker()
         {
-            _list.Adapter = new SessionsAdapter(this, _sessions);
+            list.Adapter = new SessionsSimpleAdapter(this, sessions);
         }
 
 		private void _list_ItemClick(object sender, AdapterView.ItemClickEventArgs e)
         {
-            var session = ((SessionsAdapter)_list.Adapter).GetRow(e.Position);
+            var session = ((SessionsSimpleAdapter)list.Adapter).GetRow(e.Position);
 
             var intent = new Intent();
             intent.SetClass(this, typeof(SessionActivity));

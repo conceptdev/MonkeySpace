@@ -7,15 +7,14 @@ using Android.Content;
 using Android.OS;
 using Android.Views;
 using Android.Widget;
-using Monospace;
 
 namespace MonkeySpace
 {
     [Activity(Label = "Speakers")]
     public class SpeakersActivity : BaseActivity
     {
-        ListView _list;
-        List<MonkeySpace.Core.Speaker> _speakers;
+        ListView list;
+        List<MonkeySpace.Core.Speaker> speakers;
 
         protected override void OnCreate(Bundle bundle)
         {
@@ -25,10 +24,10 @@ namespace MonkeySpace
             SetContentView(Resource.Layout.Speakers);
             Window.SetFeatureInt(WindowFeatures.CustomTitle, Resource.Layout.WindowTitle); // http://www.londatiga.net/it/how-to-create-custom-window-title-in-android/
 
-			_speakers = MonkeySpace.Core.ConferenceManager.Speakers.Values.ToList () ;
+			speakers = MonkeySpace.Core.ConferenceManager.Speakers.Values.OrderBy ((s) => s.Name).ToList ();
 
-            _list = FindViewById<ListView>(Resource.Id.List);
-			_list.ItemClick += new EventHandler<AdapterView.ItemClickEventArgs>(_list_ItemClick);
+            list = FindViewById<ListView>(Resource.Id.List);
+			list.ItemClick += new EventHandler<AdapterView.ItemClickEventArgs>(list_ItemClick);
         }
         protected override void OnResume()
         {
@@ -37,12 +36,12 @@ namespace MonkeySpace
         }
         private void refreshSpeakers()
         {
-            _list.Adapter = new SpeakersAdapter(this, _speakers);
+            list.Adapter = new SpeakersAdapter(this, speakers);
         }
 
-		private void _list_ItemClick(object sender, AdapterView.ItemClickEventArgs e)
+		private void list_ItemClick(object sender, AdapterView.ItemClickEventArgs e)
         {
-            var speaker = ((SpeakersAdapter)_list.Adapter).GetRow(e.Position);
+            var speaker = ((SpeakersAdapter)list.Adapter).GetRow(e.Position);
 
             var intent = new Intent();
             intent.SetClass(this, typeof(SpeakerActivity));

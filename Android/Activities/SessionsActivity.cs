@@ -7,16 +7,14 @@ using Android.Content;
 using Android.OS;
 using Android.Views;
 using Android.Widget;
-using Monospace;
 
 namespace MonkeySpace
 {
     [Activity(Label = "Sessions")]
     public class SessionsActivity : BaseActivity
     {
-        string _tag;
-        List<MonkeySpace.Core.Session> _sessions;
-        ListView _list;
+        List<MonkeySpace.Core.Session> sessions;
+        ListView list;
 
         protected override void OnCreate (Bundle bundle)
 		{
@@ -26,8 +24,8 @@ namespace MonkeySpace
 			SetContentView (Resource.Layout.Sessions);
 			Window.SetFeatureInt (WindowFeatures.CustomTitle, Resource.Layout.WindowTitle); // http://www.londatiga.net/it/how-to-create-custom-window-title-in-android/
 
-			_list = FindViewById<ListView> (Resource.Id.List);
-			_list.ItemClick += new EventHandler<AdapterView.ItemClickEventArgs> (_list_ItemClick);
+			list = FindViewById<ListView> (Resource.Id.List);
+			list.ItemClick += new EventHandler<AdapterView.ItemClickEventArgs> (list_ItemClick);
 
 			var d = Intent.GetStringExtra ("SelectedDate");
 			var dt = Intent.GetStringExtra ("SelectedDateTime");
@@ -42,7 +40,7 @@ namespace MonkeySpace
                             orderby s.Start
                             select s;
 
-				_sessions = sess.ToList ();
+				sessions = sess.ToList ();
 			} else if (!String.IsNullOrEmpty (dt)) {
 				var datetime = DateTime.Parse (dt);
 
@@ -53,7 +51,7 @@ namespace MonkeySpace
                            orderby s.Start
                            select s;
 
-				_sessions = sess.ToList ();
+				sessions = sess.ToList ();
 			} else {
 				// no parameters
 				FindViewById<TextView> (Resource.Id.Title).Text = "Sessions";
@@ -61,31 +59,8 @@ namespace MonkeySpace
 						orderby s.Start
 						select s;
 				
-				_sessions = sess.ToList ();
+				sessions = sess.ToList ();
 			}
-//            else
-//            {
-//                FindViewById<TextView>(Resource.Id.Title).Text = t;
-//
-//                var _tag = (from tag in Conf.Current.ConfItem.Tags
-//                            where tag.Value == t
-//                            select tag).FirstOrDefault();
-//
-//                var sessionsWithTag = new List<MonkeySpace.Core.Session>();
-//                foreach (var code in _tag.SessionCodes)
-//                {
-//                    var sess = from s in Conf.Current.ConfItem.Sessions
-//                               where s.Code == code
-//                               select s;
-//
-//                    var s1 = sess.FirstOrDefault();
-//                    if (s1 != null)
-//                    {
-//                        sessionsWithTag.Add(s1);
-//                    }
-//                }
-//                _sessions = sessionsWithTag;
-//            }
         }
         protected override void OnResume()
         {
@@ -94,12 +69,12 @@ namespace MonkeySpace
         }
         private void refreshSessions()
         {
-            _list.Adapter = new Sessions2Adapter(this, _sessions);
+            list.Adapter = new SessionsAdapter(this, sessions);
         }
 
-		private void _list_ItemClick(object sender, AdapterView.ItemClickEventArgs e)
+		private void list_ItemClick(object sender, AdapterView.ItemClickEventArgs e)
         {
-            var session = ((Sessions2Adapter)_list.Adapter).GetRow(e.Position);
+            var session = ((SessionsAdapter)list.Adapter).GetRow(e.Position);
 
             var intent = new Intent();
             intent.SetClass(this, typeof(SessionActivity));

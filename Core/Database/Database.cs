@@ -11,6 +11,7 @@ namespace MonkeySpace.Core
 		[PrimaryKey]
 		public string Code {get;set;}
 	}
+
 	/// <summary>
 	/// Use to store 'favorite sessions'
 	/// </summary>
@@ -20,7 +21,7 @@ namespace MonkeySpace.Core
 			get { 
 				var path = "userdata.db3";
 #if SILVERLIGHT
-				path = "userdata.db3";
+				//path = "userdata.db3";
 #else
 				
 #if __ANDROID__

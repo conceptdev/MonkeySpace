@@ -1,4 +1,4 @@
-namespace Monospace.Core
+namespace MonkeySpace.Core
 {
     static class Constants
     {
