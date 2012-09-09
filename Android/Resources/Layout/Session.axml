@@ -20,7 +20,7 @@
          android:layout_width="fill_parent"
          android:layout_height="wrap_content"
          android:textSize="30dp"
-         android:textColor="#EA7D02" />
+         android:textColor="#BC1718" />
 
     <TextView
       android:id="@+id/SpeakerList"
@@ -61,15 +61,15 @@
         android:layout_height="wrap_content"
         android:paddingTop="10dip"/>
     
-      <TextView
+      <!--TextView
         android:text="Tags"
-        android:textColor="#EA7D02"
+        android:textColor="#BC1718"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content" />
       <TextView
         android:id="@+id/TagList"
         android:layout_width="fill_parent"
-        android:layout_height="wrap_content" />
+        android:layout_height="wrap_content" /-->
     
   </LinearLayout>
 </ScrollView>

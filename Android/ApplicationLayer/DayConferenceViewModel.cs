@@ -1,6 +1,6 @@
 ﻿using Android.Runtime;
 
-namespace Monospace.Core
+namespace MonkeySpace.Core
 {
     [Preserve]
     public class DayConferenceViewModel

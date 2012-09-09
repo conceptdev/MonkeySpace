@@ -4,16 +4,20 @@ using System.IO;
 using System.Linq;
 using System.Xml.Serialization;
 using Android.App;
-using ConceptDevelopment;
-using Monospace.Core;
-using Monospace;
+using MonkeySpace.Core;
 
-namespace Conf
+namespace MonkeySpace
 {
     [Application]
     public class Conf : Application
     {
         public static Conf Current { get; private set; }
+
+		public static UserDatabase UserData {get; private set;} 
+		/// <summary>userdata.db</summary>
+		public static string SqliteDataFilename = "userdata.db";
+
+		string docFolder;
 
         public Conf(IntPtr handle, Android.Runtime.JniHandleOwnership transfer)
             : base(handle,transfer)
@@ -25,16 +29,20 @@ namespace Conf
         {
             base.OnCreate();
 
-            var docFolder = Constants.DocumentsFolder;
-            var confFolder = System.IO.Path.Combine(docFolder, "monospace12");
+			docFolder = Environment.GetFolderPath(Environment.SpecialFolder.Personal);
+            var confFolder = System.IO.Path.Combine(docFolder, "monkeyspace12");
             if (!System.IO.Directory.Exists(confFolder))
                 System.IO.Directory.CreateDirectory(confFolder);
 
-            var confFile = Path.Combine(confFolder, "conf.xml");
+			// setup SQLite for 'starred sessions' database
+			UserData = new UserDatabase(UserDatabase.DatabaseFilePath);
+
+
+			var confFile = Path.Combine(confFolder, MonkeySpace.Core.ConferenceManager.JsonDataFilename);
 
             if (!System.IO.File.Exists(confFile))
             {
-                var s = Resources.OpenRawResource(Resource.Raw.conf);  // RESOURCE NAME ###
+                var s = Resources.OpenRawResource(Resource.Raw.sessions);  // RESOURCE NAME ###
 
                 // create a write stream
                 FileStream writeStream = new FileStream(confFile, FileMode.OpenOrCreate, FileAccess.Write);
@@ -42,7 +50,11 @@ namespace Conf
                 ReadWriteStream(s, writeStream);
             }
 
-            DeserializeConferenceFile(confFile);
+			var jsonString = System.IO.File.ReadAllText (confFile);
+
+			MonkeySpace.Core.ConferenceManager.LoadFromString(jsonString);
+
+            DeserializeConferenceFile("");
 
         }
         // readStream is the stream you need to read
@@ -66,14 +78,14 @@ namespace Conf
 
         public string CurrentConferenceCode
         {
-            get { return "monospace12"; }
+            get { return "monkeyspace12"; }
         }
 
         /// <summary>
         /// A collection of 'favorite' sessions
         /// </summary>
-        private List<Session2> _FavoriteSessions;// { get; private set; }
-        public List<Session2> FavoriteSessions // { get; set; }
+        private List<MonkeySpace.Core.Session> _FavoriteSessions;// { get; private set; }
+		public List<MonkeySpace.Core.Session> FavoriteSessions // { get; set; }
         {
             get { return _FavoriteSessions; }
             set
@@ -81,43 +93,57 @@ namespace Conf
                 _FavoriteSessions = value;
             }
         }
-        public void UpdateFavorite(Session2 session, bool isFavorite)
+		public void UpdateFavorite (MonkeySpace.Core.Session session, bool isFavorite)
         {
-            var fs = (from s in this.FavoriteSessions
-                      where s.Code == session.Code
-                      select s).ToList();
+			if (UserData.IsFavorite(session.Code))
+				if (!isFavorite)
+					UserData.RemoveFavoriteSession(session.Code);
+			else // not Favorite
+				if (isFavorite)
+					UserData.AddFavoriteSession(session.Code);
 
-            if (fs.Count > 0)
-            {
-                // remove, as it might be old data persisted anyway (from previous conf.xml file)
-                this.FavoriteSessions.Remove(fs[0]);
-            }
-            if (isFavorite)
-            {   // add it again
-                this.FavoriteSessions.Add(new Session2(session.Clone()));
-            }
+			var favs = UserData.GetFavoriteCodes();
+			_FavoriteSessions = (from s in MonkeySpace.Core.ConferenceManager.Sessions.Values.ToList () 
+								 where favs.Contains(s.Code)
+			                     select s).ToList();
 
-            var temp = _FavoriteSessions.OrderBy(s => s.Start.Ticks);
-            _FavoriteSessions = new List<Session2>();
-            foreach (var t in temp)
-            {
-                _FavoriteSessions.Add(t);
-            }
-
-            SaveFavouritesFile();
+//
+//            var fs = (from s in this.FavoriteSessions
+//                      where s.Code == session.Code
+//                      select s).ToList();
+//
+//            if (fs.Count > 0)
+//            {
+//                // remove, as it might be old data persisted anyway (from previous conf.xml file)
+//                this.FavoriteSessions.Remove(fs[0]);
+//            }
+//            if (isFavorite)
+//            {   // add it again
+//				//this.FavoriteSessions.Add(new MonkeySpace.Core.Session(session.Clone()));
+//				this.FavoriteSessions.Add(session); // HACK
+//            }
+//
+//            var temp = _FavoriteSessions.OrderBy(s => s.Start.Ticks);
+//			_FavoriteSessions = new List<MonkeySpace.Core.Session>();
+//            foreach (var t in temp)
+//            {
+//                _FavoriteSessions.Add(t);
+//            }
+//
+//            SaveFavouritesFile();
 
             // This updates the 'whats on next' with favourites (if required)
             this.LoadWhatsOn(this.CurrentConferenceCode);
         }
 
 
-        public void SaveFavouritesFile()
-        {
-            var basedir = Path.Combine(Constants.DocumentsFolder, CurrentConferenceCode);
-            var xmlPath = Path.Combine(basedir, "Favourites.xml");
-            Console.WriteLine("[Main] SaveFeedbackFile");
-            Kelvin<List<Session2>>.ToXmlFile(Conf.Current.FavoriteSessions, xmlPath);
-        }
+//        public void SaveFavouritesFile()
+//        {
+//            var basedir = Path.Combine(docFolder, CurrentConferenceCode);
+//            var xmlPath = Path.Combine(basedir, "Favourites.xml");
+//            Console.WriteLine("[Main] SaveFeedbackFile");
+//			ConceptDevelopment.Kelvin<List<MonkeySpace.Core.Session>>.ToXmlFile(Conf.Current.FavoriteSessions, xmlPath);
+//        }
 
         private List<DayConferenceViewModel> _ScheduleItems;
         public List<DayConferenceViewModel> ScheduleItems
@@ -129,15 +155,8 @@ namespace Conf
             }
         }
 
-        private Conference2 _ConfItem;
-        public Conference2 ConfItem
-        {
-            get { return _ConfItem; }
-            set
-            {
-                _ConfItem = value;
-            }
-        }
+		public ConferenceInfo ConfItem
+		{ get; set; }
 
         public bool IsDataLoaded
         {
@@ -146,92 +165,26 @@ namespace Conf
         }
 
 
-
-
-
-
-        Monospace.Core.Conference ConferenceData;
-        Monospace.Core.Conference2 ConferenceData2;
-
-
         void DeserializeConferenceFile(string xmlPath)
         {
-            long start = DateTime.Now.Ticks;
-            using (TextReader reader = new StreamReader(xmlPath))
-            {
-                XmlSerializer serializer = new XmlSerializer(typeof(Conference2));
-                ConferenceData2 = (Conference2)serializer.Deserialize(reader);
+			ConfItem = new ConferenceInfo () {
+				StartDate = new DateTime(2012,10, 17),
+				EndDate = new DateTime(2012,10,19), 
+			};
 
-                Console.WriteLine("[AppDelegate] deserialize2:" + new TimeSpan(DateTime.Now.Ticks - start).TotalMilliseconds);
-                //http://stackoverflow.com/questions/617283/select-a-dictionaryt1-t2-with-linq
-                // Version 2 'flat' data structure
-                var sessDic2 = (from s2 in ConferenceData2.Sessions
-                                select s2).ToDictionary(item => item.Code);
-                var speaDic2 = (from s3 in ConferenceData2.Speakers
-                                select s3).ToDictionary(item => item.Name);
-                var tagDic2 = (from s3 in ConferenceData2.Tags
-                               select s3).ToDictionary(item => item.Value);
 
-                // dictionaries to re-constitute version 1 data structure
-                var speaDic1 = new Dictionary<string, Monospace.Core.Speaker>();
-                var sessDic1 = new Dictionary<string, Monospace.Core.Session>();
-                var tagDic1 = new Dictionary<string, Monospace.Core.Tag>();
+            //
+            // ######   Load 'favorites'   ####
+            //
+            var favPath = Path.Combine(docFolder, this.CurrentConferenceCode);
+            favPath = Path.Combine(favPath, "Favorites.xml");
 
-                // create version 1 speakers
-                foreach (var sp2 in speaDic2)
-                {
-                    Monospace.Core.Speaker sp1 = sp2.Value as Monospace.Core.Speaker;
-                    speaDic1.Add(sp1.Name, sp1);
-                }
-                // create version 1 sessions
-                // add sessions to version 1 tags
-                // add sessions to version 1 speakers
-                foreach (var se2 in sessDic2.Values)
-                {
-                    Monospace.Core.Session2 se1 = se2 as Monospace.Core.Session2;
-                    sessDic1.Add(se1.Code, se1);
-                    foreach (var ta2 in se2.TagStrings)
-                    {
-                        if (!tagDic1.Keys.Contains(ta2))
-                        {
-                            tagDic1.Add(ta2, new Tag { Value = ta2 });
-                        }
-                        //Console.WriteLine("[AppDelegate] TAG " + ta2 + " ses " + se1.Code);
-                        tagDic1[ta2].Sessions.Add(se1);
-                        se1.Tags.Add(tagDic1[ta2]);
-                    }
-                    // add speakers to version 1 sessions
-                    foreach (var spn in se2.SpeakerNames)
-                    {
-                        //Console.WriteLine("[AppDelegate] SPKR " + se1.Code + " ses " + spn);
-                        if (speaDic1.ContainsKey(spn))
-                        {   //Aaron  Skonnard
-                            se1.Speakers.Add(speaDic1[spn]);
-                            speaDic1[spn].Sessions.Add(se1);
-                        }
-                    }
-                }
-                // push into version 1 data structure, which rest of the app uses
-                ConferenceData = new Monospace.Core.Conference(ConferenceData2);
-                ConferenceData.Speakers = speaDic1.Values.ToList();
-                ConferenceData.Sessions = sessDic1.Values.ToList();
-                ConferenceData.Tags = tagDic1.Values.ToList();
+			FavoriteSessions = new List<MonkeySpace.Core.Session>();
 
-                ConfItem = ConferenceData2;
+            LoadWhatsOn(this.CurrentConferenceCode);
 
-                //
-                // ######   Load 'favorites'   ####
-                //
-                var favPath = Path.Combine(Constants.DocumentsFolder, this.CurrentConferenceCode);
-                favPath = Path.Combine(favPath, "Favorites.xml");
+            this.IsDataLoaded = true;
 
-                FavoriteSessions = new List<Session2>();
-
-                LoadWhatsOn(this.CurrentConferenceCode);
-
-                this.IsDataLoaded = true;
-            }
-            Console.WriteLine("[AppDelegate] deserialize2+unpack:" + new TimeSpan(DateTime.Now.Ticks - start).TotalMilliseconds);
         }
 
         
@@ -258,13 +211,13 @@ namespace Conf
                 nextStart = nextStart.AddSeconds(-nextStart.Second);
 
                 // sometimes the data might not have an 'end time', so we'll handle that by assuming 1 hour long sessions
-                var happeningNow = from s in this.ConfItem.Sessions
+				var happeningNow = from s in MonkeySpace.Core.ConferenceManager.Sessions.Values.ToList ()
                                    where s.Start <= now
                                    && (now < (s.End == DateTime.MinValue ? s.Start.AddHours(1) : s.End))
                                    && (s.Start.Minute % 10 == 0 || s.Start.Minute % 15 == 0) // fix for short-sessions (which start at :05 after the hour)
                                    select s;
 
-                var allUpcoming = from s in this.ConfItem.Sessions
+				var allUpcoming = from s in MonkeySpace.Core.ConferenceManager.Sessions.Values.ToList ()
                                   where s.Start >= nextStart && (s.Start.Minute % 10 == 0 || s.Start.Minute % 15 == 0) // (s.Start.Minute == 0 || s.Start.Minute == 30)
                                   orderby s.Start.Ticks
                                   group s by s.Start.Ticks into g
@@ -399,7 +352,7 @@ namespace Conf
 
             int NumberOfDays = days; // 3;
 
-            var sections = from s in ConfItem.Sessions
+			var sections = from s in MonkeySpace.Core.ConferenceManager.Sessions.Values.ToList ()
                            where s.Start.Day == startDate.Day
                            orderby s.Start ascending
                            group s by s.Start.ToString() into g

@@ -5,14 +5,14 @@ using Android.Views;
 using Android.Widget;
 using Monospace;
 
-namespace Conf.Activities
+namespace MonkeySpace
 {
     public class SpeakersAdapter : BaseAdapter
     {
-        private List<Monospace.Core.Speaker2> _speakers;
+        private List<MonkeySpace.Core.Speaker> _speakers;
         private Activity _context;
 
-        public SpeakersAdapter(Activity context, List<Monospace.Core.Speaker2> speakers)
+        public SpeakersAdapter(Activity context, List<MonkeySpace.Core.Speaker> speakers)
         {
             _context = context;
             _speakers = speakers;
@@ -37,7 +37,7 @@ namespace Conf.Activities
             get { return _speakers.Count(); }
         }
 
-        public Monospace.Core.Speaker2 GetRow(int position)
+        public MonkeySpace.Core.Speaker GetRow(int position)
         {
             return _speakers.ElementAt(position);
         }

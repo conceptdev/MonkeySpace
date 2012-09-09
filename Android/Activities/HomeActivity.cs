@@ -7,16 +7,16 @@ using Android.OS;
 using Android.Runtime;
 using Android.Views;
 using Android.Widget;
-using Monospace;
+using MonkeySpace.Core;
 
-namespace Conf.Activities
+namespace MonkeySpace
 {
     [Preserve]
-    [Activity(Label = "Monospace11", MainLauncher = true, Icon="@drawable/icon")]
+    [Activity(Label = "MonkeySpace", MainLauncher = true, Icon="@drawable/icon")]
     public class HomeActivity : BaseActivity
     {
         ListView _list;
-        List<Monospace.Core.DayConferenceViewModel> _schedule;
+        List<DayConferenceViewModel> _schedule;
 
         protected override void OnCreate(Bundle bundle)
         {

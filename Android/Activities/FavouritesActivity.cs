@@ -8,12 +8,12 @@ using Android.Views;
 using Android.Widget;
 using Monospace;
 
-namespace Conf.Activities
+namespace MonkeySpace
 {
     [Activity(Label = "My Schedule")]
     public class FavouritesActivity : BaseActivity
     {
-		List<Monospace.Core.Session2> _favourites;
+		List<MonkeySpace.Core.Session> _favourites;
         ListView _list;
 
         protected override void OnCreate(Bundle bundle)

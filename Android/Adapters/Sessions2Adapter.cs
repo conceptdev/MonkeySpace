@@ -5,14 +5,14 @@ using Android.Views;
 using Android.Widget;
 using Monospace;
 
-namespace Conf.Activities
+namespace MonkeySpace
 {
     public class Sessions2Adapter : BaseAdapter
     {
-        private List<Monospace.Core.Session2> _sessions;
+        private List<MonkeySpace.Core.Session> _sessions;
         private Activity _context;
 
-        public Sessions2Adapter(Activity context, List<Monospace.Core.Session2> sessions)
+        public Sessions2Adapter(Activity context, List<MonkeySpace.Core.Session> sessions)
         {
             _context = context;
             _sessions = sessions;
@@ -22,7 +22,7 @@ namespace Conf.Activities
         {
             var view = (convertView
                             ?? _context.LayoutInflater.Inflate(
-                                    Resource.Layout.Sessions2Item, parent, false)
+                                    Resource.Layout.SessionsItem, parent, false)
                         ) as LinearLayout;
             var row = _sessions.ElementAt(position);
 
@@ -30,10 +30,10 @@ namespace Conf.Activities
 
             view.FindViewById<TextView>(Resource.Id.Title).Text = row.Title;
 
-            if (row.Room == "")
-                view.FindViewById<TextView>(Resource.Id.Room).Text = row.SpeakerList;
+            if (row.Location == "")
+                view.FindViewById<TextView>(Resource.Id.Room).Text = row.GetSpeakerList ();
             else
-                view.FindViewById<TextView>(Resource.Id.Room).Text = row.Room + " room; " + row.SpeakerList;
+				view.FindViewById<TextView>(Resource.Id.Room).Text = row.LocationDisplay + "; " + row.GetSpeakerList();
             
 
             return view;
@@ -44,7 +44,7 @@ namespace Conf.Activities
             get { return _sessions.Count(); }
         }
 
-        public Monospace.Core.Session2 GetRow(int position)
+        public MonkeySpace.Core.Session GetRow(int position)
         {
             return _sessions.ElementAt(position);
         }

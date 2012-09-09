@@ -19,7 +19,7 @@
          android:layout_width="fill_parent"
          android:layout_height="wrap_content"
          android:textSize="30dp"
-         android:textColor="#EA7D02" />
+         android:textColor="#BC1718" />
 
     <TextView
       android:id="@+id/Bio"
@@ -30,7 +30,7 @@
 
     <TextView
       android:text="Sessions"
-      android:textColor="#EA7D02"
+      android:textColor="#BC1718"
      android:layout_width="fill_parent"
      android:layout_height="wrap_content" 
      android:paddingTop="10dip"/>

@@ -5,14 +5,14 @@ using Android.Views;
 using Android.Widget;
 using Monospace;
 
-namespace Conf.Activities
+namespace MonkeySpace
 {
     public class SessionsAdapter : BaseAdapter
     {
-        private List<Monospace.Core.Session> _sessions;
+        private List<MonkeySpace.Core.Session> _sessions;
         private Activity _context;
 
-        public SessionsAdapter(Activity context, List<Monospace.Core.Session> sessions)
+        public SessionsAdapter(Activity context, List<MonkeySpace.Core.Session> sessions)
         {
             _context = context;
             _sessions = sessions;
@@ -36,7 +36,7 @@ namespace Conf.Activities
             get { return _sessions.Count(); }
         }
 
-        public Monospace.Core.Session GetRow(int position)
+        public MonkeySpace.Core.Session GetRow(int position)
         {
             return _sessions.ElementAt(position);
         }

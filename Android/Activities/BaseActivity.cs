@@ -5,7 +5,7 @@ using Android.OS;
 using Android.Views;
 using Monospace;
 
-namespace Conf.Activities
+namespace MonkeySpace
 {
     public class BaseActivity : Activity
     {
@@ -55,7 +55,7 @@ namespace Conf.Activities
 
                 case "Sessions": 
 
-                    intent.SetClass(this, typeof(TagsActivity));
+                    intent.SetClass(this, typeof(SessionsActivity));
                     intent.AddFlags(ActivityFlags.ClearTop);            // http://developer.android.com/reference/android/content/Intent.html#FLAG_ACTIVITY_CLEAR_TOP
                     StartActivity(intent);
                     return true;

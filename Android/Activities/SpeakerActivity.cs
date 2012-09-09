@@ -9,14 +9,14 @@ using Android.Views;
 using Android.Widget;
 using Monospace;
 
-namespace Conf.Activities
+namespace MonkeySpace
 {
     [Activity(Label = "Speaker")]
     public class SpeakerActivity : BaseActivity
     {
         string _name;
-        Monospace.Core.Speaker2 _speaker;
-        List<Monospace.Core.Session> _sessions;
+        MonkeySpace.Core.Speaker _speaker;
+        List<MonkeySpace.Core.Session> _sessions;
         ListView _list;
 
 
@@ -30,7 +30,7 @@ namespace Conf.Activities
 
             _name = Intent.GetStringExtra("Name");
             
-            var _speaker = (from speaker in Conf.Current.ConfItem.Speakers
+			var _speaker = (from speaker in MonkeySpace.Core.ConferenceManager.Speakers.Values.ToList ()
                     where speaker.Name == _name
                     select speaker).FirstOrDefault();
 

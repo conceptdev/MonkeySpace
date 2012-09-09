@@ -3,16 +3,15 @@ using System.Linq;
 using Android.App;
 using Android.Views;
 using Android.Widget;
-using Monospace;
 
-namespace Conf.Activities
+namespace MonkeySpace
 {
     public class FavouritesAdapter : BaseAdapter
     {
-        private List<Monospace.Core.Session2> _favourites;
+        private List<MonkeySpace.Core.Session> _favourites;
         private Activity _context;
 
-        public FavouritesAdapter(Activity context, List<Monospace.Core.Session2> sessions)
+        public FavouritesAdapter(Activity context, List<MonkeySpace.Core.Session> sessions)
         {
             _context = context;
             _favourites = sessions;
@@ -28,8 +27,8 @@ namespace Conf.Activities
 
             view.FindViewById<TextView>(Resource.Id.Time).Text = row.DateTimeQuickJumpDisplay;
             view.FindViewById<TextView>(Resource.Id.Title).Text = row.Title;
-            if (row.Room != "")
-                view.FindViewById<TextView>(Resource.Id.Room).Text = row.Room + " room";
+            if (row.Location != "")
+				view.FindViewById<TextView>(Resource.Id.Room).Text = row.LocationDisplay;
             
 
             return view;
@@ -40,7 +39,7 @@ namespace Conf.Activities
             get { return _favourites.Count(); }
         }
 
-        public Monospace.Core.Session2 GetRow(int position)
+        public MonkeySpace.Core.Session GetRow(int position)
         {
             return _favourites.ElementAt(position);
         }

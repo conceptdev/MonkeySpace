@@ -13,7 +13,7 @@
     <TextView
         android:id="@+id/Title"
         android:textStyle="bold"
-        android:textColor="#EA7D02"
+        android:textColor="#BC1718"
         android:layout_height="wrap_content"
         android:layout_width="fill_parent"
         android:paddingLeft="5dip"/>

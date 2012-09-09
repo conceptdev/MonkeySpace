@@ -8,13 +8,13 @@ using Android.Views;
 using Android.Widget;
 using Monospace;
 
-namespace Conf.Activities
+namespace MonkeySpace
 {
     [Activity(Label = "Session")]
     public class SessionActivity : BaseActivity
     {
         string _code;
-        Monospace.Core.Session2 _session;
+        MonkeySpace.Core.Session _session;
         bool isFavourite = false;
         Button _favouriteButton;
 
@@ -32,19 +32,19 @@ namespace Conf.Activities
             _code = Intent.GetStringExtra("Code");
             Console.WriteLine("[SessionActivity] " + _code);
 
-            _session = (from s in Conf.Current.ConfItem.Sessions
+			_session = (from s in MonkeySpace.Core.ConferenceManager.Sessions.Values.ToList ()
                        where s.Code == _code
                        select s).FirstOrDefault();
 
             if (_session.Code != "")
             {
                 FindViewById<TextView>(Resource.Id.Title).Text = _session.Title;
-                FindViewById<TextView>(Resource.Id.SpeakerList).Text = _session.SpeakerList;
-                if (_session.Room != "")
-                    FindViewById<TextView>(Resource.Id.Room).Text = _session.Room + " room";
+				FindViewById<TextView>(Resource.Id.SpeakerList).Text = _session.GetSpeakerList();
+                if (_session.Location != "")
+					FindViewById<TextView>(Resource.Id.Room).Text = _session.LocationDisplay;
                 FindViewById<TextView>(Resource.Id.DateTimeDisplay).Text = _session.DateTimeDisplay;
-                FindViewById<TextView>(Resource.Id.Brief).Text = _session.Brief;
-                FindViewById<TextView>(Resource.Id.TagList).Text = _session.TagList;
+                FindViewById<TextView>(Resource.Id.Brief).Text = _session.Abstract;
+                //FindViewById<TextView>(Resource.Id.TagList).Text = _session.TagList;
 
 
                 var sess = from s in Conf.Current.FavoriteSessions

@@ -7,7 +7,7 @@
   <TextView
      android:text="Speakers"
      android:textSize="30dp"
-     android:textColor="#EA7D02"
+     android:textColor="#BC1718"
      android:layout_width="fill_parent"
      android:layout_height="wrap_content"
      android:paddingLeft="10dip"

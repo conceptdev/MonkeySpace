@@ -9,79 +9,83 @@ using Android.Views;
 using Android.Widget;
 using Monospace;
 
-namespace Conf.Activities
+namespace MonkeySpace
 {
     [Activity(Label = "Sessions")]
     public class SessionsActivity : BaseActivity
     {
         string _tag;
-        List<Monospace.Core.Session2> _sessions;
+        List<MonkeySpace.Core.Session> _sessions;
         ListView _list;
 
-        protected override void OnCreate(Bundle bundle)
-        {
-            base.OnCreate(bundle);
+        protected override void OnCreate (Bundle bundle)
+		{
+			base.OnCreate (bundle);
 
-            RequestWindowFeature(WindowFeatures.CustomTitle); // BETTER: http://www.anddev.org/my_own_titlebar_backbutton_like_on_the_iphone-t4591.html
-            SetContentView(Resource.Layout.Sessions);
-            Window.SetFeatureInt(WindowFeatures.CustomTitle, Resource.Layout.WindowTitle); // http://www.londatiga.net/it/how-to-create-custom-window-title-in-android/
+			RequestWindowFeature (WindowFeatures.CustomTitle); // BETTER: http://www.anddev.org/my_own_titlebar_backbutton_like_on_the_iphone-t4591.html
+			SetContentView (Resource.Layout.Sessions);
+			Window.SetFeatureInt (WindowFeatures.CustomTitle, Resource.Layout.WindowTitle); // http://www.londatiga.net/it/how-to-create-custom-window-title-in-android/
 
-            _list = FindViewById<ListView>(Resource.Id.List);
-            _list.ItemClick += new EventHandler<AdapterView.ItemClickEventArgs>(_list_ItemClick);
+			_list = FindViewById<ListView> (Resource.Id.List);
+			_list.ItemClick += new EventHandler<AdapterView.ItemClickEventArgs> (_list_ItemClick);
 
-            var t = Intent.GetStringExtra("Tag");
-            var d = Intent.GetStringExtra("SelectedDate");
-            var dt = Intent.GetStringExtra("SelectedDateTime");
+			var d = Intent.GetStringExtra ("SelectedDate");
+			var dt = Intent.GetStringExtra ("SelectedDateTime");
             
-            if (!String.IsNullOrEmpty(d))
-            {
-                var date = DateTime.Parse(d);
+			if (!String.IsNullOrEmpty (d)) {
+				var date = DateTime.Parse (d);
 
-                FindViewById<TextView>(Resource.Id.Title).Text = date.ToString("dddd, dd MMMM");
+				FindViewById<TextView> (Resource.Id.Title).Text = date.ToString ("dddd, dd MMMM");
 
-                var sess = from s in Conf.Current.ConfItem.Sessions
+				var sess = from s in MonkeySpace.Core.ConferenceManager.Sessions.Values.ToList ()
                             where s.Start.Day == date.Day
                             orderby s.Start
                             select s;
 
-                _sessions = sess.ToList();
-            }
-            else if (!String.IsNullOrEmpty(dt))
-            {
-                var datetime = DateTime.Parse(dt);
+				_sessions = sess.ToList ();
+			} else if (!String.IsNullOrEmpty (dt)) {
+				var datetime = DateTime.Parse (dt);
 
-                FindViewById<TextView>(Resource.Id.Title).Text = datetime.ToString("dddd, dd MMMM");
+				FindViewById<TextView> (Resource.Id.Title).Text = datetime.ToString ("dddd, dd MMMM");
 
-                var sess = from s in Conf.Current.ConfItem.Sessions
+				var sess = from s in MonkeySpace.Core.ConferenceManager.Sessions.Values.ToList ()
                            where s.Start == datetime
                            orderby s.Start
                            select s;
 
-                _sessions = sess.ToList();
-            }
-            else
-            {
-                FindViewById<TextView>(Resource.Id.Title).Text = t;
-
-                var _tag = (from tag in Conf.Current.ConfItem.Tags
-                            where tag.Value == t
-                            select tag).FirstOrDefault();
-
-                var sessionsWithTag = new List<Monospace.Core.Session2>();
-                foreach (var code in _tag.SessionCodes)
-                {
-                    var sess = from s in Conf.Current.ConfItem.Sessions
-                               where s.Code == code
-                               select s;
-
-                    var s1 = sess.FirstOrDefault();
-                    if (s1 != null)
-                    {
-                        sessionsWithTag.Add(s1);
-                    }
-                }
-                _sessions = sessionsWithTag;
-            }
+				_sessions = sess.ToList ();
+			} else {
+				// no parameters
+				FindViewById<TextView> (Resource.Id.Title).Text = "Sessions";
+				var sess = from s in MonkeySpace.Core.ConferenceManager.Sessions.Values.ToList ()
+						orderby s.Start
+						select s;
+				
+				_sessions = sess.ToList ();
+			}
+//            else
+//            {
+//                FindViewById<TextView>(Resource.Id.Title).Text = t;
+//
+//                var _tag = (from tag in Conf.Current.ConfItem.Tags
+//                            where tag.Value == t
+//                            select tag).FirstOrDefault();
+//
+//                var sessionsWithTag = new List<MonkeySpace.Core.Session>();
+//                foreach (var code in _tag.SessionCodes)
+//                {
+//                    var sess = from s in Conf.Current.ConfItem.Sessions
+//                               where s.Code == code
+//                               select s;
+//
+//                    var s1 = sess.FirstOrDefault();
+//                    if (s1 != null)
+//                    {
+//                        sessionsWithTag.Add(s1);
+//                    }
+//                }
+//                _sessions = sessionsWithTag;
+//            }
         }
         protected override void OnResume()
         {

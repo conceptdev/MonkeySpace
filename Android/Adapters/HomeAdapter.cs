@@ -4,10 +4,9 @@ using System.Linq;
 using Android.App;
 using Android.Views;
 using Android.Widget;
-using Monospace.Core;
-using Monospace;
+using MonkeySpace.Core;
 
-namespace Conf.Activities
+namespace MonkeySpace
 {
     public class HomeAdapter : BaseAdapter
     {

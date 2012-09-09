@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 using Android.App;
 using Android.Content;
@@ -8,13 +9,13 @@ using Android.Views;
 using Android.Widget;
 using Monospace;
 
-namespace Conf.Activities
+namespace MonkeySpace
 {
     [Activity(Label = "Speakers")]
     public class SpeakersActivity : BaseActivity
     {
         ListView _list;
-        List<Monospace.Core.Speaker2> _speakers;
+        List<MonkeySpace.Core.Speaker> _speakers;
 
         protected override void OnCreate(Bundle bundle)
         {
@@ -24,7 +25,7 @@ namespace Conf.Activities
             SetContentView(Resource.Layout.Speakers);
             Window.SetFeatureInt(WindowFeatures.CustomTitle, Resource.Layout.WindowTitle); // http://www.londatiga.net/it/how-to-create-custom-window-title-in-android/
 
-            _speakers = Conf.Current.ConfItem.Speakers ;
+			_speakers = MonkeySpace.Core.ConferenceManager.Speakers.Values.ToList () ;
 
             _list = FindViewById<ListView>(Resource.Id.List);
 			_list.ItemClick += new EventHandler<AdapterView.ItemClickEventArgs>(_list_ItemClick);
