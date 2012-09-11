@@ -11,5 +11,7 @@ TestResults
 
 *.pidb
 
+*.suo
+
 */Resource.Designer.cs
 */*/Resource.Designer.cs
