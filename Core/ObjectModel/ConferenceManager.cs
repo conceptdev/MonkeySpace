@@ -1,7 +1,13 @@
 using System;
+#if WINDOWS_PHONE
+using Newtonsoft.Json;
+#else
 using System.Json;
+#endif
 using System.IO;
 using System.Collections.Generic;
+//using System.Runtime.Serialization.Json;
+using System.Text;
 
 namespace MonkeySpace.Core
 {
@@ -9,12 +15,28 @@ namespace MonkeySpace.Core
 	{
 		public static string JsonDataFilename = "sessions.json";
 
-		public static Dictionary<int, Session> Sessions = new Dictionary<int, Session>();
+        public static Dictionary<int, Session> Sessions = new Dictionary<int, Session>();
 
 		public static Dictionary<int, Speaker> Speakers = new Dictionary<int, Speaker>();
 
 		public static void LoadFromString (string jsonString)
-		{
+        {
+#if WINDOWS_PHONE
+            jsonString = jsonString.Replace("0000-04:00", ""); // HACK: excuse this timezone hack
+            var sessions = JsonConvert.DeserializeObject<List<Session>>(jsonString);
+            Sessions = new Dictionary<int, Session>();
+            Speakers = new Dictionary<int, Speaker>();
+            foreach (var session in sessions) {
+                Sessions.Add(session.Id, session);
+                Console.WriteLine("Session: " + session.Title);
+                foreach (var speaker in session.Speakers) { 
+                    if (!Speakers.ContainsKey(speaker.Id)) {
+                        Speakers.Add(speaker.Id, speaker);
+                    }
+                    Console.WriteLine("Speaker: " + speaker.Name);
+                }
+            }
+#else
 			var jsonObject = JsonValue.Parse (jsonString);
 			
 			if (jsonObject != null)
@@ -44,9 +66,12 @@ namespace MonkeySpace.Core
 					}
 				}
 			}
-			Console.WriteLine ("done");
+#endif
+            Console.WriteLine ("done");
 		}
-		public static void LoadFromFile ()
+
+#if !WINDOWS_PHONE
+        public static void LoadFromFile ()
 		{
 			string xmlPath = JsonDataFilename;
 			var basedir = Environment.GetFolderPath (System.Environment.SpecialFolder.Personal);
@@ -59,6 +84,7 @@ namespace MonkeySpace.Core
 			
 			LoadFromString(jsonString);
 		}
+#endif
 	}
 }
 

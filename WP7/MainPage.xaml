@@ -1,0 +1,362 @@
+﻿<phone:PhoneApplicationPage
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:phone="clr-namespace:Microsoft.Phone.Controls;assembly=Microsoft.Phone"
+    xmlns:shell="clr-namespace:Microsoft.Phone.Shell;assembly=Microsoft.Phone"
+    xmlns:controls="clr-namespace:Microsoft.Phone.Controls;assembly=Microsoft.Phone.Controls"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+    xmlns:controlsPrimitives="clr-namespace:Microsoft.Phone.Controls.Primitives;assembly=Microsoft.Phone.Controls" 
+    xmlns:local="clr-namespace:MonkeySpace"
+    xmlns:cc="clr-namespace:Clarity.Phone.Controls;assembly=Clarity.Phone"
+    x:Class="MonkeySpace.MainPage" 
+    mc:Ignorable="d" d:DesignWidth="480" d:DesignHeight="800" 
+    d:DataContext="{d:DesignData SampleData/MainViewModelSampleData.xaml}"
+    SupportedOrientations="Portrait"  Orientation="Portrait"
+    shell:SystemTray.IsVisible="False">
+
+	<phone:PhoneApplicationPage.Resources>
+        <!--local:NewsDateConverter x:Key="NewsDateConverter" />
+        <local:NewsMonthConverter x:Key="NewsMonthConverter" /-->
+        <local:EmptyListVisibilityConverter x:Key="EmptyListConverter" />
+        <local:NonEmptyListVisibilityConverter x:Key="NonEmptyListConverter" />
+		<Style x:Key="PanoramaStyle" TargetType="controls:Panorama">
+			<Setter Property="ItemsPanel">
+				<Setter.Value>
+					<ItemsPanelTemplate>
+						<controlsPrimitives:PanoramaPanel x:Name="panel"/>
+					</ItemsPanelTemplate>
+				</Setter.Value>
+			</Setter>
+			<Setter Property="Foreground" Value="{StaticResource PhoneForegroundBrush}"/>
+			<Setter Property="Background" Value="Transparent"/>
+			<Setter Property="Template">
+				<Setter.Value>
+					<ControlTemplate TargetType="controls:Panorama">
+						<Grid>
+							<Grid.RowDefinitions>
+								<RowDefinition Height="auto"/>
+								<RowDefinition Height="*"/>
+							</Grid.RowDefinitions>
+							<controlsPrimitives:PanningBackgroundLayer x:Name="BackgroundLayer" HorizontalAlignment="Left" Grid.RowSpan="2">
+								<Border x:Name="background" 
+                                        Background="{TemplateBinding Background}" CacheMode="BitmapCache"/>
+							</controlsPrimitives:PanningBackgroundLayer>
+							<controlsPrimitives:PanningTitleLayer x:Name="TitleLayer" CacheMode="BitmapCache" ContentTemplate="{TemplateBinding TitleTemplate}" Content="{TemplateBinding Title}" FontSize="133.333" FontFamily="{StaticResource PhoneFontFamilyLight}" HorizontalAlignment="Left" Margin="10,-30,0,9" Grid.Row="0"/>
+							<controlsPrimitives:PanningLayer x:Name="ItemsLayer" HorizontalAlignment="Left" Grid.Row="1">
+								<ItemsPresenter x:Name="items"/>
+							</controlsPrimitives:PanningLayer>
+						</Grid>
+					</ControlTemplate>
+				</Setter.Value>
+			</Setter>
+		</Style>
+	</phone:PhoneApplicationPage.Resources>
+	<phone:PhoneApplicationPage.FontFamily>
+		<StaticResource ResourceKey="PhoneFontFamilyNormal"/>
+	</phone:PhoneApplicationPage.FontFamily>
+	<phone:PhoneApplicationPage.FontSize>
+		<StaticResource ResourceKey="PhoneFontSizeNormal"/>
+	</phone:PhoneApplicationPage.FontSize>
+	<phone:PhoneApplicationPage.Foreground>
+		<StaticResource ResourceKey="PhoneForegroundBrush"/>
+	</phone:PhoneApplicationPage.Foreground>
+
+    <!--LayoutRoot is the root grid where all page content is placed-->
+    <Grid x:Name="LayoutRoot" Background="Transparent">
+ 
+        <!--Panorama control-->
+        <!-- "conf" or "mix" -->
+        <controls:Panorama Title="MonkeySpace" 
+                           Style="{StaticResource PanoramaStyle}"
+                           Foreground="#66ff0000"
+                           x:Name="ConfPanorama">
+            <controls:Panorama.Background>
+                <ImageBrush 
+                    ImageSource="PanoramaBackground_dark.png"/>
+            </controls:Panorama.Background>
+ 
+            
+            
+            <!--Panorama ites: What's on and Other conferences...
+            WORKS: ItemsSource="{Binding ScheduleItems}"  BUT no subheading
+            -->
+            <controls:PanoramaItem Header="" Foreground="{StaticResource PhoneAccentBrush}">
+                <cc:QuickJumpGrid 
+                              DataSource="{Binding ScheduleItems}"
+                              x:Name="DaysListBox"
+                              SelectionChanged="Days_SelectionChanged"
+                              IsAlphaNumeric="False"
+                              Margin="12,0,0,0">
+                <cc:QuickJumpGrid.QuickJumpGridSelector>
+                        <local:DayConferenceSelector />
+                </cc:QuickJumpGrid.QuickJumpGridSelector>
+                    <cc:QuickJumpGrid.GroupHeaderTemplate>
+                        <DataTemplate>
+                            <Canvas Height="62" Width="456">
+                                <TextBlock Text="{Binding}" 
+                                           Style="{StaticResource PhoneTextExtraLargeStyle}" 
+                                           Margin="0,0,0,12"  
+                                           Foreground="{StaticResource PhoneAccentBrush}"   />
+                            </Canvas>
+                        </DataTemplate>
+                    </cc:QuickJumpGrid.GroupHeaderTemplate>
+                    <cc:QuickJumpGrid.ItemTemplate>
+                    <DataTemplate>
+                    <StackPanel Margin="0,0,0,10" Width="432">
+                        <TextBlock Text="{Binding LineOne}" 
+                                   Style="{StaticResource PhoneTextExtraLargeStyle}" 
+                                   FontSize="30" />
+                        <TextBlock Text="{Binding LineTwo}" Margin="12,-6,12,0" Style="{StaticResource PhoneTextSubtleStyle}"/>
+                    </StackPanel>
+                    </DataTemplate>
+                </cc:QuickJumpGrid.ItemTemplate>
+            </cc:QuickJumpGrid>
+            </controls:PanoramaItem>
+ 
+            <!--Panorama item: SPEAKERS -->
+            <controls:PanoramaItem Header="speakers" Foreground="{StaticResource PhoneAccentBrush}">
+
+
+                <cc:QuickJumpGrid DataSource="{Binding Speakers}"
+                              IsAlphaNumeric="True"
+                              Margin="12,0,0,0"
+                              SelectionChanged="Speakers_SelectionChanged"
+                              x:Name="SpeakersListBox">
+                    <cc:QuickJumpGrid.QuickJumpGridSelector>
+                        <local:SpeakerSelector />
+                    </cc:QuickJumpGrid.QuickJumpGridSelector>
+                    <cc:QuickJumpGrid.ItemTemplate>
+                        <DataTemplate>
+                            <StackPanel Orientation="Horizontal" Margin="0,0,0,17">
+
+                                <!--Rectangle Height="100" Width="100" 
+                                           Fill="{StaticResource PhoneAccentBrush}" 
+                                           Margin="12,0,9,0"/-->
+                                <StackPanel Width="411">
+                                    <TextBlock Text="{Binding Name}" 
+                                               TextWrapping="Wrap" 
+                                               Style="{StaticResource PhoneTextExtraLargeStyle}"/>
+
+                                </StackPanel>
+                            </StackPanel>
+                        </DataTemplate>
+                    </cc:QuickJumpGrid.ItemTemplate>
+                </cc:QuickJumpGrid>
+
+                <!--ListBox Margin="0,0,-12,0" 
+                         x:Name="SpeakersListBox"
+                         ItemsSource="{Binding ConfItem.Speakers}"
+                         SelectionChanged="Speakers_SelectionChanged">
+                    <ListBox.ItemTemplate>
+                        <DataTemplate>
+                            <StackPanel Orientation="Horizontal" Margin="0,0,0,17">
+                                
+                                <Rectangle Height="100" Width="100" 
+                                           Fill="{StaticResource PhoneAccentBrush}" 
+                                           Margin="12,0,9,0"/>
+                                <StackPanel Width="311">                                    
+                                    <TextBlock Text="{Binding Name}" 
+                                               TextWrapping="Wrap" 
+                                               Style="{StaticResource PhoneTextExtraLargeStyle}"/>
+                                    
+                                </StackPanel>
+                            </StackPanel>
+                        </DataTemplate>
+                    </ListBox.ItemTemplate>
+                </ListBox-->
+            </controls:PanoramaItem>
+
+
+
+            <!--Panorama item: SESSIONS-->
+            <controls:PanoramaItem Header="sessions" Foreground="{StaticResource PhoneAccentBrush}">
+                <cc:QuickJumpGrid DataSource="{Binding Sessions}"
+                              IsAlphaNumeric="False"
+                              Margin="12,0,0,0"
+                              SelectionChanged="Sessions_SelectionChanged"
+                              x:Name="SessionsListBox">
+                    <cc:QuickJumpGrid.QuickJumpGridSelector>
+                        <local:SessionDateSelector />
+                    </cc:QuickJumpGrid.QuickJumpGridSelector>
+                    <cc:QuickJumpGrid.GroupHeaderTemplate>
+                        <DataTemplate>
+                            <Canvas Height="62" Width="456">
+                                <TextBlock Text="{Binding}" 
+                                           Style="{StaticResource PhoneTextExtraLargeStyle}" 
+                                           Margin="0,0,0,12"  
+                                           Foreground="{StaticResource PhoneAccentBrush}"   />
+                            </Canvas>
+                        </DataTemplate>
+                    </cc:QuickJumpGrid.GroupHeaderTemplate>
+                    <cc:QuickJumpGrid.ItemTemplate>
+                        <DataTemplate>
+                            <StackPanel Orientation="Horizontal" Margin="0,0,0,17">
+                                <StackPanel Width="432">
+                                    <TextBlock Text="{Binding Title}" 
+                                           TextWrapping="Wrap" 
+                                           Style="{StaticResource PhoneTextLargeStyle}"/>
+                                    <TextBlock Text="{Binding DateTimeQuickJumpSubtitle}" 
+                                           TextWrapping="Wrap" 
+                                           Style="{StaticResource PhoneTextSubtleStyle}"/>
+                                </StackPanel>
+                                <!--Image Source="icons\heart_24x24.png" 
+                                   Visibility="Visible" /-->
+                            </StackPanel>
+                        </DataTemplate>
+                    </cc:QuickJumpGrid.ItemTemplate>
+                </cc:QuickJumpGrid>
+            </controls:PanoramaItem>
+
+
+
+            <!--Panorama item: MAPS -->
+            <controls:PanoramaItem Header="maps" Foreground="{StaticResource PhoneAccentBrush}">
+                <ListBox Margin="0,0,-12,0" 
+                         x:Name="MapsListBox"
+                         ItemsSource="{Binding ConfItem.Locations}"
+                         SelectionChanged="Maps_SelectionChanged"
+                         >
+                    <ListBox.ItemTemplate>
+                        <DataTemplate>
+                            <StackPanel Orientation="Horizontal" Margin="0,0,0,17">
+                                <StackPanel Width="432">
+                                    <TextBlock Text="{Binding Title}" 
+                                               TextWrapping="Wrap" 
+                                               Style="{StaticResource PhoneTextExtraLargeStyle}"
+                                               />
+                                    <TextBlock Text="{Binding Subtitle}" TextWrapping="Wrap" Margin="12,-6,12,0" Style="{StaticResource PhoneTextSubtleStyle}"/>
+                                </StackPanel>
+                            </StackPanel>
+                        </DataTemplate>
+                    </ListBox.ItemTemplate>
+                </ListBox>
+            </controls:PanoramaItem>
+
+
+            <controls:PanoramaItem Header="extras" Foreground="{StaticResource PhoneAccentBrush}">
+                <StackPanel>
+
+                    <Button Click="Info_Clicked">
+                        <StackPanel>
+                            <TextBlock Text="Conference Info" 
+                                    TextAlignment="Center"
+                                    Margin="12,-6,12,0" 
+                                    Style="{StaticResource PhoneTextExtraLargeStyle}"
+                                    />
+                            <TextBlock Text="Details about MonkeySpace" 
+                                       TextAlignment="Center"
+                                       Margin="12,-6,12,0" 
+                                       Style="{StaticResource PhoneTextSubtleStyle}"/>
+                        </StackPanel>
+                    </Button>
+                    <Button Click="About_Clicked">
+                        <StackPanel>
+                        <TextBlock Text="About This App" 
+                                    TextAlignment="Center"
+                                    Margin="12,-6,12,0" 
+                                    Style="{StaticResource PhoneTextExtraLargeStyle}"
+                                    />
+                        <TextBlock Text="Version and support info" 
+                                       TextAlignment="Center"
+                                       Margin="12,-6,12,0" 
+                                       Style="{StaticResource PhoneTextSubtleStyle}"/>
+                        </StackPanel>
+                    </Button>
+                </StackPanel>
+            </controls:PanoramaItem>
+           
+            <!--Panorama item: FAVORITES -->
+            <controls:PanoramaItem Header="my schedule" Foreground="{StaticResource PhoneAccentBrush}">
+                <Grid>
+
+
+
+
+                    <cc:QuickJumpGrid DataSource="{Binding FavoriteSessions}"
+                              IsAlphaNumeric="False"
+                              Margin="12,0,0,0"
+                              SelectionChanged="Favorites_SelectionChanged"
+                              Visibility="{Binding Path=FavoriteSessions, Mode=OneWay,Converter={StaticResource NonEmptyListConverter}}" 
+                              x:Name="FavoritesListBox">
+                        <cc:QuickJumpGrid.QuickJumpGridSelector>
+                            <local:SessionDateSelector />
+                        </cc:QuickJumpGrid.QuickJumpGridSelector>
+                        <cc:QuickJumpGrid.GroupHeaderTemplate>
+                            <DataTemplate>
+                                <Canvas Height="62" Width="456">
+                                    <TextBlock Text="{Binding}" 
+                                           Style="{StaticResource PhoneTextExtraLargeStyle}" 
+                                           Margin="0,0,0,12"  
+                                           Foreground="{StaticResource PhoneAccentBrush}" 
+                                           FontSize="30"/>
+                                </Canvas>
+                            </DataTemplate>
+                        </cc:QuickJumpGrid.GroupHeaderTemplate>
+                        <cc:QuickJumpGrid.ItemTemplate>
+                            <DataTemplate>
+                                <StackPanel Orientation="Horizontal" Margin="0,0,0,17">
+                                    <StackPanel Width="432">
+                                        <TextBlock Text="{Binding Title}" 
+                                           TextWrapping="Wrap" 
+                                                   FontSize="24"
+                                           Style="{StaticResource PhoneTextLargeStyle}"/>
+                                        <TextBlock Text="{Binding DateTimeQuickJumpSubtitle}" 
+                                           TextWrapping="Wrap" 
+                                           Style="{StaticResource PhoneTextSubtleStyle}"/>
+                                    </StackPanel>
+                                </StackPanel>
+                            </DataTemplate>
+                        </cc:QuickJumpGrid.ItemTemplate>
+                    </cc:QuickJumpGrid>
+
+
+
+                    <!-- {Binding Path=Items, Mode=OneWay,Converter={StaticResource NonEmptyListConverter}} -->
+                    <!--ListBox Margin="0,0,-12,0" 
+                             ItemsSource="{Binding FavoriteSessions}"
+                             x:Name="FavoritesListBox"
+                             Visibility="{Binding Path=FavoriteSessions, Mode=OneWay,Converter={StaticResource NonEmptyListConverter}}" 
+                             SelectionChanged="Favorites_SelectionChanged">
+                        <ListBox.ItemTemplate>
+                            <DataTemplate>
+                                <StackPanel Width="411">
+                                    <TextBlock Text="{Binding Title}" 
+                                               TextWrapping="Wrap" 
+                                               FontSize="30"
+                                               Style="{StaticResource PhoneTextLargeStyle}"
+                                               />
+                                    <TextBlock Text="{Binding FavoritesSubtitle}" 
+                                                Style="{StaticResource PhoneTextSubtleStyle}"/>
+                                </StackPanel>
+                            </DataTemplate>
+                        </ListBox.ItemTemplate>
+                    </ListBox-->
+                    <!--  -->
+                    <StackPanel
+                       Visibility="{Binding Path=FavoriteSessions, Mode=OneWay,Converter={StaticResource EmptyListConverter}}"
+                        x:Name="FavoritesEmpty">
+                        <TextBlock Text="Touch the heart icon in any session to add to this list." 
+                                   TextWrapping="Wrap" 
+                                   Foreground="{StaticResource PhoneSubtleBrush}"
+                                   Style="{StaticResource PhoneTextLargeStyle}"
+                                   />
+                    </StackPanel>
+
+                </Grid>
+            </controls:PanoramaItem>
+
+
+
+        </controls:Panorama>
+    </Grid>
+ 
+    
+    
+    
+    
+    
+    
+    
+
+</phone:PhoneApplicationPage>

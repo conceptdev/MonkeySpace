@@ -1,0 +1,86 @@
+﻿<phone:PhoneApplicationPage 
+    x:Class="MonkeySpace.AboutPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:phone="clr-namespace:Microsoft.Phone.Controls;assembly=Microsoft.Phone"
+    xmlns:shell="clr-namespace:Microsoft.Phone.Shell;assembly=Microsoft.Phone"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    FontFamily="{StaticResource PhoneFontFamilyNormal}"
+    FontSize="{StaticResource PhoneFontSizeNormal}"
+    Foreground="{StaticResource PhoneForegroundBrush}"
+    SupportedOrientations="Portrait" Orientation="Portrait"
+    mc:Ignorable="d" d:DesignHeight="768" d:DesignWidth="480"
+    shell:SystemTray.IsVisible="True">
+
+    <!--LayoutRoot is the root grid where all page content is placed-->
+    <Grid x:Name="LayoutRoot" 
+          Background="Transparent"
+          >
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <!--TitlePanel contains the name of the application and page title-->
+        <StackPanel x:Name="TitlePanel" Grid.Row="0" Margin="12,17,0,28">
+            <!-- "conf:" or "monkeyspace:" -->
+            <TextBlock x:Name="ApplicationTitle" 
+                       Text="monkeyspace:" 
+                       Style="{StaticResource PhoneTextNormalStyle}" />
+            <TextBlock x:Name="PageTitle" Text="about" 
+                       Margin="9,-7,0,0" 
+                       Foreground="{StaticResource PhoneAccentBrush}"
+                       Style="{StaticResource PhoneTextTitle1Style}"/>
+        </StackPanel>
+
+        <!--ContentPanel - place additional content here-->
+        <Grid x:Name="ContentPanel" 
+              Grid.Row="1" 
+              Margin="12,0,12,0">
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="*"/>
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto" />
+                    <ColumnDefinition Width="*" />
+                </Grid.ColumnDefinitions>
+                <TextBlock Grid.Row="0" Grid.Column="0" Padding="0 0 15 5"
+                           Text="Version"/>
+                <TextBlock Grid.Row="0" Grid.Column="1" 
+                           x:Name="VersionText" />
+
+                <TextBlock Grid.Row="1" Grid.Column="0"  Padding="0 0 15 5"
+                           Text="Website"/>
+                <TextBlock Grid.Row="1" Grid.Column="1" 
+                           Text="http://confapp.com" />
+
+                <TextBlock Grid.Row="2" Grid.Column="0"  Padding="0 0 15 5"
+                           Text="Email"/>
+                <TextBlock Grid.Row="2" Grid.Column="1" 
+                           Text="support@confapp.com" />
+
+                <TextBlock Grid.Row="3" Grid.Column="0"  Padding="0 0 15 5"
+                           Text="Current"/>
+                <TextBlock Grid.Row="3" Grid.Column="1" 
+                           x:Name="CurrentTextBox"
+                           Text="" />
+
+                <TextBlock Grid.Row="4" Grid.Column="0"  Padding="0 0 15 5"
+                           Text="Privacy"/>
+                <TextBlock Grid.Row="4" Grid.Column="1" 
+                           x:Name="PrivacyTextBox"
+                           TextWrapping="Wrap"
+                           Text="Conf does not store any personal data on remote servers. Location services are used solely to display your position on a map within the application using Bing Maps - it is not shared or stored anywhere. Your Favorite Sessions list is only stored on your device, it is not used for any other purpose. Your Feedback is provided anonymously to the conference organiser and the relevant speaker/s." />
+            </Grid>
+
+
+        </Grid>
+    </Grid>
+
+</phone:PhoneApplicationPage>

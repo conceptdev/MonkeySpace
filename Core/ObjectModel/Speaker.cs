@@ -1,5 +1,7 @@
 using System;
+#if !WINDOWS_PHONE
 using System.Json;
+#endif
 using System.Collections.Generic;
 
 namespace MonkeySpace.Core
@@ -13,6 +15,7 @@ namespace MonkeySpace.Core
 		{
 			Sessions = new List<Session>();
 		}
+#if !WINDOWS_PHONE
 		public Speaker (JsonValue json) : this()
 		{
 			Id = json["id"];
@@ -21,7 +24,7 @@ namespace MonkeySpace.Core
 			Bio = json["bio"];
 			HeadshotUrl = json["headshotUrl"];
 		}
-
+#endif
 		public int Id { get; set; }
 		public string Name {get;set;}
 		public string TwitterHandle {get;set;}

@@ -1,6 +1,8 @@
 using System;
 using System.Collections.Generic;
+#if !WINDOWS_PHONE
 using System.Json;
+#endif
 using System.Collections;
 
 namespace MonkeySpace.Core
@@ -21,6 +23,7 @@ namespace MonkeySpace.Core
 			Speakers = new List<Speaker>();
 		}
 
+#if !WINDOWS_PHONE
 		public Session (JsonValue json) : this()
 		{
 			Id = json["id"];
@@ -33,7 +36,7 @@ namespace MonkeySpace.Core
 			var ends = json["ends"].ToString ().Trim ('"').Substring (0, 19).Replace ("T", " ");
 			Ends = DateTime.Parse (ends, System.Globalization.CultureInfo.InvariantCulture);
 		}
-
+#endif
 		public int Id { get; set; }
 		public string Title {get;set;}
 		public string Abstract {get;set;}
@@ -62,7 +65,8 @@ namespace MonkeySpace.Core
 			get{return Begins.ToString("ddd MMM dd H:mm");}}
 		public string DateTimeQuickJumpSubtitle {
 			get{return Begins.ToString("ddd MMM dd H:mm");}}
-
+        public string TimeQuickJumpDisplay{
+            get{ return Start.ToString("ddd H:mm");}}
 		public bool HasTag (string tag)
 		{
 			return false;
@@ -70,6 +74,7 @@ namespace MonkeySpace.Core
 
 		public List<Speaker> Speakers {get;set;}
 
+        public string SpeakerList { get { return GetSpeakerList();  } }
 		public string GetSpeakerList ()
 		{
 			var speakers = "";
