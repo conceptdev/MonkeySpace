@@ -58,7 +58,7 @@
                 <TextBlock Grid.Row="1" Grid.Column="0"  Padding="0 0 15 5"
                            Text="Website"/>
                 <TextBlock Grid.Row="1" Grid.Column="1" 
-                           Text="http://confapp.com" />
+                           Text="http://monkeyspace.confapp.com" />
 
                 <TextBlock Grid.Row="2" Grid.Column="0"  Padding="0 0 15 5"
                            Text="Email"/>
@@ -76,7 +76,7 @@
                 <TextBlock Grid.Row="4" Grid.Column="1" 
                            x:Name="PrivacyTextBox"
                            TextWrapping="Wrap"
-                           Text="Conf does not store any personal data on remote servers. Location services are used solely to display your position on a map within the application using Bing Maps - it is not shared or stored anywhere. Your Favorite Sessions list is only stored on your device, it is not used for any other purpose. Your Feedback is provided anonymously to the conference organiser and the relevant speaker/s." />
+                           Text="MonkeySpace does not store any personal data on remote servers. Location services are used solely to display your position on a map within the application using Bing Maps - it is not shared or stored anywhere. Your Favorite Sessions list is only stored on your device, it is not used for any other purpose." />
             </Grid>
 
 
