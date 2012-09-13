@@ -184,5 +184,6 @@
     <BundleResource Include="Resources\icon_50.png" />
     <BundleResource Include="Resources\icon_58.png" />
     <BundleResource Include="Resources\icon_72.png" />
+    <BundleResource Include="Resources\Default-568h%402x.png" />
   </ItemGroup>
 </Project>
