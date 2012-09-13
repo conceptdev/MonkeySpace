@@ -76,7 +76,8 @@ namespace Monospace11
 			};
 
 			var segmentedControl = new UISegmentedControl();
-			segmentedControl.Frame = new RectangleF(20, 320, 282,30);
+			var topOfSegement = View.Frame.Height - 120;
+			segmentedControl.Frame = new RectangleF(20, topOfSegement, 282, 30);
 			segmentedControl.InsertSegment("Map", 0, false);
 			segmentedControl.InsertSegment("Satellite", 1, false);
 			segmentedControl.InsertSegment("Hybrid", 2, false);
@@ -99,7 +100,7 @@ namespace Monospace11
             mapView.SizeToFit();
 
             // Reposition and resize the receiver
-            mapView.Frame = new RectangleF (0, 50, this.View.Frame.Width, this.View.Frame.Height - 100);
+            mapView.Frame = new RectangleF (0, 50, View.Frame.Width, View.Frame.Height - 100);
 
 			MKCoordinateSpan span = new MKCoordinateSpan(0.2,0.2);
 			MKCoordinateRegion region = new MKCoordinateRegion(ConferenceLocation,span);
@@ -117,9 +118,9 @@ namespace Monospace11
 			locationManager.StartUpdatingLocation();
 			
             // Add the table view as a subview
-            this.View.AddSubview(mapView);
-			this.View.AddSubview(labelDistance);
-			this.View.AddSubview(segmentedControl);
+            View.AddSubview(mapView);
+			View.AddSubview(labelDistance);
+			View.AddSubview(segmentedControl);
 			
 			// Add the 'info' button to flip
 			var flipButton = UIButton.FromType(UIButtonType.InfoLight);
@@ -128,7 +129,7 @@ namespace Monospace11
 			flipButton.TouchDown += delegate {
 				_mfvc.Flip();
 			};
-			this.View.AddSubview(flipButton);
+			View.AddSubview(flipButton);
 		}	
 		
 		public class MapViewDelegate : MKMapViewDelegate

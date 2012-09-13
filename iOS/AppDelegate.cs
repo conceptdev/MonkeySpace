@@ -84,7 +84,10 @@ namespace Monospace11
 			MonkeySpace.Core.ConferenceManager.LoadFromFile();
 
 			#endregion
-			
+
+			UIApplication.SharedApplication.SetStatusBarStyle (UIStatusBarStyle.Default, false);
+			UINavigationBar.Appearance.TintColor = new UIColor(188/255f, 23/255f, 24/255f, 1f);
+
 			// Create the tab bar
 			tabBarController = new TabBarController ();
 			// Create the main window and add the navigation controller as a subview

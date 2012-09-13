@@ -33,19 +33,23 @@ namespace Monospace11
 			speakerData = MonkeySpace.Core.ConferenceManager.Speakers.Values.ToList ();
 			
 			UIImageView imageView = new UIImageView (UIImage.FromFile ("Background.png"));
-			imageView.Frame = new RectangleF (0, 0, this.View.Frame.Width, this.View.Frame.Height);
+			imageView.Frame = new RectangleF (0, 0, View.Frame.Width, View.Frame.Height);
 			imageView.UserInteractionEnabled = true;
 
-			tableView = new UITableView { Source = new TableViewSource (this, speakerData), AutoresizingMask = UIViewAutoresizing.FlexibleHeight | UIViewAutoresizing.FlexibleWidth, BackgroundColor = UIColor.Clear, Frame = new RectangleF (0, 0, this.View.Frame.Width, this.View.Frame.Height - 100) };
+			tableView = new UITableView { Source = new TableViewSource (this, speakerData)
+				, AutoresizingMask = UIViewAutoresizing.FlexibleHeight | UIViewAutoresizing.FlexibleWidth
+				, BackgroundColor = UIColor.Clear
+				, Frame = new RectangleF (0, 0, View.Frame.Width, View.Frame.Height - 93) 
+				, ShowsVerticalScrollIndicator = true};
 			
 			imageView.AddSubview (tableView);
-			this.View.AddSubview (imageView);
+			View.AddSubview (imageView);
 		}
 
 		private class TableViewSource : UITableViewSource
 		{
-			private SpeakersViewController _svc;
-			private List<MonkeySpace.Core.Speaker> _speakers;
+			private SpeakersViewController svc;
+			private List<MonkeySpace.Core.Speaker> speakers;
 
 			List<string> sectionTitles;
 			// for index
@@ -53,22 +57,22 @@ namespace Monospace11
 			// for index
 			public TableViewSource (SpeakersViewController controller, List<MonkeySpace.Core.Speaker> speakers)
 			{
-				_svc = controller;
-				_speakers = speakers;
-				var newSpeakers = from nonempty in _speakers
+				svc = controller;
+				speakers = speakers;
+				var newSpeakers = from nonempty in speakers
 					where !(String.IsNullOrEmpty (nonempty.Bio) && nonempty.Sessions.Count == 0)
 					select nonempty;
-				_speakers = newSpeakers.ToList ();
+				speakers = newSpeakers.ToList ();
 				
 				
 				// apologies in advance for this dodgy linq/loop - could do better...[CD]
-				sectionTitles = (from c in _speakers
+				sectionTitles = (from c in speakers
 					select c.Name.Substring (0, 1)).Distinct ().ToList ();
 				// sort the list alphabetically
 				sectionTitles.Sort ();
 				// add each element to the List<Element> according to the letter it starts with
 				// in the SortedDictionary<int, List<Element>>
-				foreach (var element in _speakers) {
+				foreach (var element in speakers) {
 					// sectionNum a=1, b=2, c=3, etc
 					int sectionNum = sectionTitles.IndexOf (element.Name.Substring (0, 1));
 					if (sectionElements.ContainsKey (sectionNum)) {
@@ -101,7 +105,7 @@ namespace Monospace11
 					bioVC.Update (s);
 				
 				bioVC.Title = s.Name;
-				_svc.NavigationController.PushViewController (bioVC, true);
+				svc.NavigationController.PushViewController (bioVC, true);
 				tableView.DeselectRow (indexPath, true);
 			}
 

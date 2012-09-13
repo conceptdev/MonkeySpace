@@ -57,36 +57,34 @@ namespace Monospace11
 			
 			webView.ShouldStartLoad = delegate (UIWebView webViewParam, NSUrlRequest request, UIWebViewNavigationType navigationType)
 			{	// Catch the link click, and process the add/remove favorites
-				Debug.WriteLine(request.Url.Host);
 				if (navigationType == UIWebViewNavigationType.LinkClicked)
 				{
 					string path = request.Url.Path.Substring(1);
-					if (request.Url.Host == "tweet.MIX10.app")
-					{
+					string host = request.Url.Host.ToLower ();
+					if (request.Url.Host == "tweet.mix10.app") {
 						var tweet = new TWTweetComposeViewController();
-						tweet.SetInitialText ("I'm in '" + this.DisplaySession.Title + "' at #monkeyspace" );
+						tweet.SetInitialText ("I'm in '" + DisplaySession.Title + "' at #monkeyspace" );
 						PresentModalViewController(tweet, true);
 
-					} else if (request.Url.Host == "add.MIX10.app")
-					{
+					} else if (request.Url.Host == "add.mix10.app") {
 						AppDelegate.UserData.AddFavoriteSession(path);
-						this.Update(this.DisplaySession);
+						Update(DisplaySession);
 					}
-					else if (request.Url.Host == "remove.MIX10.app")
+					else if (request.Url.Host == "remove.mix10.app")
 					{	// "remove.MIX10.app"
 						AppDelegate.UserData.RemoveFavoriteSession(path);
-						if (this.IsFromFavoritesView)
+						if (IsFromFavoritesView)
 						{	// once unfavorited, hide and go back to list view
-							this.NavigationController.PopViewControllerAnimated(true);
+							NavigationController.PopViewControllerAnimated(true);
 						}
 						else
 						{
-							this.Update(this.DisplaySession);
+							Update(DisplaySession);
 						}
 					}
 					else
 					{
-						this.NavigationController.PushViewController (new WebViewController (request), true);
+						NavigationController.PushViewController (new WebViewController (request), true);
 						return false;
 					}
 				}
@@ -130,12 +128,6 @@ namespace Monospace11
 				sb.Append("<br />"+ Environment.NewLine);
 			}
 			sb.Append("<span class='body'>"+DisplaySession.Abstract+"</span>"+ Environment.NewLine);
-
-//			if (DisplaySession.Tags.Count > 0)
-//			{
-//				sb.Append("<br /><br />"+ Environment.NewLine);
-//				sb.Append("Tags: <span class='sessiontag'>"+DisplaySession.GetTagList()+"</span>"+ Environment.NewLine);
-//			}
 				
 			return sb.ToString();
 		}

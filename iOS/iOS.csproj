@@ -92,7 +92,6 @@
     <Compile Include="TabMap\MapHelper.cs" />
     <Compile Include="TabMap\MapLocationViewController.cs" />
     <Compile Include="TabMap\MapViewController.cs" />
-    <Compile Include="TabSessions\SessionsViewController.cs" />
     <Compile Include="TabSchedule\DayViewController.cs" />
     <Compile Include="TabSchedule\TimeslotViewController.cs" />
     <Compile Include="TabSchedule\WeekViewController.cs" />
