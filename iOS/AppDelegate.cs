@@ -22,28 +22,11 @@ namespace Monospace11
 		{
 			try
 			{
-				UIApplication.Main (args, "ConferenceApplication", "AppDelegate");
+				UIApplication.Main (args, null, "AppDelegate");
 			}
 			catch (Exception ex)
 			{	// HACK: this is just here for debugging
 				Debug.WriteLine(ex);
-			}
-		}
-	}
-	
-	[Register ("ConferenceApplication")]
-	public class ConferenceApplication : UIApplication {
-		public static WeakReference cref;
-		
-		public static UIViewController CurrentController {
-			get {
-				if (cref != null && cref.IsAlive)
-					return (UIViewController) cref.Target;
-				
-				return null;
-			}
-			set {
-				cref = new WeakReference (value);
 			}
 		}
 	}

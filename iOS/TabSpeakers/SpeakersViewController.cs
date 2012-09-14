@@ -58,7 +58,7 @@ namespace Monospace11
 			public TableViewSource (SpeakersViewController controller, List<MonkeySpace.Core.Speaker> speakers)
 			{
 				svc = controller;
-				speakers = speakers;
+				this.speakers = speakers;
 				var newSpeakers = from nonempty in speakers
 					where !(String.IsNullOrEmpty (nonempty.Bio) && nonempty.Sessions.Count == 0)
 					select nonempty;

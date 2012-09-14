@@ -59,7 +59,6 @@
     <WarningLevel>4</WarningLevel>
     <CodesignKey>iPhone Developer</CodesignKey>
     <MtouchI18n />
-    <CodesignProvision>B707997A-B31B-476A-8A1D-65F0DFCC9154</CodesignProvision>
     <MtouchSdkVersion>4.2</MtouchSdkVersion>
     <AssemblyName>Monospace11</AssemblyName>
   </PropertyGroup>
@@ -69,7 +68,7 @@
     <OutputPath>bin\iPhone\Distribution</OutputPath>
     <WarningLevel>4</WarningLevel>
     <CodesignKey>iPhone Distribution</CodesignKey>
-    <CodesignProvision>2CB2A27C-4F40-4F12-8E59-A00F4749B75C</CodesignProvision>
+    <CodesignProvision>AA243EA5-2B02-47F0-8F2A-156AED540EFC</CodesignProvision>
     <MtouchI18n />
     <MtouchSdkVersion>4.2</MtouchSdkVersion>
     <AssemblyName>Monospace11</AssemblyName>

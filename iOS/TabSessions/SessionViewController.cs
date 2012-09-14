@@ -61,16 +61,16 @@ namespace Monospace11
 				{
 					string path = request.Url.Path.Substring(1);
 					string host = request.Url.Host.ToLower ();
-					if (request.Url.Host == "tweet.mix10.app") {
+					if (host == "tweet.mix10.app") {
 						var tweet = new TWTweetComposeViewController();
 						tweet.SetInitialText ("I'm in '" + DisplaySession.Title + "' at #monkeyspace" );
 						PresentModalViewController(tweet, true);
 
-					} else if (request.Url.Host == "add.mix10.app") {
+					} else if (host == "add.mix10.app") {
 						AppDelegate.UserData.AddFavoriteSession(path);
 						Update(DisplaySession);
 					}
-					else if (request.Url.Host == "remove.mix10.app")
+					else if (host == "remove.mix10.app")
 					{	// "remove.MIX10.app"
 						AppDelegate.UserData.RemoveFavoriteSession(path);
 						if (IsFromFavoritesView)
@@ -100,15 +100,15 @@ namespace Monospace11
 			sb.Append("<h2>"+DisplaySession.Title+"</h2>"+ Environment.NewLine);
 
 			if (TWTweetComposeViewController.CanSendTweet) {
-				sb.Append ("<p><a href='http://tweet.MIX10.app/' style='font-weight:normal'>tweet</a></p>");
+				sb.Append ("<p><a href='http://tweet.mix10.app/' style='font-weight:normal'>tweet</a></p>");
 			}
 
 			if (AppDelegate.UserData.IsFavorite(DisplaySession.Code))
 			{	// okay this is a little bit of a HACK:
-				sb.Append(@"<nobr><a href=""http://remove.MIX10.app/"+DisplaySession.Code+@"""><img src='Images/favorited.png' align='right' border='0'/></a></nobr>");
+				sb.Append(@"<nobr><a href=""http://remove.mix10.app/"+DisplaySession.Code+@"""><img src='Images/favorited.png' align='right' border='0'/></a></nobr>");
 			}
 			else {
-				sb.Append(@"<nobr><a href=""http://add.MIX10.app/"+DisplaySession.Code+@"""><img src='Images/favorite.png' align='right' border='0'/></a></nobr>");
+				sb.Append(@"<nobr><a href=""http://add.mix10.app/"+DisplaySession.Code+@"""><img src='Images/favorite.png' align='right' border='0'/></a></nobr>");
 			}
 			sb.Append("<br/>");
 			if (DisplaySession.Speakers.Count > 0)
