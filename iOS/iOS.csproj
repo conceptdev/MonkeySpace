@@ -172,6 +172,8 @@
     <Content Include="Background.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <Content Include="Images\Tweet.png" />
+    <Content Include="Images\Tweet%402x.png" />
   </ItemGroup>
   <ItemGroup>
     <BundleResource Include="Resources\Default.png" />

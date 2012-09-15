@@ -17,9 +17,7 @@ namespace Monospace11
 				, navSpeakerController
 				, navScheduleController
 				, navFavoritesController;
-		
-		//UIColor HeaderColor = new UIColor(188/255f, 23/255f, 24/255f, 1f);
-		
+
 		/// <summary>
 		/// Create the ViewControllers that we are going to use for the tabs:
 		/// Sessions, Speakers
@@ -36,7 +34,6 @@ namespace Monospace11
 			navScheduleController = new MonoTouch.UIKit.UINavigationController();
 			navScheduleController.PushViewController(dvc, false);
 			navScheduleController.NavigationBar.BarStyle = UIBarStyle.Black;
-			//navScheduleController.NavigationBar.TintColor = HeaderColor;
 			navScheduleController.TopViewController.Title ="What's on";
 			navScheduleController.TabBarItem = new UITabBarItem("What's on", UIImage.FromFile("Images/83-calendar.png"), 0);
 			
@@ -45,7 +42,6 @@ namespace Monospace11
 			navSpeakerController.PushViewController(svc, false);
 			navSpeakerController.TopViewController.View.BackgroundColor = new UIColor(65.0f,169.0f,198.0f,255.0f);
 			navSpeakerController.NavigationBar.BarStyle = UIBarStyle.Black;
-			//navSpeakerController.NavigationBar.TintColor = HeaderColor;
 			navSpeakerController.TopViewController.Title ="Speakers";
 			navSpeakerController.TabBarItem = new UITabBarItem("Speakers", UIImage.FromFile("Images/tabspeaker.png"), 1);
 			
@@ -53,7 +49,6 @@ namespace Monospace11
 			navSessionController = new MonoTouch.UIKit.UINavigationController();
 			navSessionController.PushViewController(ssvc, false);
 			navSessionController.NavigationBar.BarStyle = UIBarStyle.Black;
-			//navSessionController.NavigationBar.TintColor = HeaderColor;
 			navSessionController.TopViewController.Title ="Sessions";
 			navSessionController.TabBarItem = new UITabBarItem("Sessions", UIImage.FromFile("Images/124-bullhorn.png"), 2);
 			
@@ -65,7 +60,6 @@ namespace Monospace11
 			navFavoritesController = new MonoTouch.UIKit.UINavigationController();
 			navFavoritesController.PushViewController(fvc, false);
 			navFavoritesController.NavigationBar.BarStyle = UIBarStyle.Black;
-			//navFavoritesController.NavigationBar.TintColor = HeaderColor;
 			navFavoritesController.TopViewController.Title ="My Schedule";
 			navFavoritesController.TabBarItem = new UITabBarItem("My Schedule", UIImage.FromFile("Images/28-star.png"), 7);
 			
@@ -78,15 +72,14 @@ namespace Monospace11
 				, navFavoritesController
 			};
 			
-			this.SelectedIndex = 0;
-			this.ViewControllers = u;
-			//this.MoreNavigationController.NavigationBar.TintColor = HeaderColor;
-			this.MoreNavigationController.NavigationBar.BarStyle = UIBarStyle.Black;
+			SelectedIndex = 0;
+			ViewControllers = u;
+			MoreNavigationController.NavigationBar.BarStyle = UIBarStyle.Black;
 			
 			var backgroundColor = UIColor.FromPatternImage(UIImage.FromFile("Background.png"));
-			this.MoreNavigationController.View.BackgroundColor = backgroundColor;
+			MoreNavigationController.View.BackgroundColor = backgroundColor;
 			
-			this.CustomizableViewControllers = new UIViewController[]{};
+			CustomizableViewControllers = new UIViewController[]{};
 		}
 	}
 }

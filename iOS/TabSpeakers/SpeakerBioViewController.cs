@@ -42,19 +42,23 @@ namespace Monospace11
 			public override bool ShouldStartLoad (UIWebView webView, NSUrlRequest request, UIWebViewNavigationType navigationType)
 			{
 				if (navigationType == UIWebViewNavigationType.LinkClicked) {
-					string path = request.Url.Path.Substring (1);
-					var pathArray = path.Split ('/');
-					if (pathArray[0] == "tweet") {
-						string handle = pathArray[1];
+					string path = request.Url.Path.Substring(1);
+					string host = request.Url.Host.ToLower ();
+					if (host == "tweet.mix10.app") {
 						var tweet = new TWTweetComposeViewController();
-						tweet.SetInitialText ("@" + handle + " #monkeyspace" );
+						tweet.SetInitialText ("@" + path + " #monkeyspace" );
 						_c.PresentModalViewController(tweet, true);
-					} else {
+					} else if (host == "session.mix10.app") {
 						if (sessVC == null)
 							sessVC = new SessionViewController (path);
 						else
 							sessVC.Update (path);
 						_c.NavigationController.PushViewController (sessVC, true);
+					}
+					else
+					{
+						_c.NavigationController.PushViewController (new WebViewController (request), true);
+						return false;
 					}
 				}
 				return true;
@@ -69,19 +73,24 @@ namespace Monospace11
 			sb.Append (StyleHtmlSnippet);
 			sb.Append ("<h2>" + _speaker.Name + "</h2>" + Environment.NewLine);
 
-			if (TWTweetComposeViewController.CanSendTweet) {
-				sb.Append ("<p><a href='http://MIX10.app/tweet/"+_speaker.TwitterHandle +"' style='font-weight:normal'>@" + _speaker.TwitterHandle + "</a></p>");
-			}
-
 			if (!string.IsNullOrEmpty (_speaker.HeadshotUrl)) {
 				sb.Append ("<img height=160 width=160 align=right src='http://monkeyspace.org" + _speaker.HeadshotUrl + "'>" + Environment.NewLine);
 			}
+
+			if (TWTweetComposeViewController.CanSendTweet) {
+				sb.Append ("<p><a href='http://tweet.mix10.app/" + _speaker.TwitterHandle + "' style='font-weight:normal'>@" + _speaker.TwitterHandle + "</a>");
+				sb.Append ("<br /><a href='http://tweet.mix10.app/" + _speaker.TwitterHandle + "' style='font-weight:normal'><img height=22 width=58 src='Images/Tweet.png'></a></p>");
+			} //else {
+			//	sb.Append ("<p><a href='http://twitter.com/" + _speaker.TwitterHandle + "' style='font-weight:normal'>@" + _speaker.TwitterHandle + "</a>");
+			//}
+
+
 			if (!string.IsNullOrEmpty (_speaker.Bio)) {
 				sb.Append ("<span class='body'>" + _speaker.Bio + "</span><br/>" + Environment.NewLine);
 			}
 			sb.Append ("<br />");
 			foreach (var session in _speaker.Sessions) {
-				sb.Append ("<div class='sessionspeaker'><a href='http://MIX10.app/" + session.Code + "' class='sessionspeaker'>" + session.Title + "</a></div><br />");
+				sb.Append ("<div class='sessionspeaker'><a href='http://session.mix10.app/" + session.Code + "' class='sessionspeaker'>" + session.Title + "</a></div><br />");
 			}		
 			return sb.ToString ();
 		}

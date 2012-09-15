@@ -92,23 +92,19 @@ namespace Monospace11
 			};
 		}
 
-		protected override string FormatText()
+		protected override string FormatText ()
 		{
 			string timeFormat = "H:mm";
-			StringBuilder sb = new StringBuilder();
-			sb.Append(StyleHtmlSnippet);
-			sb.Append("<h2>"+DisplaySession.Title+"</h2>"+ Environment.NewLine);
-
-			if (TWTweetComposeViewController.CanSendTweet) {
-				sb.Append ("<p><a href='http://tweet.mix10.app/' style='font-weight:normal'>tweet</a></p>");
-			}
+			StringBuilder sb = new StringBuilder ();
+			sb.Append (StyleHtmlSnippet);
+			sb.Append ("<h2>" + DisplaySession.Title + "</h2>" + Environment.NewLine);
 
 			if (AppDelegate.UserData.IsFavorite(DisplaySession.Code))
 			{	// okay this is a little bit of a HACK:
-				sb.Append(@"<nobr><a href=""http://remove.mix10.app/"+DisplaySession.Code+@"""><img src='Images/favorited.png' align='right' border='0'/></a></nobr>");
+				sb.Append(@"<p><nobr><a href=""http://remove.mix10.app/"+DisplaySession.Code+@"""><img src='Images/favorited.png' align='right' border='0'/></a></nobr></p>");
 			}
 			else {
-				sb.Append(@"<nobr><a href=""http://add.mix10.app/"+DisplaySession.Code+@"""><img src='Images/favorite.png' align='right' border='0'/></a></nobr>");
+				sb.Append(@"<p><nobr><a href=""http://add.mix10.app/"+DisplaySession.Code+@"""><img src='Images/favorite.png' align='right' border='0'/></a></nobr></p>");
 			}
 			sb.Append("<br/>");
 			if (DisplaySession.Speakers.Count > 0)
@@ -122,6 +118,9 @@ namespace Monospace11
 					+ DisplaySession.Start.ToString(timeFormat)+" - " 
 					+ DisplaySession.End.ToString(timeFormat) +"</span><br />"+ Environment.NewLine);
 
+			if (TWTweetComposeViewController.CanSendTweet) {
+				sb.Append ("<a href='http://tweet.mix10.app/' style='font-weight:normal'><img height=22 width=58 align='right' src='Images/Tweet.png'></a>");
+			} 
 			if (!String.IsNullOrEmpty (DisplaySession.Location))
 			{
 				sb.Append("<span class='sessionroom'>"+DisplaySession.LocationDisplay+"</span><br />"+ Environment.NewLine);
