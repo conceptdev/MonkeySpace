@@ -13,15 +13,15 @@ namespace Monospace11
 	/// </remarks>
 	public class SpeakerBioViewController : WebViewControllerBase
 	{
-		MonkeySpace.Core.Speaker _speaker;
+		MonkeySpace.Core.Speaker speaker;
 
 		public SpeakerBioViewController (MonkeySpace.Core.Speaker speaker) : base()
 		{
-			_speaker = speaker;
+			this.speaker = speaker;
 		}
 		public void Update (MonkeySpace.Core.Speaker speaker)
 		{
-			_speaker = speaker;
+			this.speaker = speaker;
 			LoadHtmlString (FormatText ());
 		}
 
@@ -32,10 +32,10 @@ namespace Monospace11
 		}
 		class WebViewDelegate : UIWebViewDelegate
 		{
-			private SpeakerBioViewController _c;
-			public WebViewDelegate (SpeakerBioViewController bc)
+			private SpeakerBioViewController viewController;
+			public WebViewDelegate (SpeakerBioViewController speakerViewController)
 			{
-				_c = bc;
+				viewController = speakerViewController;
 			}
 			private SessionViewController sessVC;
 
@@ -47,17 +47,17 @@ namespace Monospace11
 					if (host == "tweet.mix10.app") {
 						var tweet = new TWTweetComposeViewController();
 						tweet.SetInitialText ("@" + path + " #monkeyspace" );
-						_c.PresentModalViewController(tweet, true);
+						viewController.PresentModalViewController(tweet, true);
 					} else if (host == "session.mix10.app") {
 						if (sessVC == null)
 							sessVC = new SessionViewController (path);
 						else
 							sessVC.Update (path);
-						_c.NavigationController.PushViewController (sessVC, true);
+						viewController.NavigationController.PushViewController (sessVC, true);
 					}
 					else
 					{
-						_c.NavigationController.PushViewController (new WebViewController (request), true);
+						viewController.NavigationController.PushViewController (new WebViewController (request), true);
 						return false;
 					}
 				}
@@ -71,25 +71,27 @@ namespace Monospace11
 			StringBuilder sb = new StringBuilder ();
 			
 			sb.Append (StyleHtmlSnippet);
-			sb.Append ("<h2>" + _speaker.Name + "</h2>" + Environment.NewLine);
+			sb.Append ("<h2>" + speaker.Name + "</h2>" + Environment.NewLine);
 
-			if (!string.IsNullOrEmpty (_speaker.HeadshotUrl)) {
-				sb.Append ("<img height=160 width=160 align=right src='http://monkeyspace.org" + _speaker.HeadshotUrl + "'>" + Environment.NewLine);
+			if (!string.IsNullOrEmpty (speaker.HeadshotUrl)) {
+				sb.Append ("<img height=160 width=160 align=right src='http://monkeyspace.org" + speaker.HeadshotUrl + "'>" + Environment.NewLine);
 			}
 
 			if (TWTweetComposeViewController.CanSendTweet) {
-				sb.Append ("<p><a href='http://tweet.mix10.app/" + _speaker.TwitterHandle + "' style='font-weight:normal'>@" + _speaker.TwitterHandle + "</a>");
-				sb.Append ("<br /><a href='http://tweet.mix10.app/" + _speaker.TwitterHandle + "' style='font-weight:normal'><img height=22 width=58 src='Images/Tweet.png'></a></p>");
-			} //else {
+				sb.Append ("<p><a href='http://tweet.mix10.app/" + speaker.TwitterHandle + "' style='font-weight:normal'>@" + speaker.TwitterHandle + "</a>");
+				sb.Append ("<br /><a href='http://tweet.mix10.app/" + speaker.TwitterHandle + "' style='font-weight:normal'><img height=22 width=58 src='Images/Tweet.png'></a></p>");
+			} 
+			// TODO: add this back later on, when the 'embedded safari' web view controller is fixed
+			//else {
 			//	sb.Append ("<p><a href='http://twitter.com/" + _speaker.TwitterHandle + "' style='font-weight:normal'>@" + _speaker.TwitterHandle + "</a>");
 			//}
 
 
-			if (!string.IsNullOrEmpty (_speaker.Bio)) {
-				sb.Append ("<span class='body'>" + _speaker.Bio + "</span><br/>" + Environment.NewLine);
+			if (!string.IsNullOrEmpty (speaker.Bio)) {
+				sb.Append ("<span class='body'>" + speaker.Bio + "</span><br/>" + Environment.NewLine);
 			}
 			sb.Append ("<br />");
-			foreach (var session in _speaker.Sessions) {
+			foreach (var session in speaker.Sessions) {
 				sb.Append ("<div class='sessionspeaker'><a href='http://session.mix10.app/" + session.Code + "' class='sessionspeaker'>" + session.Title + "</a></div><br />");
 			}		
 			return sb.ToString ();

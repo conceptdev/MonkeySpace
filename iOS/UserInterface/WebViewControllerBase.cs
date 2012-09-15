@@ -71,6 +71,7 @@ namespace Monospace11
             base.ViewDidLoad ();
 			basedir = Environment.GetFolderPath (System.Environment.SpecialFolder.Personal);
 			basedir = System.IO.Path.Combine(basedir, "..", "iOS.app");
+			Console.WriteLine ("~~~"+System.Environment.CurrentDirectory);
 			// no XIB !
 			webView = new UIWebView()
 			{

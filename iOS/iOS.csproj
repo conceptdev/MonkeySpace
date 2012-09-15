@@ -91,9 +91,6 @@
     <Compile Include="TabMap\MapHelper.cs" />
     <Compile Include="TabMap\MapLocationViewController.cs" />
     <Compile Include="TabMap\MapViewController.cs" />
-    <Compile Include="TabSchedule\DayViewController.cs" />
-    <Compile Include="TabSchedule\TimeslotViewController.cs" />
-    <Compile Include="TabSchedule\WeekViewController.cs" />
     <Compile Include="TabSessions\SessionViewController.cs" />
     <Compile Include="TabSessions\TagsViewController.cs" />
     <Compile Include="TabAbout\AboutViewController.cs" />
@@ -160,14 +157,8 @@
     <Content Include="Images\124-bullhorn.png" />
     <Content Include="Images\124-bullhorn%402x.png" />
     <Content Include="Images\surprise.png" />
-    <Content Include="..\Core\Data\schedule.json">
-      <Link>schedule.json</Link>
-    </Content>
     <Content Include="..\Core\Data\sessions.json">
       <Link>sessions.json</Link>
-    </Content>
-    <Content Include="..\Core\Data\speakers.json">
-      <Link>speakers.json</Link>
     </Content>
     <Content Include="Background.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>

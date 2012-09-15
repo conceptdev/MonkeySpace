@@ -3,6 +3,7 @@ using System.Linq;
 using System.Collections.Generic;
 using MonoTouch.Dialog;
 using MonoTouch.UIKit;
+using MonoTouch.Foundation;
 using System.Text;
 using System.Drawing;
 using System.Globalization;
@@ -117,7 +118,7 @@ namespace Monospace11
 				where favs.Contains (s.Id.ToString ()) 
 				select (Element) new SessionElement (s);
 			
-			section.Add (favsessions);
+			section.AddAll (favsessions);
 		}
 		
 		// Appends a section to the list.
@@ -142,13 +143,17 @@ namespace Monospace11
 			return true;
 		}
 		
-		UIBarButtonItem item2;
-		
 		public HomeViewController () : base (null)
 		{
-
+			NavigationItem.SetRightBarButtonItem (new UIBarButtonItem (UIBarButtonSystemItem.Refresh), false);
+			NavigationItem.RightBarButtonItem.Clicked += (sender, e) => { Refresh(); };
 		}
 
+		void Refresh() 
+		{
+			Console.WriteLine ("Refresh data from server");
+			AppDelegate.Conference.DownloadFromServer ();
+		}
 		
 		public override void ViewWillAppear (bool animated)
 		{
@@ -203,7 +208,9 @@ namespace Monospace11
 
 				full.Add (MakeSchedule (DayStarts [i-1]));
 			}
-			
+
+			full.Footer = "Last updated: " + NSUserDefaults.StandardUserDefaults.StringForKey("LastUpdated");
+
 			root.Add (full);
 			
 			return root;

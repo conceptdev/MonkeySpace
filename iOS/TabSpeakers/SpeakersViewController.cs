@@ -49,8 +49,6 @@ namespace Monospace11
 		private class TableViewSource : UITableViewSource
 		{
 			private SpeakersViewController svc;
-			private List<MonkeySpace.Core.Speaker> speakers;
-
 			List<string> sectionTitles;
 			// for index
 			private SortedDictionary<int, List<MonkeySpace.Core.Speaker>> sectionElements = new SortedDictionary<int, List<MonkeySpace.Core.Speaker>> ();
@@ -58,13 +56,12 @@ namespace Monospace11
 			public TableViewSource (SpeakersViewController controller, List<MonkeySpace.Core.Speaker> speakers)
 			{
 				svc = controller;
-				this.speakers = speakers;
+
 				var newSpeakers = from nonempty in speakers
 					where !(String.IsNullOrEmpty (nonempty.Bio) && nonempty.Sessions.Count == 0)
 					select nonempty;
 				speakers = newSpeakers.ToList ();
-				
-				
+
 				// apologies in advance for this dodgy linq/loop - could do better...[CD]
 				sectionTitles = (from c in speakers
 					select c.Name.Substring (0, 1)).Distinct ().ToList ();

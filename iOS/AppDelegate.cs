@@ -42,37 +42,58 @@ namespace Monospace11
 		
 		TabBarController tabBarController;
 		public static UserDatabase UserData {get; private set;} 
-
+		public static ConferenceManager Conference { get; private set; }
+		string documentsPath;
+		string libraryPath;
+		string jsonPath;
 		/// <summary>userdata.db</summary>
-		public static string SqliteDataFilename = "userdata.db";
+		static string SqliteDataFilename = "userdata.db";
 		
 		/// <summary>
-		/// Loads the best conf.xml it can find - first look in SpecialFolder 
+		/// Loads the best sessions.json it can find - first look in SpecialFolder 
 		/// (if not there, load the one that was included in the app download)
 		/// </summary>
-		/// <remarks>
-		/// I wonder if there could be a problem with newer app code trying to 
-		/// open an older Xml after an upgrade is installed? 
-		/// I guess newer apps that aren't backward compatible
-		/// should use a different filename eg. conf2.xml...
-		/// </remarks>
 		public override bool FinishedLaunching (UIApplication app, NSDictionary options)
         {
-			// setup SQLite for 'starred sessions' database
-			var basedir = Environment.GetFolderPath (System.Environment.SpecialFolder.Personal);
-			UserData = new UserDatabase(Path.Combine (basedir, SqliteDataFilename));
+			documentsPath = Environment.GetFolderPath (Environment.SpecialFolder.Personal); // Documents folder
+			libraryPath = Path.Combine (documentsPath, "..", "Library"); // Library folder
+			var builtInJsonPath = Path.Combine (System.Environment.CurrentDirectory, ConferenceManager.JsonDataFilename);
+			jsonPath = Path.Combine (libraryPath, ConferenceManager.JsonDataFilename); // 
+			UserData = new UserDatabase(Path.Combine (libraryPath, SqliteDataFilename));
 
-			#region Get All Session data...
+			Conference = new ConferenceManager();
+			Conference.OnDownloadSucceeded += (jsonString) => {
+				File.WriteAllText (jsonPath, jsonString);
+				NSUserDefaults.StandardUserDefaults.SetString(ConferenceManager.LastUpdatedDisplay, "LastUpdated");
 
-			MonkeySpace.Core.ConferenceManager.LoadFromFile();
+				Console.WriteLine("Local json file updated " + jsonPath);
+				UIApplication.SharedApplication.NetworkActivityIndicatorVisible = false;
+			};
+			Conference.OnDownloadFailed += (error) => {
+				Console.WriteLine("OnDownloadFailed:" + error);
+				UIApplication.SharedApplication.NetworkActivityIndicatorVisible = false;
+			};
+			
+			#region Get session data from json into memory...
+
+			var json = "";
+			if (!File.Exists(jsonPath)) {
+				//jsonPath = builtInJsonPath; // use the bundled file
+				NSUserDefaults.StandardUserDefaults.SetString("2012-09-15 15:15:15", "LastUpdated");
+
+				File.Copy (builtInJsonPath, jsonPath); // so it is there for loading
+			}
+			json = File.ReadAllText(jsonPath);
+
+			MonkeySpace.Core.ConferenceManager.LoadFromString (json);
 
 			#endregion
 
-			UIApplication.SharedApplication.SetStatusBarStyle (UIStatusBarStyle.Default, false);
-			UINavigationBar.Appearance.TintColor = new UIColor(188/255f, 23/255f, 24/255f, 1f);
-
 			// Create the tab bar
 			tabBarController = new TabBarController ();
+
+			UINavigationBar.Appearance.TintColor = new UIColor(188/255f, 23/255f, 24/255f, 1f);
+
 			// Create the main window and add the navigation controller as a subview
 			window = new UIWindow (UIScreen.MainScreen.Bounds);
 			window.AddSubview(tabBarController.View);
@@ -80,6 +101,12 @@ namespace Monospace11
 			showSplashScreen();
 			
             return true;
+		}
+
+		public void Refresh () 
+		{
+			AppDelegate.Conference.DownloadFromServer();
+			UIApplication.SharedApplication.NetworkActivityIndicatorVisible = true;
 		}
 		
 		void showSplashScreen ()
