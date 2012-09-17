@@ -73,21 +73,6 @@ namespace Monospace11
 		public static string MakeCaption (string caption, DateTime start)
 		{
 			return MakeCaption (caption, start, false);
-//			string date;
-//			var now = DateTime.Now;
-//			
-//			if (start.Year == now.Year && start.Month == now.Month)
-//			{
-//				if (start.Day == now.Day)
-//					date = ""; 
-//				else if (start.Day == now.Day+1)
-//					date = "tomorrow at";
-//				else
-//					date = start.ToString ("MMM dd");
-//			} else
-//				date = start.ToString ("MMM dd");
-//			
-//			return String.Format ("{0}{1} {2} {3}", caption, caption != "" ? " " : "", date, start.ToString ("H:mm"));
 		}
 		
 		// Fills out the schedule for a given day
@@ -152,6 +137,7 @@ namespace Monospace11
 		void Refresh() 
 		{
 			Console.WriteLine ("Refresh data from server");
+			UIApplication.SharedApplication.NetworkActivityIndicatorVisible = true;
 			AppDelegate.Conference.DownloadFromServer ();
 		}
 		

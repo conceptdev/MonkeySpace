@@ -4,6 +4,7 @@ using System.IO;
 using System.Collections.Generic;
 
 using System.Net;
+using System.Text;
 
 namespace MonkeySpace.Core
 {
@@ -11,6 +12,7 @@ namespace MonkeySpace.Core
 	{
 		public Action<string> OnDownloadSucceeded;
 		public Action<string> OnDownloadFailed;
+		bool isDownloading = false;
 
 		/// <summary>"sessions.json"</summary>
 		public static string JsonDataFilename = "sessions.json";
@@ -39,37 +41,6 @@ namespace MonkeySpace.Core
 			}
 			Console.WriteLine ("Parsing sessions.json failed");
 			return false;
-
-//			var jsonObject = JsonValue.Parse (jsonString);
-//			
-//			if (jsonObject != null)
-//			{
-//				for (var j = 0;j < jsonObject.Count; j++) {
-//					var jsonSession = jsonObject[j];// as JsonValue;
-//					var session = new Session(jsonSession);
-//					
-//					Sessions.Add(session.Id, session);
-//					Console.WriteLine ("Session: " + session.Title);
-//					
-//					var jsonSpeakers = jsonSession["speakers"];// as JsonValue;
-//					
-//					for (var k = 0; k < jsonSpeakers.Count; k++) {
-//						var jsonSpeaker = jsonSpeakers[k]; // as JsonValue;
-//						var speaker = new Speaker(jsonSpeaker);
-//						
-//						if (!Speakers.ContainsKey (speaker.Id)) {
-//							Speakers.Add (speaker.Id, speaker);
-//						} else {
-//							speaker = Speakers[speaker.Id];
-//						}
-//						speaker.Sessions.Add (session);
-//						session.Speakers.Add (speaker);
-//						
-//						Console.WriteLine ("Speaker: " + speaker.Name);
-//					}
-//				}
-//			}
-
 		}
 
 		/// <summary>
@@ -134,16 +105,22 @@ namespace MonkeySpace.Core
 			LoadFromString(jsonString);
 		}
 
-		public void DownloadFromServer() 
+		public void DownloadFromServer ()
 		{
-			var client = new WebClient();
+			Console.WriteLine ("DownloadFromServer");
+			if (!isDownloading) {	//TODO: lock?
+				Console.WriteLine ("start downloading");
+				isDownloading = true;
+				var client = new WebClient ();
 			
-			client.DownloadStringCompleted += DownloadCompleted;
+				client.DownloadDataCompleted += DownloadCompleted;
 
-			client.DownloadStringAsync(new Uri(SessionDataUrl));
-
+				client.DownloadDataAsync (new Uri (SessionDataUrl));
+			}
+			else 
+				Console.WriteLine ("Already downloading");
 		}
-		private void DownloadCompleted (object sender, DownloadStringCompletedEventArgs e)
+		private void DownloadCompleted (object sender, DownloadDataCompletedEventArgs e)
 		{
 			if (e.Error != null || e.Result == null) {
 				Console.WriteLine("Nothing downloaded from " + SessionDataUrl); 
@@ -152,7 +129,7 @@ namespace MonkeySpace.Core
 				if (OnDownloadFailed != null)
 					OnDownloadFailed("Download error.");
 			} else {
-				string jsonString = e.Result;
+				string jsonString = Encoding.UTF8.GetString(e.Result);;
 
 				if (LoadFromString(jsonString)) {
 					LastUpdated = DateTime.Now;
@@ -164,8 +141,8 @@ namespace MonkeySpace.Core
 						OnDownloadFailed("Parsing error.");
 				}
 			}
+			isDownloading = false;
 		}
-
 	}
 }
 

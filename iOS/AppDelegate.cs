@@ -96,7 +96,7 @@ namespace Monospace11
 
 			// Create the main window and add the navigation controller as a subview
 			window = new UIWindow (UIScreen.MainScreen.Bounds);
-			window.AddSubview(tabBarController.View);
+			window.RootViewController = tabBarController;
 			window.MakeKeyAndVisible ();
 			showSplashScreen();
 			

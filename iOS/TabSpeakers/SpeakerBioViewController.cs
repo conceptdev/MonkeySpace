@@ -48,6 +48,9 @@ namespace Monospace11
 						var tweet = new TWTweetComposeViewController();
 						tweet.SetInitialText ("@" + path + " #monkeyspace" );
 						viewController.PresentModalViewController(tweet, true);
+					} else if (host == "twitter.mix10.app") {
+						var nsurl = new NSUrl("twitter://user?screen_name="+viewController.speaker.TwitterHandle);
+						UIApplication.SharedApplication.OpenUrl (nsurl);
 					} else if (host == "session.mix10.app") {
 						if (sessVC == null)
 							sessVC = new SessionViewController (path);
@@ -78,13 +81,21 @@ namespace Monospace11
 			}
 
 			if (TWTweetComposeViewController.CanSendTweet) {
-				sb.Append ("<p><a href='http://tweet.mix10.app/" + speaker.TwitterHandle + "' style='font-weight:normal'>@" + speaker.TwitterHandle + "</a>");
+				var nsurl = new NSUrl("twitter://user?screen_name="+speaker.TwitterHandle);
+				if (UIApplication.SharedApplication.CanOpenUrl(nsurl)){
+					sb.Append ("<p><a href='http://twitter.mix10.app/" + speaker.TwitterHandle + "' style='font-weight:normal'>@" + speaker.TwitterHandle + "</a>");
+				} else {
+					sb.Append ("<p><a href='http://tweet.mix10.app/" + speaker.TwitterHandle + "' style='font-weight:normal'>@" + speaker.TwitterHandle + "</a>");
+				}
+
 				sb.Append ("<br /><a href='http://tweet.mix10.app/" + speaker.TwitterHandle + "' style='font-weight:normal'><img height=22 width=58 src='Images/Tweet.png'></a></p>");
-			} 
-			// TODO: add this back later on, when the 'embedded safari' web view controller is fixed
-			//else {
-			//	sb.Append ("<p><a href='http://twitter.com/" + _speaker.TwitterHandle + "' style='font-weight:normal'>@" + _speaker.TwitterHandle + "</a>");
-			//}
+			} else {
+				// can't send tweet, but maybe twitter is installed
+				var nsurl = new NSUrl("twitter://user?screen_name="+speaker.TwitterHandle);
+				if (UIApplication.SharedApplication.CanOpenUrl(nsurl)) {
+					sb.Append ("<p><a href='http://twitter.mix10.app/" + speaker.TwitterHandle + "' style='font-weight:normal'>@" + speaker.TwitterHandle + "</a>");
+				}
+			}
 
 
 			if (!string.IsNullOrEmpty (speaker.Bio)) {
