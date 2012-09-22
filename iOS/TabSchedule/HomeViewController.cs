@@ -130,10 +130,33 @@ namespace Monospace11
 		
 		public HomeViewController () : base (null)
 		{
-			NavigationItem.SetRightBarButtonItem (new UIBarButtonItem (UIBarButtonSystemItem.Refresh), false);
-			NavigationItem.RightBarButtonItem.Clicked += (sender, e) => { Refresh(); };
+			if (UIDevice.CurrentDevice.CheckSystemVersion (6,0)) {
+				// UIRefreshControl iOS6
+				RefreshControl = new UIRefreshControl();
+				RefreshControl.ValueChanged += HandleValueChanged;
+				AppDelegate.Conference.OnDownloadSucceeded += (jsonString) => {
+					Console.WriteLine ("OnDownloadSucceeded");
+					InvokeOnMainThread (() => {
+						RefreshControl.EndRefreshing ();
+					});
+				};
+				AppDelegate.Conference.OnDownloadFailed += (err) => {
+					Console.WriteLine ("OnDownloadFailed");
+					InvokeOnMainThread (() => {
+						RefreshControl.EndRefreshing ();
+					});
+				};
+			} else {
+				// old style refresh button
+				NavigationItem.SetRightBarButtonItem (new UIBarButtonItem (UIBarButtonSystemItem.Refresh), false);
+				NavigationItem.RightBarButtonItem.Clicked += (sender, e) => { Refresh(); };
+			}
 		}
-
+		// UIRefreshControl iOS6
+		void HandleValueChanged (object sender, EventArgs e)
+		{
+			Refresh();
+		}
 		void Refresh() 
 		{
 			Console.WriteLine ("Refresh data from server");

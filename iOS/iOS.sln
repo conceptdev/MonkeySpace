@@ -1,0 +1,29 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 11.00
+# Visual Studio 2010
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "iOS", "iOS.csproj", "{EFAEF3CA-CBCF-49E2-A52A-069372D79667}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|iPhoneSimulator = Debug|iPhoneSimulator
+		Release|iPhoneSimulator = Release|iPhoneSimulator
+		Debug|iPhone = Debug|iPhone
+		Release|iPhone = Release|iPhone
+		Distribution|iPhone = Distribution|iPhone
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{EFAEF3CA-CBCF-49E2-A52A-069372D79667}.Debug|iPhone.ActiveCfg = Debug|iPhone
+		{EFAEF3CA-CBCF-49E2-A52A-069372D79667}.Debug|iPhone.Build.0 = Debug|iPhone
+		{EFAEF3CA-CBCF-49E2-A52A-069372D79667}.Debug|iPhoneSimulator.ActiveCfg = Debug|iPhoneSimulator
+		{EFAEF3CA-CBCF-49E2-A52A-069372D79667}.Debug|iPhoneSimulator.Build.0 = Debug|iPhoneSimulator
+		{EFAEF3CA-CBCF-49E2-A52A-069372D79667}.Distribution|iPhone.ActiveCfg = Distribution|iPhone
+		{EFAEF3CA-CBCF-49E2-A52A-069372D79667}.Distribution|iPhone.Build.0 = Distribution|iPhone
+		{EFAEF3CA-CBCF-49E2-A52A-069372D79667}.Release|iPhone.ActiveCfg = Release|iPhone
+		{EFAEF3CA-CBCF-49E2-A52A-069372D79667}.Release|iPhone.Build.0 = Release|iPhone
+		{EFAEF3CA-CBCF-49E2-A52A-069372D79667}.Release|iPhoneSimulator.ActiveCfg = Release|iPhoneSimulator
+		{EFAEF3CA-CBCF-49E2-A52A-069372D79667}.Release|iPhoneSimulator.Build.0 = Release|iPhoneSimulator
+	EndGlobalSection
+	GlobalSection(MonoDevelopProperties) = preSolution
+		StartupItem = iOS.csproj
+	EndGlobalSection
+EndGlobal
