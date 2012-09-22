@@ -92,7 +92,8 @@ namespace Monospace11
 			// Create the tab bar
 			tabBarController = new TabBarController ();
 
-			UINavigationBar.Appearance.TintColor = new UIColor(188/255f, 23/255f, 24/255f, 1f);
+			//#d4563e
+			UINavigationBar.Appearance.TintColor = new UIColor(212/255f, 86/255f, 62/255f, 1f);
 
 			// Create the main window and add the navigation controller as a subview
 			window = new UIWindow (UIScreen.MainScreen.Bounds);
