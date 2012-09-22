@@ -67,7 +67,7 @@
  
         <!--Panorama control-->
         <!-- "conf" or "mix" -->
-        <controls:Panorama Title="MonkeySpace" 
+        <controls:Panorama Title="  " 
                            Style="{StaticResource PanoramaStyle}"
                            Foreground="#66ff0000"
                            x:Name="ConfPanorama">
