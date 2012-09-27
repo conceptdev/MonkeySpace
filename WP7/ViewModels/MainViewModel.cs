@@ -27,7 +27,9 @@ namespace MonkeySpace
     {
         public MainViewModel()
         {
+			MapLocations = new List<MapLocation>();
         }
+
 
         /// <summary>
         /// A collection of 'favorite' sessions
@@ -80,6 +82,17 @@ namespace MonkeySpace
             }
         }
 
+		private List<MapLocation> mapLocations;
+		public List<MapLocation> MapLocations
+		{
+			get { return mapLocations; }
+			set
+			{
+				mapLocations = value;
+				NotifyPropertyChanged("MapLocations");
+			}
+		}
+
         private ConferenceInfo confItem;
         public ConferenceInfo ConfItem 
         {
@@ -113,6 +126,15 @@ namespace MonkeySpace
                 EndDate = new DateTime(2012, 10, 19)
             };
             App.ViewModel.ConfItem = ci;
+
+			// HACK: would prefer to get this data from the server
+			var ml = new List<MapLocation>();
+			ml.Add(new MapLocation() { 
+						Title = "MonkeySpace", 
+						Subtitle = "NERD Center", 
+						Location = new Core.Point(-71.08363940740965, 42.36100515974955) 
+			});
+			MapLocations = ml;
 
             var json = App.LoadText(@"monkeyspace12\sessions.json");
             MonkeySpace.Core.ConferenceManager.LoadFromString(json);

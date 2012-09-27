@@ -214,7 +214,7 @@
             <controls:PanoramaItem Header="maps" Foreground="{StaticResource PhoneAccentBrush}">
                 <ListBox Margin="0,0,-12,0" 
                          x:Name="MapsListBox"
-                         ItemsSource="{Binding ConfItem.Locations}"
+                         ItemsSource="{Binding MapLocations}"
                          SelectionChanged="Maps_SelectionChanged"
                          >
                     <ListBox.ItemTemplate>
