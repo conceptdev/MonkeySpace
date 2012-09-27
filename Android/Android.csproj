@@ -166,6 +166,7 @@
     <AndroidResource Include="Resources\Drawable-hdpi\icon.png" />
     <AndroidResource Include="Resources\Drawable-ldpi\icon.png" />
     <AndroidResource Include="Resources\Drawable-mdpi\icon.png" />
+    <AndroidResource Include="Resources\Values\Colors.xml" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Novell\Novell.MonoDroid.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

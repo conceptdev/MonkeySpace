@@ -5,9 +5,9 @@
     android:layout_height="fill_parent">
     <TextView
         android:id="@+id/Title"
-        android:text="Sessions"
+        android:text="@string/sessions"
         android:textSize="30dp"
-        android:textColor="#BC1718"
+        android:textColor="@color/accent"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:paddingLeft="5dip" />

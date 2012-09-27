@@ -4,21 +4,16 @@
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
     android:padding="5dip">
-
-  <TextView
-   android:text="My Schedule"
-   android:textSize="30dp"
-   android:textColor="#BC1718"
-   android:layout_width="fill_parent"
-   android:layout_height="wrap_content"
-     />
-  
-  <!-- FAVOURITES / MY SCHEDULE -->
-  <ListView
+    <TextView
+        android:text="@string/favorites"
+        android:textSize="30dp"
+        android:textColor="@color/accent"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content" />
+<!-- FAVOURITES / MY SCHEDULE -->
+    <ListView
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
         android:dividerHeight="1px"
-        android:id="@+id/List">
-  </ListView>
-  
+        android:id="@+id/List" />
 </LinearLayout>

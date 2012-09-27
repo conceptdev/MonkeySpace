@@ -10,7 +10,7 @@
   <TextView
     android:id="@+id/Time"
     android:textStyle="bold"
-    android:textColor="#BC1718"
+    android:textColor="@color/accent"
     android:layout_height="wrap_content"
     android:layout_width="fill_parent"
     />
