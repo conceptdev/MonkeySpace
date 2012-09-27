@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Deployment xmlns="http://schemas.microsoft.com/windowsphone/2009/deployment" AppPlatformVersion="7.0">
-  <App xmlns="" ProductID="{16534811-961e-46a8-bba1-d6b78c7d0d10}" Title="MonkeySpace" RuntimeType="Silverlight" Version="1.1.0.0" Genre="apps.normal" Author="Craig Dunn" Description="Conference schedule planner" Publisher="ConceptDevelopment.net">
+  <App xmlns="" ProductID="{1EC04908-D3C3-4677-9245-87C5DB2594BB}" Title="MonkeySpace" RuntimeType="Silverlight" Version="1.0.0.0" Genre="apps.normal" Author="Craig Dunn" Description="Conference schedule planner" Publisher="ConceptDevelopment.net">
     <IconPath IsRelative="true" IsResource="false">ApplicationIcon.png</IconPath>
     <Capabilities>
       <Capability Name="ID_CAP_IDENTITY_DEVICE" />
