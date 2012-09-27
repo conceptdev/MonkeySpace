@@ -146,14 +146,15 @@ namespace MonkeySpace
             NotifyPropertyChanged("Sessions");
 
             string currentConf="";
-            if (IsolatedStorageSettings.ApplicationSettings.Contains("LastConferenceCode"))
-                currentConf = (string)IsolatedStorageSettings.ApplicationSettings["LastConferenceCode"];
-                //
-                // ######   Load 'favorites'   ####
-                //
-                FavoriteSessions = App.Load<ObservableCollection<MonkeySpace.Core.Session>>(currentConf + "\\Favorites.xml");
+			if (IsolatedStorageSettings.ApplicationSettings.Contains("LastConferenceCode")) {
+				currentConf = (string)IsolatedStorageSettings.ApplicationSettings["LastConferenceCode"];
+				//
+				// ######   Load 'favorites'   ####
+				//
+				FavoriteSessions = App.Load<ObservableCollection<MonkeySpace.Core.Session>>(currentConf + "\\Favorites.xml");
 
-                LoadWhatsOn(currentConf);
+				LoadWhatsOn(currentConf);
+			}
             #endregion
 
             this.IsDataLoaded = true;

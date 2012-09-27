@@ -29,8 +29,9 @@ namespace MonkeySpace.Core
             foreach (var session in sessions) {
                 Sessions.Add(session.Id, session);
                 Console.WriteLine("Session: " + session.Title);
-                foreach (var speaker in session.Speakers) { 
-                    if (!Speakers.ContainsKey(speaker.Id)) {
+                foreach (var speaker in session.Speakers) {
+					speaker.Sessions.Add(session);
+					if (!Speakers.ContainsKey(speaker.Id)) {
                         Speakers.Add(speaker.Id, speaker);
                     }
                     Console.WriteLine("Speaker: " + speaker.Name);

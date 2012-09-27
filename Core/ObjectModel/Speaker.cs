@@ -31,6 +31,12 @@ namespace MonkeySpace.Core
 		public string Bio {get;set;}
 		public string HeadshotUrl {get;set;}
 
+		#if WINDOWS_PHONE
+		// bit of a HACK: because we're serializing and storing as XML, 
+		// this prevents a circular reference in the object graph
+		// TODO: store favorites in Sqlite like the other platforms
+		[System.Xml.Serialization.XmlIgnore]
+		#endif
 		public List<Session> Sessions {get;set;}
 	}
 }

@@ -40,11 +40,6 @@ namespace MonkeySpace
             FavoriteBarIcon.Text = "add favorite";
             FavoriteBarIcon.Click += new EventHandler(AddFavoriteButton_Click);
 
-            //FeedbackBarIcon = new ApplicationBarIconButton();
-            //FeedbackBarIcon.IconUri = new Uri("icons/tick.png", UriKind.Relative);
-            //FeedbackBarIcon.Text = "feedback";
-            //FeedbackBarIcon.Click += new EventHandler(FeedbackButton_Click);
-
             VideoBarIcon = new ApplicationBarIconButton();
             VideoBarIcon.Text = "Video";
             VideoBarIcon.IconUri = new Uri("icons/appbar.feature.video.rest.png", UriKind.Relative);
@@ -79,8 +74,6 @@ namespace MonkeySpace
                 {
                     FavoriteBarIcon.IconUri = new Uri(addfavorite, UriKind.Relative);
                     FavoriteBarIcon.Text = addfavouritelabel;// "add to sched";
-
-                    //App.ViewModel.Items.Add(new ItemViewModel { LineOne = session.Title }); // add to the 'My Sessions' panel
                 }
 
                 ApplicationBar.Buttons.Add(FavoriteBarIcon);
@@ -111,8 +104,6 @@ namespace MonkeySpace
                            select s;
 
                 session = sess.FirstOrDefault();
-                //session.Room = session.Room;
-
                 DataContext = session;
             }
         }
