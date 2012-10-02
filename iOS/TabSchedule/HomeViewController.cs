@@ -163,11 +163,11 @@ namespace Monospace11
 			UIApplication.SharedApplication.NetworkActivityIndicatorVisible = true;
 			AppDelegate.Conference.DownloadFromServer ();
 		}
-		
-		public override void ViewWillAppear (bool animated)
+
+		public override void ViewDidAppear (bool animated)
 		{
+			base.ViewDidAppear (animated);
 			Root = GenerateRoot ();
-			base.ViewWillAppear (animated);
 		}
 
 		RootElement GenerateRoot ()
