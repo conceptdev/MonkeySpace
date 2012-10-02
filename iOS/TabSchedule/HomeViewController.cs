@@ -23,7 +23,7 @@ namespace Monospace11
 			
 			for (int i = 0; i <= days; i++)
 			{
-				//DayStarts [i] = new DateTime (2011, 7, 23+i);
+				//HACK: hardcoding is bad :-\
 				DayStarts [i] = new DateTime (2012, 10, 17+i);
 			}
 		}
@@ -43,7 +43,7 @@ namespace Monospace11
 		}
 
 		/// <summary>
-		/// Pretifies a caption to show a nice time relative to the current time.
+		/// Prettifies a caption to show a nice time relative to the current time.
 		/// </summary>
 		public static string MakeCaption (string caption, DateTime start, bool includeDayName)
 		{
@@ -127,7 +127,8 @@ namespace Monospace11
 			
 			return true;
 		}
-		
+
+		UIBarButtonItem bbi;
 		public HomeViewController () : base (null)
 		{
 			if (UIDevice.CurrentDevice.CheckSystemVersion (6,0)) {
@@ -146,8 +147,16 @@ namespace Monospace11
 						RefreshControl.EndRefreshing ();
 					});
 				};
+
+				if (MonoTouch.PassKit.PKPassLibrary.IsAvailable) {
+					// PassKit
+					bbi = new UIBarButtonItem(UIImage.FromBundle ("Images/TicketIcon"), UIBarButtonItemStyle.Plain, (sender, e) => {
+						ShowPassKit();
+					});
+					NavigationItem.SetLeftBarButtonItem (bbi, false);
+				}
 			} else {
-				// old style refresh button
+				// old style refresh button and no PassKit for older iOS
 				NavigationItem.SetRightBarButtonItem (new UIBarButtonItem (UIBarButtonSystemItem.Refresh), false);
 				NavigationItem.RightBarButtonItem.Clicked += (sender, e) => { Refresh(); };
 			}
@@ -162,6 +171,14 @@ namespace Monospace11
 			Console.WriteLine ("Refresh data from server");
 			UIApplication.SharedApplication.NetworkActivityIndicatorVisible = true;
 			AppDelegate.Conference.DownloadFromServer ();
+		}
+
+		void ShowPassKit() 
+		{
+			Console.WriteLine ("Show PassKit");
+			var pkvc = new PassKitViewController();
+			pkvc.Title = "Event Ticket";
+			NavigationController.PushViewController (pkvc, true);
 		}
 
 		public override void ViewDidAppear (bool animated)

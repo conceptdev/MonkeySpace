@@ -61,7 +61,6 @@ namespace Monospace11
 		public override void ViewDidLoad ()
         {
             base.ViewDidLoad ();
-			// no XIB !
 			mapView = new MKMapView()
 			{
 				ShowsUserLocation = true
@@ -102,7 +101,7 @@ namespace Monospace11
             // Reposition and resize the receiver
             mapView.Frame = new RectangleF (0, 50, View.Frame.Width, View.Frame.Height - 100);
 
-			MKCoordinateSpan span = new MKCoordinateSpan(0.2,0.2);
+			MKCoordinateSpan span = new MKCoordinateSpan(0.01,0.01);
 			MKCoordinateRegion region = new MKCoordinateRegion(ConferenceLocation,span);
 			mapView.SetRegion(region, true);
 			

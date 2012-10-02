@@ -31,8 +31,9 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <MtouchI18n />
-    <MtouchSdkVersion>4.2</MtouchSdkVersion>
+    <MtouchSdkVersion>6.0</MtouchSdkVersion>
     <AssemblyName>MonkeySpace</AssemblyName>
+    <MtouchArch>ARMv7</MtouchArch>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|iPhone' ">
     <DebugSymbols>True</DebugSymbols>
@@ -42,14 +43,16 @@
     <DefineConstants>DEBUG</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
-    <CodesignKey>iPhone Developer</CodesignKey>
+    <CodesignKey>iPhone Developer: Craig Dunn (6Q937X2U43)</CodesignKey>
     <MtouchDebug>True</MtouchDebug>
     <MtouchI18n />
-    <MtouchSdkVersion>5.1</MtouchSdkVersion>
+    <MtouchSdkVersion>6.0</MtouchSdkVersion>
     <IpaPackageName />
     <CrashReportingApiKey />
     <AssemblyName>Monospace11</AssemblyName>
     <MtouchArch>ARMv7</MtouchArch>
+    <CodesignProvision>3F0D1957-1C46-4BFE-B3B6-26DA8D12A2B3</CodesignProvision>
+    <CodesignEntitlements>Entitlements.plist</CodesignEntitlements>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|iPhone' ">
     <DebugType>none</DebugType>
@@ -57,10 +60,14 @@
     <OutputPath>bin\iPhone\Release</OutputPath>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
-    <CodesignKey>iPhone Developer</CodesignKey>
+    <CodesignKey>iPhone Developer: Craig Dunn (6Q937X2U43)</CodesignKey>
     <MtouchI18n />
-    <MtouchSdkVersion>4.2</MtouchSdkVersion>
+    <MtouchSdkVersion>6.0</MtouchSdkVersion>
     <AssemblyName>Monospace11</AssemblyName>
+    <MtouchArch>ARMv7</MtouchArch>
+    <CodesignProvision>3F0D1957-1C46-4BFE-B3B6-26DA8D12A2B3</CodesignProvision>
+    <IpaPackageName />
+    <CodesignEntitlements>Entitlements.plist</CodesignEntitlements>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Distribution|iPhone' ">
     <DebugType>none</DebugType>
@@ -68,13 +75,14 @@
     <OutputPath>bin\iPhone\Distribution</OutputPath>
     <WarningLevel>4</WarningLevel>
     <CodesignKey>iPhone Distribution</CodesignKey>
-    <CodesignProvision>AA243EA5-2B02-47F0-8F2A-156AED540EFC</CodesignProvision>
+    <CodesignProvision>0C6ABADA-F77C-404F-B7A1-6CBEF39A6A8D</CodesignProvision>
     <MtouchI18n />
     <MtouchSdkVersion>4.2</MtouchSdkVersion>
     <AssemblyName>Monospace11</AssemblyName>
     <MtouchArch>ARMv7</MtouchArch>
     <IpaPackageName />
     <CrashReportingApiKey />
+    <CodesignEntitlements>Entitlements.plist</CodesignEntitlements>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
@@ -127,6 +135,7 @@
     <Compile Include="..\Core\Database\SQLite.cs">
       <Link>Core\SessionDatabase\SQLite.cs</Link>
     </Compile>
+    <Compile Include="TabPassKit\PassKitViewController.cs" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="TabSessions\" />
@@ -141,9 +150,11 @@
     <Folder Include="Resources\" />
     <Folder Include="Core\" />
     <Folder Include="Core\SessionDatabase\" />
+    <Folder Include="TabPassKit\" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Info.plist" />
+    <None Include="Entitlements.plist" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Images\tabspeaker.png">
@@ -168,6 +179,12 @@
     </Content>
     <Content Include="Images\Tweet.png" />
     <Content Include="Images\Tweet%402x.png" />
+    <Content Include="Images\NoTicketSlash.png" />
+    <Content Include="Images\NoTicketSlash%402x.png" />
+    <Content Include="Images\Monkey.png" />
+    <Content Include="Images\Monkey%402x.png" />
+    <Content Include="Images\TicketIcon.png" />
+    <Content Include="Images\TicketIcon%402x.png" />
   </ItemGroup>
   <ItemGroup>
     <BundleResource Include="Resources\Default.png" />
