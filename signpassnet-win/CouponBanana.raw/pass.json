@@ -3,9 +3,10 @@
   "passTypeIdentifier" : "pass.com.xamarin.coupon.banana",
   "serialNumber" : "BANANA-B2",
   "teamIdentifier" : "YOURTEAMID",
-  "webServiceURL" : "https://xamarin.com/passes/",
   "authenticationToken" : "qwertyasdf",
+  "associatedStoreIdentifiers" : [562123362],
   "barcode" : {
+    "altText" : "Free Banana",
     "message" : "FREE-BANANA-2",
     "format" : "PKBarcodeFormatPDF417",
     "messageEncoding" : "iso-8859-1"
