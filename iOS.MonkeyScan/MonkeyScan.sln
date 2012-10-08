@@ -1,0 +1,32 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 11.00
+# Visual Studio 2010
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MonkeyScan", "MonkeyScan.csproj", "{AED16C36-4B1D-49B3-8A16-BA93F56004BF}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|iPhoneSimulator = Debug|iPhoneSimulator
+		Release|iPhoneSimulator = Release|iPhoneSimulator
+		Debug|iPhone = Debug|iPhone
+		Release|iPhone = Release|iPhone
+		Ad-Hoc|iPhone = Ad-Hoc|iPhone
+		AppStore|iPhone = AppStore|iPhone
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{AED16C36-4B1D-49B3-8A16-BA93F56004BF}.Ad-Hoc|iPhone.ActiveCfg = Ad-Hoc|iPhone
+		{AED16C36-4B1D-49B3-8A16-BA93F56004BF}.Ad-Hoc|iPhone.Build.0 = Ad-Hoc|iPhone
+		{AED16C36-4B1D-49B3-8A16-BA93F56004BF}.AppStore|iPhone.ActiveCfg = AppStore|iPhone
+		{AED16C36-4B1D-49B3-8A16-BA93F56004BF}.AppStore|iPhone.Build.0 = AppStore|iPhone
+		{AED16C36-4B1D-49B3-8A16-BA93F56004BF}.Debug|iPhone.ActiveCfg = Debug|iPhone
+		{AED16C36-4B1D-49B3-8A16-BA93F56004BF}.Debug|iPhone.Build.0 = Debug|iPhone
+		{AED16C36-4B1D-49B3-8A16-BA93F56004BF}.Debug|iPhoneSimulator.ActiveCfg = Debug|iPhoneSimulator
+		{AED16C36-4B1D-49B3-8A16-BA93F56004BF}.Debug|iPhoneSimulator.Build.0 = Debug|iPhoneSimulator
+		{AED16C36-4B1D-49B3-8A16-BA93F56004BF}.Release|iPhone.ActiveCfg = Release|iPhone
+		{AED16C36-4B1D-49B3-8A16-BA93F56004BF}.Release|iPhone.Build.0 = Release|iPhone
+		{AED16C36-4B1D-49B3-8A16-BA93F56004BF}.Release|iPhoneSimulator.ActiveCfg = Release|iPhoneSimulator
+		{AED16C36-4B1D-49B3-8A16-BA93F56004BF}.Release|iPhoneSimulator.Build.0 = Release|iPhoneSimulator
+	EndGlobalSection
+	GlobalSection(MonoDevelopProperties) = preSolution
+		StartupItem = MonkeyScan.csproj
+	EndGlobalSection
+EndGlobal
