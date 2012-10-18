@@ -1,7 +1,6 @@
 using System;
 using System.Runtime.Serialization;
 
-
 namespace MonkeyScan
 {
 	public class ConfAttendee
@@ -10,11 +9,14 @@ namespace MonkeyScan
 		{
 		}
 
+//		[DataMember (Name = "id")]
 		public int Id { get; set; }
+
+		[SQLite.PrimaryKey]
+		public int SqlId { get; set; }
 
 		public string Barcode { get; set; }
 		public string Name { get; set; }
-		public string Email { get; set; }
 
 		public int ScanCount { get; set; }
 	}

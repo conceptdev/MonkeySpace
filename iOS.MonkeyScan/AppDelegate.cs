@@ -43,6 +43,9 @@ namespace MonkeyScan
 
 			tabBarController = new TabBarController ();
 
+			if (UserData.CountAttendees() == 0)
+				UserData.LoadSeedAttendeeData();
+
 			window.RootViewController = tabBarController;
 			window.MakeKeyAndVisible ();
 			

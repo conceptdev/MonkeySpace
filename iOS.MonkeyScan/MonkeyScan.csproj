@@ -23,6 +23,7 @@
     <MtouchDebug>True</MtouchDebug>
     <MtouchProfiling>True</MtouchProfiling>
     <MtouchLink>None</MtouchLink>
+    <MtouchArch>ARMv7</MtouchArch>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|iPhoneSimulator' ">
     <DebugType>none</DebugType>
@@ -70,6 +71,9 @@
     <ConsolePause>False</ConsolePause>
     <BuildIpa>True</BuildIpa>
     <CodesignKey>iPhone Distribution</CodesignKey>
+    <IpaPackageName />
+    <MtouchArch>ARMv7</MtouchArch>
+    <MtouchI18n />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'AppStore|iPhone' ">
     <DebugType>none</DebugType>
@@ -100,13 +104,18 @@
     <Compile Include="AppDelegate.cs" />
     <Compile Include="UserInterface\TabBarController.cs" />
     <Compile Include="DataLayer\SQLite.cs" />
-    <Compile Include="UserInterface\HistoryController.cs" />
-    <Compile Include="UserInterface\QrScannerViewController.cs" />
     <Compile Include="BusinessLayer\DataManager.cs" />
     <Compile Include="BusinessLayer\ConfAttendee.cs" />
     <Compile Include="BusinessLayer\ConfScan.cs" />
     <Compile Include="Constants.cs" />
-    <Compile Include="UserInterface\AttendeeController.cs" />
+    <Compile Include="BusinessLayer\AzureManager.cs" />
+    <Compile Include="UserInterface\Elements\AttendeeElement.cs" />
+    <Compile Include="UserInterface\Elements\ScanElement.cs" />
+    <Compile Include="UserInterface\Elements\StatsElement.cs" />
+    <Compile Include="UserInterface\Screens\AttendeeController.cs" />
+    <Compile Include="UserInterface\Screens\HistoryController.cs" />
+    <Compile Include="UserInterface\Screens\StatsController.cs" />
+    <Compile Include="UserInterface\Screens\QRScannerViewController.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>
@@ -114,6 +123,9 @@
     <Folder Include="BusinessLayer\" />
     <Folder Include="DataLayer\" />
     <Folder Include="Resources\" />
+    <Folder Include="UserInterface\Screens\" />
+    <Folder Include="Images\" />
+    <Folder Include="UserInterface\Elements\" />
   </ItemGroup>
   <ItemGroup>
     <BundleResource Include="Resources\Default-568h%402x.png" />
@@ -127,5 +139,24 @@
     <BundleResource Include="Resources\icon_57.png" />
     <BundleResource Include="Resources\icon_58.png" />
     <BundleResource Include="Resources\icon_72.png" />
+    <BundleResource Include="Resources\Attendees.csv" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Images\Blue.png" />
+    <Content Include="Images\Green.png" />
+    <Content Include="Images\Indigo.png" />
+    <Content Include="Images\Orange.png" />
+    <Content Include="Images\Red.png" />
+    <Content Include="Images\Violet.png" />
+    <Content Include="Images\Yellow.png" />
+    <Content Include="Images\TabMonkey.png" />
+    <Content Include="Images\17-bar-chart.png" />
+    <Content Include="Images\17-bar-chart%402x.png" />
+    <Content Include="Images\64-zap.png" />
+    <Content Include="Images\64-zap%402x.png" />
+    <Content Include="Images\77-ekg.png" />
+    <Content Include="Images\77-ekg%402x.png" />
+    <Content Include="Images\112-group.png" />
+    <Content Include="Images\112-group%402x.png" />
   </ItemGroup>
 </Project>
