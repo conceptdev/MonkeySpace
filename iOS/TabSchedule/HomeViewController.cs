@@ -191,6 +191,11 @@ namespace Monospace11
 		{
 			var now = DateTime.Now;
 
+#if DEBUG
+			// TEST: this for testing only
+			//now = new DateTime(2012, 10, 19, 15, 45, 0);
+#endif
+
 			var nowStart = now.AddMinutes (now.Minute<30?-now.Minute:-(now.Minute-30)); // also helps (within 30 minutes bug)
 			// The shortest session appears to be 30 minutes that I could see
 			var nextStart = nowStart.AddMinutes (29); // possible fix to (within 30 minutes bug)
@@ -202,20 +207,17 @@ namespace Monospace11
 			 
 			var root = new RootElement ("MonkeySpace");
 
-			// Commented out because of post-conference no-upcoming-data-bug
-			if (DateTime.Now < new DateTime(2012,10,19,16,0,0))
-			{
-				// Added .ToString/Convert.ToDateTime 
-				// to avoid System.ExecutionEngineException: Attempting to JIT compile method 'System.Collections.Generic.GenericEqualityComparer`1<System.DateTime>:.ctor ()' while running with --aot-only.
-				var allUpcoming = from s in MonkeySpace.Core.ConferenceManager.Sessions.Values.ToList () //AppDelegate.ConferenceData.Sessions
-					where s.Start >= nextStart && 
-						(s.Start.Minute == 0 || s.Start.Minute ==30 || s.Start.Minute == 15 || s.Start.Minute == 45)
-					orderby s.Start.Ticks
-					group s by s.Start.Ticks into g
-					select new { Start = g.Key, Sessions = g };
-	
-				var upcoming = allUpcoming.FirstOrDefault ();
-				
+			// Added .ToString/Convert.ToDateTime 
+			// to avoid System.ExecutionEngineException: Attempting to JIT compile method 'System.Collections.Generic.GenericEqualityComparer`1<System.DateTime>:.ctor ()' while running with --aot-only.
+			var allUpcoming = from s in MonkeySpace.Core.ConferenceManager.Sessions.Values.ToList () //AppDelegate.ConferenceData.Sessions
+				where s.Start >= nextStart && 
+					(s.Start.Minute == 0 || s.Start.Minute == 30 || s.Start.Minute == 15 || s.Start.Minute == 45)
+				orderby s.Start.Ticks
+				group s by s.Start.Ticks into g
+				select new { Start = g.Key, Sessions = g };
+
+			var upcoming = allUpcoming.FirstOrDefault ();
+			if (upcoming != null) { // after the last session
 				var haveNow = AppendSection (root, happeningNow, MakeCaption ("On Now", nowStart));
 				AppendSection (root, upcoming.Sessions, MakeCaption ("Up Next", new DateTime (upcoming.Start)));
 	
@@ -225,13 +227,10 @@ namespace Monospace11
 					AppendSection (root, upcoming.Sessions, "Afterwards");
 				}
 			}
-			
+
 			var full = new Section ("Full Schedule");
 			for (int i = 1; i < DayStarts.Length; i++)
 			{
-//				if (DateTime.Now <= new DateTime(2011,7,23))
-//					if (now < DayStarts [i]);// REMOVED for post-conference display of entire schedule [CD]
-
 				full.Add (MakeSchedule (DayStarts [i-1]));
 			}
 
