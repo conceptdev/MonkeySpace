@@ -52,7 +52,7 @@
     <CrashReportingApiKey />
     <AssemblyName>Monospace11</AssemblyName>
     <MtouchArch>ARMv7</MtouchArch>
-    <CodesignProvision>3F0D1957-1C46-4BFE-B3B6-26DA8D12A2B3</CodesignProvision>
+    <CodesignProvision>5304C771-2458-4326-B09C-E656F3318CE8</CodesignProvision>
     <CodesignEntitlements>Entitlements.plist</CodesignEntitlements>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|iPhone' ">

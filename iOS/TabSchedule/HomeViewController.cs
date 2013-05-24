@@ -14,7 +14,7 @@ namespace Monospace11
 	/// Yep, there is some dodgy hardcoding going on in here... date-wise...
 	/// </summary>
 	public partial class HomeViewController : DialogViewController {
-		const int days = 3;
+		const int days = 4;
 		static DateTime [] DayStarts;
 		
 		static HomeViewController ()
@@ -24,7 +24,7 @@ namespace Monospace11
 			for (int i = 0; i <= days; i++)
 			{
 				//HACK: hardcoding is bad :-\
-				DayStarts [i] = new DateTime (2012, 10, 17+i);
+				DayStarts [i] = new DateTime (2013, 07, 22+i);
 			}
 		}
 		
