@@ -93,9 +93,6 @@
     <Reference Include="System.Xml.Linq" />
     <Reference Include="MonoTouch.Dialog-1" />
     <Reference Include="System.Json" />
-    <Reference Include="FlyoutNavigation">
-      <HintPath>..\Components\flyoutnavigation-1.1\lib\ios\FlyoutNavigation.dll</HintPath>
-    </Reference>
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>
@@ -134,6 +131,8 @@
     </Compile>
     <Compile Include="TabPassKit\PassKitViewController.cs" />
     <Compile Include="UserInterface\CustomFlyoutNavigationController.cs" />
+    <Compile Include="Component_FlyoutNavigation\FlyoutNavigationController.cs" />
+    <Compile Include="Component_FlyoutNavigation\OpenMenuGestureRecognizer.cs" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="TabSessions\" />
@@ -149,6 +148,7 @@
     <Folder Include="Core\" />
     <Folder Include="Core\SessionDatabase\" />
     <Folder Include="TabPassKit\" />
+    <Folder Include="Component_FlyoutNavigation\" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Info.plist" />
@@ -160,14 +160,6 @@
     </Content>
     <Content Include="Images\favorite.png" />
     <Content Include="Images\favorited.png" />
-    <Content Include="Images\28-star.png" />
-    <Content Include="Images\28-star%402x.png" />
-    <Content Include="Images\83-calendar.png" />
-    <Content Include="Images\83-calendar%402x.png" />
-    <Content Include="Images\103-map.png" />
-    <Content Include="Images\103-map%402x.png" />
-    <Content Include="Images\124-bullhorn.png" />
-    <Content Include="Images\124-bullhorn%402x.png" />
     <Content Include="Images\surprise.png" />
     <Content Include="..\Core\Data\sessions.json">
       <Link>sessions.json</Link>
@@ -195,12 +187,8 @@
     <BundleResource Include="Resources\icon_72.png" />
     <BundleResource Include="Resources\Default-568h%402x.png" />
     <BundleResource Include="Images\slideout.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <XamarinComponentReference Include="flyoutnavigation">
-      <InstallationInProgress>True</InstallationInProgress>
-      <Version>1.1</Version>
-      <Visible>False</Visible>
-    </XamarinComponentReference>
+    <BundleResource Include="Images\Background-Party.png" />
+    <BundleResource Include="Images\113-naviagation%402x.png" />
+    <BundleResource Include="Images\113-navigation.png" />
   </ItemGroup>
 </Project>

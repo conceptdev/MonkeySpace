@@ -16,6 +16,13 @@ namespace Monospace11
 		{
 			Root = GenerateRoot ();
 			base.LoadView ();
+
+			// SLIDEOUT BUTTON
+			NavigationController.NavigationBar.SetTitleTextAttributes(AppDelegate.Current.FontTitleTextAttributes);
+			var bbi = new UIBarButtonItem(UIImage.FromBundle ("Images/slideout"), UIBarButtonItemStyle.Plain, (sender, e) => {
+				AppDelegate.Current.FlyoutNavigation.ToggleMenu();
+			});
+			NavigationItem.SetLeftBarButtonItem (bbi, false);
 		}
 
 		RootElement GenerateRoot ()

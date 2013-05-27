@@ -66,14 +66,14 @@ namespace Monospace11
 			// Create the navigation menu
 			NavigationRoot = new RootElement ("Navigation") {
 				new Section () {
-					new StyledStringElement ("MonkeySpace"){BackgroundColor = UIColor.Clear, TextColor = UIColor.White, Font = AppDelegate.Current.FontFlyoutMenuSection},
+					new StyledStringElement ("MonkeySpace 2013"){BackgroundColor = UIColor.Clear, TextColor = UIColor.White, Font = AppDelegate.Current.FontFlyoutMenuSection},
 					new StyledStringElement ("Sessions"){BackgroundColor = UIColor.Clear, TextColor = UIColor.LightGray, Font = AppDelegate.Current.FontFlyoutMenu},
 					new StyledStringElement ("Speakers"){BackgroundColor = UIColor.Clear, TextColor = UIColor.LightGray, Font = AppDelegate.Current.FontFlyoutMenu},
 					new StyledStringElement ("Favorites"){BackgroundColor = UIColor.Clear, TextColor = UIColor.LightGray, Font = AppDelegate.Current.FontFlyoutMenu},
 					//new StyledStringElement ("Room Plan"){BackgroundColor = UIColor.Clear, TextColor = UIColor.LightGray, Font = AppDelegate.Current.FontFlyoutMenu},
 					new StyledStringElement ("Location Map"){BackgroundColor = UIColor.Clear, TextColor = UIColor.LightGray, Font = AppDelegate.Current.FontFlyoutMenu},
 					new StyledStringElement ("Passbook"){BackgroundColor = UIColor.Clear, TextColor = UIColor.LightGray, Font = AppDelegate.Current.FontFlyoutMenu},
-					//new StyledStringElement ("About Evolve"){BackgroundColor = UIColor.Clear, TextColor = UIColor.LightGray, Font = AppDelegate.Current.FontFlyoutMenu},
+					//new StyledStringElement ("About MonkeySpace"){BackgroundColor = UIColor.Clear, TextColor = UIColor.LightGray, Font = AppDelegate.Current.FontFlyoutMenu},
 				}
 			};
 			// Supply view controllers corresponding to menu items:
@@ -87,6 +87,9 @@ namespace Monospace11
 				, passbookViewController
 				//, aboutViewController
 			};
+			if (MonoTouch.PassKit.PKPassLibrary.IsAvailable) {
+				//TODO: only add the passkit screen if necessary
+			}
 
 			View.BackgroundColor = UIColor.Blue;
 		}

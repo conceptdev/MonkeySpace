@@ -29,6 +29,9 @@ namespace Monospace11
 		public override void ViewDidLoad ()
 		{
 			base.ViewDidLoad ();
+
+			Title = "Speakers";
+
 			//_speakerData = AppDelegate.ConferenceData.Speakers;
 			speakerData = MonkeySpace.Core.ConferenceManager.Speakers.Values.ToList ();
 			
@@ -39,11 +42,18 @@ namespace Monospace11
 			tableView = new UITableView { Source = new TableViewSource (this, speakerData)
 				, AutoresizingMask = UIViewAutoresizing.FlexibleHeight | UIViewAutoresizing.FlexibleWidth
 				, BackgroundColor = UIColor.Clear
-				, Frame = new RectangleF (0, 0, View.Frame.Width, View.Frame.Height - 93) 
+				, Frame = new RectangleF (0, 0, View.Frame.Width, View.Frame.Height - 44) 
 				, ShowsVerticalScrollIndicator = true};
 			
 			imageView.AddSubview (tableView);
 			View.AddSubview (imageView);
+
+			// SLIDEOUT BUTTON
+			NavigationController.NavigationBar.SetTitleTextAttributes(AppDelegate.Current.FontTitleTextAttributes);
+			var bbi = new UIBarButtonItem(UIImage.FromBundle ("Images/slideout"), UIBarButtonItemStyle.Plain, (sender, e) => {
+				AppDelegate.Current.FlyoutNavigation.ToggleMenu();
+			});
+			NavigationItem.SetLeftBarButtonItem (bbi, false);
 		}
 
 		private class TableViewSource : UITableViewSource

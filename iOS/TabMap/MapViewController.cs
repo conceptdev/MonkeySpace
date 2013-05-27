@@ -57,10 +57,37 @@ namespace Monospace11
 			}
 			mapView.CenterCoordinate = targetLocation;
 		}
-		
+
+		UINavigationBar navBar;
 		public override void ViewDidLoad ()
         {
             base.ViewDidLoad ();
+
+
+
+
+
+
+			navBar = new UINavigationBar (new RectangleF (0, 0, 320, 44));
+			var bbi = new UIBarButtonItem(UIImage.FromBundle ("Images/slideout"), UIBarButtonItemStyle.Plain, (sender, e) => {
+				AppDelegate.Current.FlyoutNavigation.ToggleMenu();
+			});
+			var rbi = new UIBarButtonItem (UIImage.FromBundle ("Images/113-navigation"), UIBarButtonItemStyle.Plain, (sender,e) => {
+				_mfvc.Flip();
+			});
+
+			var item = new UINavigationItem ("Location Map");
+			item.LeftBarButtonItem = bbi;
+			item.RightBarButtonItem = rbi;
+			var items = new UINavigationItem[] {
+				item
+			};
+			navBar.SetItems (items, false);
+
+
+
+
+
 			mapView = new MKMapView()
 			{
 				ShowsUserLocation = true
@@ -68,14 +95,14 @@ namespace Monospace11
 			
 			labelDistance = new UILabel()
 			{
-				Frame = new RectangleF (0, 0, 320, 49),
+				Frame = new RectangleF (0, 44, 320, 49),
 				Lines = 2,
 				BackgroundColor = UIColor.Black,
 				TextColor = UIColor.White
 			};
 
 			var segmentedControl = new UISegmentedControl();
-			var topOfSegement = View.Frame.Height - 120;
+			var topOfSegement = View.Frame.Height - 60;
 			segmentedControl.Frame = new RectangleF(20, topOfSegement, 282, 30);
 			segmentedControl.InsertSegment("Map", 0, false);
 			segmentedControl.InsertSegment("Satellite", 1, false);
@@ -99,7 +126,7 @@ namespace Monospace11
             mapView.SizeToFit();
 
             // Reposition and resize the receiver
-            mapView.Frame = new RectangleF (0, 50, View.Frame.Width, View.Frame.Height - 100);
+            mapView.Frame = new RectangleF (0, 44 + 50, View.Frame.Width, View.Frame.Height - 93);
 
 			MKCoordinateSpan span = new MKCoordinateSpan(0.01,0.01);
 			MKCoordinateRegion region = new MKCoordinateRegion(ConferenceLocation,span);
@@ -129,6 +156,9 @@ namespace Monospace11
 				_mfvc.Flip();
 			};
 			View.AddSubview(flipButton);
+
+
+			View.Add (navBar);
 		}	
 		
 		public class MapViewDelegate : MKMapViewDelegate

@@ -40,7 +40,7 @@ namespace FlyoutNavigation
 		DialogViewController navigation;
 		public UISearchBar SearchBar;
 		public Action SelectedIndexChanged {get;set;}
-		public const int menuWidth = 180;
+		public const int menuWidth = 200;
 		private UIView shadowView;
 		private UIButton closeButton;
 		public bool AlwaysShowLandscapeMenu {get;set;}
