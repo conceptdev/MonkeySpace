@@ -9,37 +9,37 @@ namespace Monospace11
 	public class WebViewControllerBase : UIViewController
 	{
 		#region respond to shaking (OS3+)
-		// also requires you to put
-		// UIApplication.SharedApplication.ApplicationSupportsShakeToEdit = true;
-		// in Main.cs : FinishedLaunching()
-		public override bool CanBecomeFirstResponder {
-			get {
-				return true;
-			}
-		}
-		public override void ViewDidAppear (bool animated)
-		{
-			base.ViewDidAppear (animated);
-			this.BecomeFirstResponder();
-		}
-		public override void ViewWillDisappear (bool animated)
-		{
-			this.ResignFirstResponder();
-			base.ViewWillDisappear (animated);
-		}
-		public override void MotionEnded (UIEventSubtype motion, UIEvent evt)
-		{
-			Console.WriteLine("Motion detected");
-			if (motion ==  UIEventSubtype.MotionShake)
-			{
-				Console.WriteLine("and was a shake");
-				//labelLastUpdated.Text = "All shook up! Updating..."; // never appears
-				// Do your application-specific shake response here...
-				var ice = new ICEViewController();
-				this.PresentModalViewController (ice, true);
-
-			}
-		}
+//		// also requires you to put
+//		// UIApplication.SharedApplication.ApplicationSupportsShakeToEdit = true;
+//		// in Main.cs : FinishedLaunching()
+//		public override bool CanBecomeFirstResponder {
+//			get {
+//				return true;
+//			}
+//		}
+//		public override void ViewDidAppear (bool animated)
+//		{
+//			base.ViewDidAppear (animated);
+//			this.BecomeFirstResponder();
+//		}
+//		public override void ViewWillDisappear (bool animated)
+//		{
+//			this.ResignFirstResponder();
+//			base.ViewWillDisappear (animated);
+//		}
+//		public override void MotionEnded (UIEventSubtype motion, UIEvent evt)
+//		{
+//			Console.WriteLine("Motion detected");
+//			if (motion ==  UIEventSubtype.MotionShake)
+//			{
+//				Console.WriteLine("and was a shake");
+//				//labelLastUpdated.Text = "All shook up! Updating..."; // never appears
+//				// Do your application-specific shake response here...
+//				var ice = new ICEViewController();
+//				this.PresentModalViewController (ice, true);
+//
+//			}
+//		}
 		#endregion
 
 		protected string basedir;

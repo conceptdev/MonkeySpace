@@ -148,18 +148,23 @@ namespace Monospace11
 					});
 				};
 
-				if (MonoTouch.PassKit.PKPassLibrary.IsAvailable) {
-					// PassKit
-					bbi = new UIBarButtonItem(UIImage.FromBundle ("Images/TicketIcon"), UIBarButtonItemStyle.Plain, (sender, e) => {
-						ShowPassKit();
-					});
-					NavigationItem.SetLeftBarButtonItem (bbi, false);
-				}
+//				if (MonoTouch.PassKit.PKPassLibrary.IsAvailable) {
+//					// PassKit
+//					bbi = new UIBarButtonItem(UIImage.FromBundle ("Images/TicketIcon"), UIBarButtonItemStyle.Plain, (sender, e) => {
+//						ShowPassKit();
+//					});
+//					NavigationItem.SetLeftBarButtonItem (bbi, false);
+//				}
 			} else {
 				// old style refresh button and no PassKit for older iOS
 				NavigationItem.SetRightBarButtonItem (new UIBarButtonItem (UIBarButtonSystemItem.Refresh), false);
 				NavigationItem.RightBarButtonItem.Clicked += (sender, e) => { Refresh(); };
 			}
+
+			bbi = new UIBarButtonItem(UIImage.FromBundle ("Images/slideout"), UIBarButtonItemStyle.Plain, (sender, e) => {
+				AppDelegate.Current.FlyoutNavigation.ToggleMenu();
+			});
+			NavigationItem.SetLeftBarButtonItem (bbi, false);
 		}
 		// UIRefreshControl iOS6
 		void HandleValueChanged (object sender, EventArgs e)
@@ -173,13 +178,13 @@ namespace Monospace11
 			AppDelegate.Conference.DownloadFromServer ();
 		}
 
-		void ShowPassKit() 
-		{
-			Console.WriteLine ("Show PassKit");
-			var pkvc = new PassKitViewController();
-			pkvc.Title = "Event Ticket";
-			NavigationController.PushViewController (pkvc, true);
-		}
+//		void ShowPassKit() 
+//		{
+//			Console.WriteLine ("Show PassKit");
+//			var pkvc = new PassKitViewController();
+//			pkvc.Title = "Event Ticket";
+//			NavigationController.PushViewController (pkvc, true);
+//		}
 
 		public override void ViewDidAppear (bool animated)
 		{

@@ -37,8 +37,13 @@ namespace Monospace11
 	[Register ("AppDelegate")]
     public class AppDelegate : UIApplicationDelegate
     {
-        UIWindow window;
-		UIImageView splashView;
+		static AppDelegate current;
+		UIWindow window;
+		public static AppDelegate Current {
+			get { return current; }
+		}
+
+        UIImageView splashView;
 		
 		TabBarController tabBarController;
 		public static UserDatabase UserData {get; private set;} 
@@ -55,6 +60,8 @@ namespace Monospace11
 		/// </summary>
 		public override bool FinishedLaunching (UIApplication app, NSDictionary options)
         {
+			AppDelegate.current = this;
+
 			documentsPath = Environment.GetFolderPath (Environment.SpecialFolder.Personal); // Documents folder
 			libraryPath = Path.Combine (documentsPath, "..", "Library"); // Library folder
 			var builtInJsonPath = Path.Combine (System.Environment.CurrentDirectory, ConferenceManager.JsonDataFilename);
@@ -96,13 +103,20 @@ namespace Monospace11
 			UINavigationBar.Appearance.TintColor = new UIColor(212/255f, 86/255f, 62/255f, 1f);
 
 			// Create the main window and add the navigation controller as a subview
+//			window = new UIWindow (UIScreen.MainScreen.Bounds);
+//			window.RootViewController = tabBarController;
+//			window.MakeKeyAndVisible ();
+//			showSplashScreen();
+
+			FlyoutNavigation = new CustomFlyoutNavigationController ();
+
 			window = new UIWindow (UIScreen.MainScreen.Bounds);
-			window.RootViewController = tabBarController;
+			window.RootViewController = FlyoutNavigation;
 			window.MakeKeyAndVisible ();
-			showSplashScreen();
 			
             return true;
 		}
+		public CustomFlyoutNavigationController FlyoutNavigation;
 
 		public void Refresh () 
 		{
@@ -144,7 +158,66 @@ namespace Monospace11
 				cell.SelectedBackgroundView = v;
 			}
 		}
-		
+
+
+
+
+
+
+
+		#region iOS6 and iOS5 font support
+		// seealso: WebViewControllerBase.cs for CSS specification
+		static string FontName {
+			get {
+				if (UIDevice.CurrentDevice.CheckSystemVersion (6,0)) 
+					return "Avenir";
+				else
+					return "HelveticaNeue";
+			}
+		}
+		static string FontMediumName {
+			get {
+				if (UIDevice.CurrentDevice.CheckSystemVersion (6,0)) 
+					return "Avenir-Medium";
+				else
+					return "HelveticaNeue-Medium";
+			}
+		}
+		static string FontLightName {
+			get {
+				if (UIDevice.CurrentDevice.CheckSystemVersion (6,0)) 
+					return "Avenir-Light";
+				else
+					return "HelveticaNeue-Light";
+			}
+		}
+		#endregion
+		public UIFont FontFlyoutMenu = UIFont.FromName (FontLightName, 18f); // Avenir-Heavy, Avenir-Black, Avenir-Medium, ...Oblique
+		public UIFont FontFlyoutMenuSection = UIFont.FromName (FontName, 18f); // Avenir-Heavy, Avenir-Black, Avenir-Medium, ...Oblique
+		public UIFont FontCell = UIFont.FromName (FontLightName, 18f); // Avenir-Heavy, Avenir-Black, Avenir-Medium, ...Oblique
+		public UIFont FontCellMedium = UIFont.FromName (FontLightName, 16f); // Avenir-Heavy, Avenir-Black, Avenir-Medium, ...Oblique
+		public UIFont FontCellSmall = UIFont.FromName (FontLightName, 14f); // Avenir-Heavy, Avenir-Black, Avenir-Medium, ...Oblique
+		public UITextAttributes FontTitleTextAttributes {
+			get {
+				var fontTitleTextAttributes = new UITextAttributes();
+				fontTitleTextAttributes.Font = UIFont.FromName(FontMediumName, 20f);
+				return fontTitleTextAttributes;
+			}
+		}
+		public UITextAttributes FontBackTextAttributes {
+			get {
+				var fontTitleTextAttributes = new UITextAttributes();
+				fontTitleTextAttributes.Font = UIFont.FromName(FontLightName, 12f);
+				return fontTitleTextAttributes;
+			}
+		}
+
+
+
+
+
+
+
         // This method is allegedly required in iPhoneOS 3.0
         public override void OnActivated (UIApplication application)
         {

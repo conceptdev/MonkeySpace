@@ -93,6 +93,9 @@
     <Reference Include="System.Xml.Linq" />
     <Reference Include="MonoTouch.Dialog-1" />
     <Reference Include="System.Json" />
+    <Reference Include="FlyoutNavigation">
+      <HintPath>..\Components\flyoutnavigation-1.1\lib\ios\FlyoutNavigation.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>
@@ -116,7 +119,6 @@
     <Compile Include="UserInterface\TableViewControllerBase.cs" />
     <Compile Include="UserInterface\WebViewController.cs" />
     <Compile Include="UserInterface\WebViewControllerBase.cs" />
-    <Compile Include="UserInterface\ICEViewController.cs" />
     <Compile Include="..\Core\ObjectModel\ConferenceInfo.cs">
       <Link>Core\ObjectModel\ConferenceInfo.cs</Link>
     </Compile>
@@ -131,6 +133,7 @@
       <Link>Core\SessionDatabase\SQLite.cs</Link>
     </Compile>
     <Compile Include="TabPassKit\PassKitViewController.cs" />
+    <Compile Include="UserInterface\CustomFlyoutNavigationController.cs" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="TabSessions\" />
@@ -191,5 +194,13 @@
     <BundleResource Include="Resources\icon_58.png" />
     <BundleResource Include="Resources\icon_72.png" />
     <BundleResource Include="Resources\Default-568h%402x.png" />
+    <BundleResource Include="Images\slideout.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <XamarinComponentReference Include="flyoutnavigation">
+      <InstallationInProgress>True</InstallationInProgress>
+      <Version>1.1</Version>
+      <Visible>False</Visible>
+    </XamarinComponentReference>
   </ItemGroup>
 </Project>
