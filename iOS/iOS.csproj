@@ -195,11 +195,11 @@
     <BundleResource Include="Resources\Default-568h%402x.png" />
     <BundleResource Include="Images\slideout.png" />
     <BundleResource Include="Images\Background-Party.png" />
-    <BundleResource Include="Images\113-naviagation%402x.png" />
     <BundleResource Include="Images\113-navigation.png" />
     <BundleResource Include="Images\Background.png" />
     <BundleResource Include="Resources\About\Default.html" />
     <BundleResource Include="Images\avatar.png" />
     <BundleResource Include="Images\avatar%402x.png" />
+    <BundleResource Include="Images\113-navigation%402x.png" />
   </ItemGroup>
 </Project>

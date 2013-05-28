@@ -28,6 +28,8 @@ namespace Monospace11
 				AppDelegate.Current.FlyoutNavigation.ToggleMenu();
 			});
 			NavigationItem.SetLeftBarButtonItem (bbi, false);
+
+			TableView.BackgroundView = new UIImageView (UIImage.FromBundle ("Images/Background"));
 		}
 		
 		RootElement GenerateRoot ()

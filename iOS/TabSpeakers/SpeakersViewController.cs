@@ -54,6 +54,8 @@ namespace Monospace11
 				AppDelegate.Current.FlyoutNavigation.ToggleMenu();
 			});
 			NavigationItem.SetLeftBarButtonItem (bbi, false);
+
+			tableView.BackgroundView = new UIImageView (UIImage.FromBundle ("Images/Background"));
 		}
 
 		private class TableViewSource : UITableViewSource
