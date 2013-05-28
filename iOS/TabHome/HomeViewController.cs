@@ -186,16 +186,28 @@ namespace Monospace11
 
 #if DEBUG
 			// TEST: this for testing only
-			//now = new DateTime(2012, 10, 19, 15, 45, 0);
+		//	now = new DateTime(2013, 07, 25, 17, 45, 0);
 #endif
 
-			var nowStart = now.AddMinutes (now.Minute<30?-now.Minute:-(now.Minute-30)); // also helps (within 30 minutes bug)
+			var nowStart = now; //.AddMinutes (now.Minute<30?-now.Minute:-(now.Minute-30)); // also helps (within 30 minutes bug)
+
+			if (now.Minute < 15) {
+				nowStart = now.AddMinutes (-now.Minute);
+			} else if (now.Minute < 30) {
+				nowStart = now.AddMinutes (-(now.Minute - 15));
+			} else if (now.Minute < 45) {
+				nowStart = now.AddMinutes (-(now.Minute - 30));
+			} else {
+				nowStart = now.AddMinutes (-(now.Minute - 45));
+			}
+
+
 			// The shortest session appears to be 30 minutes that I could see
-			var nextStart = nowStart.AddMinutes (29); // possible fix to (within 30 minutes bug)
+			var nextStart = nowStart.AddMinutes (14); // possible fix to (within 30 minutes bug)
 			nextStart = nextStart.AddSeconds(-nextStart.Second);
 			
 			var happeningNow = from s in MonkeySpace.Core.ConferenceManager.Sessions.Values.ToList () //AppDelegate.ConferenceData.Sessions
-				where s.Start <= now && now < s.End && (s.Start.Minute == 0 || s.Start.Minute == 30) // fix for short-sessions (which start at :05 after the hour)
+				where s.Start <= now && now < s.End && (s.Start.Minute == 0 || s.Start.Minute == 30 || s.Start.Minute == 15 || s.Start.Minute == 45) // fix for short-sessions (which start at :05 after the hour)
 				select s;
 			 
 			var root = new RootElement (MonkeySpace.Core.Constants.ConferenceInfo.DisplayName);
@@ -217,7 +229,8 @@ namespace Monospace11
 				// Get also the next slot
 				if (!haveNow){
 					upcoming = allUpcoming.Skip (1).FirstOrDefault ();
-					AppendSection (root, upcoming.Sessions, "Afterwards");
+					if (upcoming != null) // Skip1 still has something after it...
+						AppendSection (root, upcoming.Sessions, "Afterwards");
 				}
 			}
 

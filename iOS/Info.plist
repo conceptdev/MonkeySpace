@@ -13,8 +13,6 @@
 		<string>Resources/icon_58.png</string>
 		<string>Resources/icon_50.png</string>
 	</array>
-	<key>CFBundleVersion</key>
-	<string>1.1</string>
 	<key>MinimumOSVersion</key>
 	<string>5.0</string>
 	<key>SBUsesNetwork</key>
@@ -28,6 +26,8 @@
 		<string>UIInterfaceOrientationPortrait</string>
 	</array>
 	<key>CFBundleIdentifier</key>
-	<string>com.conceptdevelopment.monkeyspace</string>
+	<string>com.confapp.monkeyspace</string>
+	<key>CFBundleVersion</key>
+	<string>2.0</string>
 </dict>
 </plist>

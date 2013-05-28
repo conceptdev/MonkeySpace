@@ -17,19 +17,22 @@ namespace Monospace11
 		PKPass[] passes;
 		PKPass currentPass;
 
+		UINavigationBar navBar;
+		int top = 44;
+
 		public override void ViewDidLoad ()
 		{
 			base.ViewDidLoad ();
 			View.BackgroundColor = UIColor.DarkGray;
 
-			passAvailable = new UITextView (new RectangleF (20, 100, 300, 200));
+			passAvailable = new UITextView (new RectangleF (20, top + 100, 300, 200));
 			passAvailable.Font = UIFont.SystemFontOfSize(14f);
 			passAvailable.BackgroundColor = UIColor.Clear;
 			passAvailable.TextColor = UIColor.White;
 			passAvailable.Editable = false;
 			Add (passAvailable);
 
-			var topOfButton = View.Frame.Height - 160;
+			var topOfButton = View.Frame.Height - 160 + top;
 			showPass = UIButton.FromType (UIButtonType.Custom);
 			showPass.Frame = new RectangleF(60, topOfButton, 200, 40);
 			showPass.Layer.CornerRadius = 7f;
@@ -48,7 +51,7 @@ namespace Monospace11
 			};
 			Add (showPass);
 
-			passHeading = new UILabel (new RectangleF (10, 40, 310, 80));
+			passHeading = new UILabel (new RectangleF (10, top + 40, 310, 80));
 			passHeading.Text = "No Event Ticket\nin Passbook";
 			passHeading.Lines = 2;
 			passHeading.TextAlignment = UITextAlignment.Center;
@@ -59,9 +62,25 @@ namespace Monospace11
 			passHeading.ShadowOffset = new SizeF(1,1);
 			Add (passHeading);
 
-			passImage = new UIImageView (new RectangleF(90,120,147,186));
+			passImage = new UIImageView (new RectangleF(90,top + 120,147,186));
 			passImage.Image = UIImage.FromBundle("Images/NoTicketSlash");
 			Add (passImage);
+
+
+
+
+			navBar = new UINavigationBar (new RectangleF (0, 0, 320, 44));
+			var bbi = new UIBarButtonItem(UIImage.FromBundle ("Images/slideout"), UIBarButtonItemStyle.Plain, (sender, e) => {
+				AppDelegate.Current.FlyoutNavigation.ToggleMenu();
+			});
+			var item = new UINavigationItem ("Passbook");
+			item.LeftBarButtonItem = bbi;
+			var items = new UINavigationItem[] {
+				item
+			};
+			navBar.SetItems (items, false);
+
+			View.Add (navBar);
 
 
 

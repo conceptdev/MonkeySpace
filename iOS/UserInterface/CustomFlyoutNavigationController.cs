@@ -60,7 +60,7 @@ namespace Monospace11
 			navFavoritesController.PushViewController(fvc, false);
 
 
-			var passbookViewController = new PassKitViewController ();
+//			var passbookViewController = new PassKitViewController ();
 
 			var aboutViewController = new AboutViewController ();
 
@@ -76,7 +76,7 @@ namespace Monospace11
 					new StyledStringElement ("Favorites"){BackgroundColor = UIColor.Clear, TextColor = UIColor.LightGray, Font = AppDelegate.Current.FontFlyoutMenu},
 					//new StyledStringElement ("Room Plan"){BackgroundColor = UIColor.Clear, TextColor = UIColor.LightGray, Font = AppDelegate.Current.FontFlyoutMenu},
 					new StyledStringElement ("Location Map"){BackgroundColor = UIColor.Clear, TextColor = UIColor.LightGray, Font = AppDelegate.Current.FontFlyoutMenu},
-					new StyledStringElement ("Passbook"){BackgroundColor = UIColor.Clear, TextColor = UIColor.LightGray, Font = AppDelegate.Current.FontFlyoutMenu},
+					//new StyledStringElement ("Passbook"){BackgroundColor = UIColor.Clear, TextColor = UIColor.LightGray, Font = AppDelegate.Current.FontFlyoutMenu},
 					new StyledStringElement ("About MonkeySpace"){BackgroundColor = UIColor.Clear, TextColor = UIColor.LightGray, Font = AppDelegate.Current.FontFlyoutMenu},
 				}
 			};
@@ -88,7 +88,7 @@ namespace Monospace11
 				, navFavoritesController
 				//, roomsViewController
 				, mapViewController
-				, passbookViewController
+				//, passbookViewController
 				, aboutViewController
 			};
 			if (MonoTouch.PassKit.PKPassLibrary.IsAvailable) {
