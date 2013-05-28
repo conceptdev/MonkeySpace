@@ -137,6 +137,8 @@
     <Compile Include="..\Core\ObjectModel\Constants.cs">
       <Link>Core\ObjectModel\Constants.cs</Link>
     </Compile>
+    <Compile Include="TabSpeakers\SpeakersCollectionCell.cs" />
+    <Compile Include="TabSpeakers\SpeakersCollectionViewController.cs" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="TabSessions\" />
@@ -197,5 +199,7 @@
     <BundleResource Include="Images\113-navigation.png" />
     <BundleResource Include="Images\Background.png" />
     <BundleResource Include="Resources\About\Default.html" />
+    <BundleResource Include="Images\avatar.png" />
+    <BundleResource Include="Images\avatar%402x.png" />
   </ItemGroup>
 </Project>

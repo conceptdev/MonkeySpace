@@ -77,7 +77,7 @@ namespace Monospace11
 			sb.Append ("<h2>" + speaker.Name + "</h2>" + Environment.NewLine);
 
 			if (!string.IsNullOrEmpty (speaker.HeadshotUrl)) {
-				sb.Append ("<img height=160 width=160 align=right src='http://monkeyspace.org" + speaker.HeadshotUrl + "'>" + Environment.NewLine);
+				sb.Append ("<img height=160 width=160 align=right src='" + speaker.HeadshotUrl + "'>" + Environment.NewLine);
 			}
 
 			if (TWTweetComposeViewController.CanSendTweet) {

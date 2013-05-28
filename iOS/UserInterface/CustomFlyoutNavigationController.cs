@@ -23,27 +23,27 @@ namespace Monospace11
 			//			navScheduleController.TopViewController.Title ="What's on";
 			//			navScheduleController.TabBarItem = new UITabBarItem("What's on", UIImage.FromFile("Images/83-calendar.png"), 0);
 
-//			if (UIDevice.CurrentDevice.CheckSystemVersion (6,0)) {
-//				// iOS 6 and above support CollectionView
-//				var layout = new UICollectionViewFlowLayout (){
-//					SectionInset = new UIEdgeInsets (0,0,0,0), 
-////					ItemSize = SpeakerCollectionCell.Size,
-//					MinimumInteritemSpacing = 10,
-//					MinimumLineSpacing = 5
-//				};
-//				var svc = new SpeakersCollectionViewController (layout); // COLLECTION
-//				navSpeakerController = new MonoTouch.UIKit.UINavigationController();
-//				navSpeakerController.PushViewController(svc, false);
-//				navSpeakerController.TopViewController.View.BackgroundColor = new UIColor(65.0f,169.0f,198.0f,255.0f);
-//				navSpeakerController.NavigationBar.BarStyle = UIBarStyle.Black;
-//				navSpeakerController.TopViewController.Title ="Speakers";
-//			} else {
+			if (UIDevice.CurrentDevice.CheckSystemVersion (6,0)) {
+				// iOS 6 and above support CollectionView
+				var layout = new UICollectionViewFlowLayout (){
+					SectionInset = new UIEdgeInsets (0,0,0,0), 
+					ItemSize = SpeakerCollectionCell.Size,
+					MinimumInteritemSpacing = 10,
+					MinimumLineSpacing = 5
+				};
+				var svc = new SpeakersCollectionViewController (layout); // COLLECTION
+				navSpeakerController = new MonoTouch.UIKit.UINavigationController();
+				navSpeakerController.PushViewController(svc, false);
+				navSpeakerController.TopViewController.View.BackgroundColor = new UIColor(65.0f,169.0f,198.0f,255.0f);
+				navSpeakerController.NavigationBar.BarStyle = UIBarStyle.Black;
+				navSpeakerController.TopViewController.Title ="Speakers";
+			} else {
 				// use a table
 				var svc = new SpeakersViewController(); // TABLE
 				navSpeakerController = new MonoTouch.UIKit.UINavigationController();
 				navSpeakerController.PushViewController (svc, false);
 				navSpeakerController.NavigationBar.BarStyle = UIBarStyle.Black;
-//			}
+			}
 
 			var ssvc = new TagsViewController(); 
 			navSessionController = new MonoTouch.UIKit.UINavigationController();

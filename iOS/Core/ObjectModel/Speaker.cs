@@ -9,6 +9,8 @@ namespace MonkeySpace.Core
 	 */
 	public class Speaker
 	{
+		string headshotUrl;
+
 		public Speaker ()
 		{
 			Sessions = new List<Session>();
@@ -19,14 +21,17 @@ namespace MonkeySpace.Core
 			Name = json["name"];
 			TwitterHandle = json["twitterHandle"];
 			Bio = json["bio"];
-			HeadshotUrl = json["headshotUrl"];
+			headshotUrl = json["headshotUrl"];
 		}
 
 		public int Id { get; set; }
 		public string Name {get;set;}
 		public string TwitterHandle {get;set;}
 		public string Bio {get;set;}
-		public string HeadshotUrl {get;set;}
+		public string HeadshotUrl {
+			get{ return "http://monkeyspace.org" + headshotUrl;}
+			set{ headshotUrl = value; }
+		}
 
 		public List<Session> Sessions {get;set;}
 	}
