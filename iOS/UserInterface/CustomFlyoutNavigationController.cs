@@ -59,8 +59,12 @@ namespace Monospace11
 			navFavoritesController = new MonoTouch.UIKit.UINavigationController();
 			navFavoritesController.PushViewController(fvc, false);
 
-			//var aboutViewController = new AboutViewController ();
+
 			var passbookViewController = new PassKitViewController ();
+
+			var aboutViewController = new AboutViewController ();
+
+
 			//var roomsViewController = new RoomsViewController ();
 
 			// Create the navigation menu
@@ -73,7 +77,7 @@ namespace Monospace11
 					//new StyledStringElement ("Room Plan"){BackgroundColor = UIColor.Clear, TextColor = UIColor.LightGray, Font = AppDelegate.Current.FontFlyoutMenu},
 					new StyledStringElement ("Location Map"){BackgroundColor = UIColor.Clear, TextColor = UIColor.LightGray, Font = AppDelegate.Current.FontFlyoutMenu},
 					new StyledStringElement ("Passbook"){BackgroundColor = UIColor.Clear, TextColor = UIColor.LightGray, Font = AppDelegate.Current.FontFlyoutMenu},
-					//new StyledStringElement ("About MonkeySpace"){BackgroundColor = UIColor.Clear, TextColor = UIColor.LightGray, Font = AppDelegate.Current.FontFlyoutMenu},
+					new StyledStringElement ("About MonkeySpace"){BackgroundColor = UIColor.Clear, TextColor = UIColor.LightGray, Font = AppDelegate.Current.FontFlyoutMenu},
 				}
 			};
 			// Supply view controllers corresponding to menu items:
@@ -85,7 +89,7 @@ namespace Monospace11
 				//, roomsViewController
 				, mapViewController
 				, passbookViewController
-				//, aboutViewController
+				, aboutViewController
 			};
 			if (MonoTouch.PassKit.PKPassLibrary.IsAvailable) {
 				//TODO: only add the passkit screen if necessary

@@ -5,6 +5,8 @@ using System.Collections.Generic;
 using System.Drawing;
 using System.Diagnostics;
 
+using MonkeySpace.Core;
+
 namespace Monospace11
 {
 	public class MapLocationViewController : TableViewControllerBase
@@ -16,11 +18,7 @@ namespace Monospace11
 		public MapLocationViewController (MapFlipViewController mfvc) : base()
 		{
 			FlipController = mfvc;
-			locations = new List<MonkeySpace.Core.MapLocation> () {
-				new MonkeySpace.Core.MapLocation{Title="MonkeySpace", Location=new MonkeySpace.Core.Point{X=-71.08363940740965,Y=42.36100515974955}}
-				,new MonkeySpace.Core.MapLocation{Title="Party: The Meadhall", Location=new MonkeySpace.Core.Point{X=-71.087109,Y=42.363368}}
-			};
-			locations.Add(new MonkeySpace.Core.MapLocation{Title="My location", Location=new MonkeySpace.Core.Point{X=0,Y=0}});
+			locations = Constants.Locations;
 		}
 		
 		public override void ViewDidLoad ()

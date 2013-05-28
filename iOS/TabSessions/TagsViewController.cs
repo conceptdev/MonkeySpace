@@ -8,7 +8,7 @@ namespace Monospace11
 {
     public class TagsViewController : DialogViewController
     {
-		public TagsViewController () : base (null)
+		public TagsViewController () : base (UITableViewStyle.Plain, null)
 		{
 		}
 		
@@ -23,6 +23,8 @@ namespace Monospace11
 				AppDelegate.Current.FlyoutNavigation.ToggleMenu();
 			});
 			NavigationItem.SetLeftBarButtonItem (bbi, false);
+
+			TableView.BackgroundView = new UIImageView (UIImage.FromBundle ("Images/Background"));
 		}
 
 		RootElement GenerateRoot ()
@@ -37,7 +39,7 @@ namespace Monospace11
 					   select (Element) new SessionElement (hs)
 			}};
 
-			var root = new RootElement ("Sessions") { 
+			var root = new CustomRootElement ("Sessions") { 
 					allSessions
 			};
 			

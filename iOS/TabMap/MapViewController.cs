@@ -17,16 +17,16 @@ namespace Monospace11
 		private MKMapView mapView;
 		public UILabel labelDistance;
 		
-		public CLLocationCoordinate2D ConferenceLocation;
+		public MapLocation ConferenceLocation;
 		private CLLocationManager locationManager;
 
-		private MapFlipViewController _mfvc;
+		private MapFlipViewController mapFlipViewController;
 
 		public MapViewController (MapFlipViewController mfvc):base()
 		{
-			_mfvc = mfvc;
-			var l = new MonkeySpace.Core.MapLocation() {Title="MonkeySpace", Location=new MonkeySpace.Core.Point{X=-71.08363940740965,Y=42.36100515974955}};
-			ConferenceLocation = l.Location.To2D();
+			mapFlipViewController = mfvc;
+			//var l = Constants.Locations [0];
+			ConferenceLocation = Constants.Locations [0];//l.Location.To2D();
 		}
 		
 		public void SetLocation (MonkeySpace.Core.MapLocation toLocation)
@@ -73,7 +73,7 @@ namespace Monospace11
 				AppDelegate.Current.FlyoutNavigation.ToggleMenu();
 			});
 			var rbi = new UIBarButtonItem (UIImage.FromBundle ("Images/113-navigation"), UIBarButtonItemStyle.Plain, (sender,e) => {
-				_mfvc.Flip();
+				mapFlipViewController.Flip();
 			});
 
 			var item = new UINavigationItem ("Location Map");
@@ -129,12 +129,12 @@ namespace Monospace11
             mapView.Frame = new RectangleF (0, 44 + 50, View.Frame.Width, View.Frame.Height - 93);
 
 			MKCoordinateSpan span = new MKCoordinateSpan(0.01,0.01);
-			MKCoordinateRegion region = new MKCoordinateRegion(ConferenceLocation,span);
+			MKCoordinateRegion region = new MKCoordinateRegion(ConferenceLocation.Location.To2D(),span);
 			mapView.SetRegion(region, true);
 			
-			ConferenceAnnotation a = new ConferenceAnnotation(ConferenceLocation
-                                , "MonkeySpace"
-                                , "NERD Center"
+			ConferenceAnnotation a = new ConferenceAnnotation(ConferenceLocation.Location.To2D()
+			                                                  , ConferenceLocation.Title
+			                                                  , ConferenceLocation.Subtitle
                               );
 			mapView.AddAnnotationObject(a); 
 			
@@ -153,7 +153,7 @@ namespace Monospace11
 			flipButton.Frame = new RectangleF(290,17,20,20);
 			flipButton.Title (UIControlState.Normal);
 			flipButton.TouchDown += delegate {
-				_mfvc.Flip();
+				mapFlipViewController.Flip();
 			};
 			View.AddSubview(flipButton);
 
@@ -222,7 +222,7 @@ namespace Monospace11
 				//MKCoordinateRegion region = new MKCoordinateRegion(newLocation.Coordinate,span);
 				//_appd.mylocation = newLocation;
 				//_mapview.SetRegion(region, true);
-				double distanceToConference = MapHelper.Distance (new Coordinate(_appd.ConferenceLocation), new Coordinate(newLocation.Coordinate), UnitsOfLength.Miles);
+				double distanceToConference = MapHelper.Distance (new Coordinate(_appd.ConferenceLocation.Location.To2D()), new Coordinate(newLocation.Coordinate), UnitsOfLength.Miles);
 				_appd.labelDistance.TextAlignment = UITextAlignment.Center;
 				_appd.labelDistance.Text = String.Format("{0} miles from MonkeySpace!", Math.Round(distanceToConference,0));
 				Debug.WriteLine("Distance: {0}", distanceToConference);
@@ -245,24 +245,24 @@ namespace Monospace11
 	/// </summary>
 	public class ConferenceAnnotation : MKAnnotation
 	{
-		private CLLocationCoordinate2D _coordinate;
-		private string _title, _subtitle;
+		private CLLocationCoordinate2D coordinate;
+		private string title, subtitle;
 		public override CLLocationCoordinate2D Coordinate {
 			get {
-				return _coordinate;
+				return coordinate;
 			}
 			set {
-				_coordinate = value;
+				coordinate = value;
 			}
 		}
 		public override string Title {
 			get {
-				return _title;
+				return title;
 			}
 		}
 		public override string Subtitle {
 			get {
-				return _subtitle;
+				return subtitle;
 			}
 		}
 		/// <summary>
@@ -270,9 +270,9 @@ namespace Monospace11
 		/// </summary>
 		public ConferenceAnnotation (CLLocationCoordinate2D coord, string t, string s) : base()
 		{
-			_coordinate=coord;
-		 	_title=t; 
-			_subtitle=s;
+			coordinate=coord;
+		 	title=t; 
+			subtitle=s;
 		}
 	}
 }

@@ -106,13 +106,10 @@
     <Compile Include="TabSessions\SessionViewController.cs" />
     <Compile Include="TabSessions\TagsViewController.cs" />
     <Compile Include="TabAbout\AboutViewController.cs" />
-    <Compile Include="TabSchedule\HomeViewController.cs" />
     <Compile Include="TabFavorites\FavoritesViewController.cs" />
     <Compile Include="..\Core\ObjectModel\ObjectExtensions.cs">
       <Link>ApplicationLayer\ObjectExtensions.cs</Link>
     </Compile>
-    <Compile Include="UserInterface\ConferenceElements.cs" />
-    <Compile Include="UserInterface\TabBarController.cs" />
     <Compile Include="UserInterface\TableViewControllerBase.cs" />
     <Compile Include="UserInterface\WebViewController.cs" />
     <Compile Include="UserInterface\WebViewControllerBase.cs" />
@@ -133,10 +130,16 @@
     <Compile Include="UserInterface\CustomFlyoutNavigationController.cs" />
     <Compile Include="Component_FlyoutNavigation\FlyoutNavigationController.cs" />
     <Compile Include="Component_FlyoutNavigation\OpenMenuGestureRecognizer.cs" />
+    <Compile Include="TabHome\HomeViewController.cs" />
+    <Compile Include="UserInterface\CustomRootElement.cs" />
+    <Compile Include="UserInterface\CustomDialogViewController.cs" />
+    <Compile Include="UserInterface\SessionElement.cs" />
+    <Compile Include="..\Core\ObjectModel\Constants.cs">
+      <Link>Core\ObjectModel\Constants.cs</Link>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <Folder Include="TabSessions\" />
-    <Folder Include="TabSchedule\" />
     <Folder Include="TabSpeakers\" />
     <Folder Include="TabMap\" />
     <Folder Include="Images\" />
@@ -149,6 +152,8 @@
     <Folder Include="Core\SessionDatabase\" />
     <Folder Include="TabPassKit\" />
     <Folder Include="Component_FlyoutNavigation\" />
+    <Folder Include="TabHome\" />
+    <Folder Include="Resources\About\" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Info.plist" />
@@ -190,5 +195,7 @@
     <BundleResource Include="Images\Background-Party.png" />
     <BundleResource Include="Images\113-naviagation%402x.png" />
     <BundleResource Include="Images\113-navigation.png" />
+    <BundleResource Include="Images\Background.png" />
+    <BundleResource Include="Resources\About\Default.html" />
   </ItemGroup>
 </Project>

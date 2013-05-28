@@ -61,17 +61,17 @@ namespace Monospace11
 				{
 					string path = request.Url.Path.Substring(1);
 					string host = request.Url.Host.ToLower ();
-					if (host == "tweet.mix10.app") {
+					if (host == "tweet.monkeyspace.app") {
 						var tweet = new TWTweetComposeViewController();
 						tweet.SetInitialText ("I'm in '" + DisplaySession.Title + "' at #monkeyspace" );
 						PresentModalViewController(tweet, true);
 
-					} else if (host == "add.mix10.app") {
+					} else if (host == "add.monkeyspace.app") {
 						AppDelegate.UserData.AddFavoriteSession(path);
 						Update(DisplaySession);
 					}
-					else if (host == "remove.mix10.app")
-					{	// "remove.MIX10.app"
+					else if (host == "remove.monkeyspace.app")
+					{	// "remove.monkeyspace.app"
 						AppDelegate.UserData.RemoveFavoriteSession(path);
 						if (IsFromFavoritesView)
 						{	// once unfavorited, hide and go back to list view
@@ -101,10 +101,10 @@ namespace Monospace11
 
 			if (AppDelegate.UserData.IsFavorite(DisplaySession.Code))
 			{	// okay this is a little bit of a HACK:
-				sb.Append(@"<p><nobr><a href=""http://remove.mix10.app/"+DisplaySession.Code+@"""><img src='Images/favorited.png' align='right' border='0'/></a></nobr></p>");
+				sb.Append(@"<p><nobr><a href=""http://remove.monkeyspace.app/"+DisplaySession.Code+@"""><img src='Images/favorited.png' align='right' border='0'/></a></nobr></p>");
 			}
 			else {
-				sb.Append(@"<p><nobr><a href=""http://add.mix10.app/"+DisplaySession.Code+@"""><img src='Images/favorite.png' align='right' border='0'/></a></nobr></p>");
+				sb.Append(@"<p><nobr><a href=""http://add.monkeyspace.app/"+DisplaySession.Code+@"""><img src='Images/favorite.png' align='right' border='0'/></a></nobr></p>");
 			}
 			sb.Append("<br/>");
 			if (DisplaySession.Speakers.Count > 0)
@@ -119,7 +119,7 @@ namespace Monospace11
 					+ DisplaySession.End.ToString(timeFormat) +"</span><br />"+ Environment.NewLine);
 
 			if (TWTweetComposeViewController.CanSendTweet) {
-				sb.Append ("<a href='http://tweet.mix10.app/' style='font-weight:normal'><img height=22 width=58 align='right' src='Images/Tweet.png'></a>");
+				sb.Append ("<a href='http://tweet.monkeyspace.app/' style='font-weight:normal'><img height=22 width=58 align='right' src='Images/Tweet.png'></a>");
 			} 
 			if (!String.IsNullOrEmpty (DisplaySession.Location))
 			{

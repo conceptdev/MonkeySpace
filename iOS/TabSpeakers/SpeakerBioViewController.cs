@@ -44,14 +44,14 @@ namespace Monospace11
 				if (navigationType == UIWebViewNavigationType.LinkClicked) {
 					string path = request.Url.Path.Substring(1);
 					string host = request.Url.Host.ToLower ();
-					if (host == "tweet.mix10.app") {
+					if (host == "tweet.monkeyspace.app") {
 						var tweet = new TWTweetComposeViewController();
-						tweet.SetInitialText ("@" + path + " #monkeyspace" );
+						tweet.SetInitialText ("@" + path + " " + MonkeySpace.Core.Constants.TwitterHashTag);
 						viewController.PresentModalViewController(tweet, true);
-					} else if (host == "twitter.mix10.app") {
+					} else if (host == "twitter.monkeyspace.app") {
 						var nsurl = new NSUrl("twitter://user?screen_name="+viewController.speaker.TwitterHandle);
 						UIApplication.SharedApplication.OpenUrl (nsurl);
-					} else if (host == "session.mix10.app") {
+					} else if (host == "session.monkeyspace.app") {
 						if (sessVC == null)
 							sessVC = new SessionViewController (path);
 						else
@@ -83,17 +83,17 @@ namespace Monospace11
 			if (TWTweetComposeViewController.CanSendTweet) {
 				var nsurl = new NSUrl("twitter://user?screen_name="+speaker.TwitterHandle);
 				if (UIApplication.SharedApplication.CanOpenUrl(nsurl)){
-					sb.Append ("<p><a href='http://twitter.mix10.app/" + speaker.TwitterHandle + "' style='font-weight:normal'>@" + speaker.TwitterHandle + "</a>");
+					sb.Append ("<p><a href='http://twitter.monkeyspace.app/" + speaker.TwitterHandle + "' style='font-weight:normal'>@" + speaker.TwitterHandle + "</a>");
 				} else {
-					sb.Append ("<p><a href='http://tweet.mix10.app/" + speaker.TwitterHandle + "' style='font-weight:normal'>@" + speaker.TwitterHandle + "</a>");
+					sb.Append ("<p><a href='http://tweet.monkeyspace.app/" + speaker.TwitterHandle + "' style='font-weight:normal'>@" + speaker.TwitterHandle + "</a>");
 				}
 
-				sb.Append ("<br /><a href='http://tweet.mix10.app/" + speaker.TwitterHandle + "' style='font-weight:normal'><img height=22 width=58 src='Images/Tweet.png'></a></p>");
+				sb.Append ("<br /><a href='http://tweet.monkeyspace.app/" + speaker.TwitterHandle + "' style='font-weight:normal'><img height=22 width=58 src='Images/Tweet.png'></a></p>");
 			} else {
 				// can't send tweet, but maybe twitter is installed
 				var nsurl = new NSUrl("twitter://user?screen_name="+speaker.TwitterHandle);
 				if (UIApplication.SharedApplication.CanOpenUrl(nsurl)) {
-					sb.Append ("<p><a href='http://twitter.mix10.app/" + speaker.TwitterHandle + "' style='font-weight:normal'>@" + speaker.TwitterHandle + "</a>");
+					sb.Append ("<p><a href='http://twitter.monkeyspace.app/" + speaker.TwitterHandle + "' style='font-weight:normal'>@" + speaker.TwitterHandle + "</a>");
 				}
 			}
 
@@ -103,7 +103,7 @@ namespace Monospace11
 			}
 			sb.Append ("<br />");
 			foreach (var session in speaker.Sessions) {
-				sb.Append ("<div class='sessionspeaker'><a href='http://session.mix10.app/" + session.Code + "' class='sessionspeaker'>" + session.Title + "</a></div><br />");
+				sb.Append ("<div class='sessionspeaker'><a href='http://session.monkeyspace.app/" + session.Code + "' class='sessionspeaker'>" + session.Title + "</a></div><br />");
 			}		
 			return sb.ToString ();
 		}

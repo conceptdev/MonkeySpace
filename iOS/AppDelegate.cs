@@ -44,8 +44,7 @@ namespace Monospace11
 		}
 
         UIImageView splashView;
-		
-		TabBarController tabBarController;
+
 		public static UserDatabase UserData {get; private set;} 
 		public static ConferenceManager Conference { get; private set; }
 		string documentsPath;
@@ -86,7 +85,7 @@ namespace Monospace11
 			var json = "";
 			if (!File.Exists(jsonPath)) {
 				//jsonPath = builtInJsonPath; // use the bundled file
-				NSUserDefaults.StandardUserDefaults.SetString("2012-09-15 15:15:15", "LastUpdated");
+				NSUserDefaults.StandardUserDefaults.SetString("2013-05-28 15:15:15", "LastUpdated");
 
 				File.Copy (builtInJsonPath, jsonPath); // so it is there for loading
 			}
@@ -96,17 +95,13 @@ namespace Monospace11
 
 			#endregion
 
-			// Create the tab bar
-			tabBarController = new TabBarController ();
-
+			#region APPEARANCE
 			//#d4563e
 			UINavigationBar.Appearance.TintColor = new UIColor(212/255f, 86/255f, 62/255f, 1f);
-
-			// Create the main window and add the navigation controller as a subview
-//			window = new UIWindow (UIScreen.MainScreen.Bounds);
-//			window.RootViewController = tabBarController;
-//			window.MakeKeyAndVisible ();
-//			showSplashScreen();
+			UILabel.Appearance.Font = UIFont.FromName (FontLightName, 14f); // Avenir-Heavy, Avenir-Black, Avenir-Medium, ...Oblique
+			UINavigationBar.Appearance.SetTitleTextAttributes (FontTitleTextAttributes);
+			UIBarButtonItem.Appearance.SetTitleTextAttributes (FontBackTextAttributes, UIControlState.Normal);
+			#endregion
 
 			FlyoutNavigation = new CustomFlyoutNavigationController ();
 
@@ -123,31 +118,6 @@ namespace Monospace11
 			AppDelegate.Conference.DownloadFromServer();
 			UIApplication.SharedApplication.NetworkActivityIndicatorVisible = true;
 		}
-		
-		void showSplashScreen ()
-		{
-			splashView = new UIImageView(new RectangleF(0f, 0f, 320f, 480f));
-			splashView.Image = UIImage.FromFile("Default.png");
-			window.AddSubview(splashView);
-			window.BringSubviewToFront(splashView);
-			UIView.BeginAnimations("SplashScreen");
-			UIView.SetAnimationDuration(0.5f);
-			UIView.SetAnimationDelegate(this);
-			UIView.SetAnimationTransition(UIViewAnimationTransition.None, window, true);
-			UIView.SetAnimationDidStopSelector(new Selector("completedAnimation"));
-		    splashView.Alpha = 0f;
-		    splashView.Frame = new RectangleF(-60f, -60f, 440f, 600f);
-		    UIView.CommitAnimations();
-		}
-
-		[Export("completedAnimation")]
-		void StartupAnimationDone()
-		{
-			Debug.WriteLine ("Done");
-			splashView.RemoveFromSuperview();
-			splashView.Dispose();
-		}
-
 		
 		public static void GetCellSelectedColor(UITableViewCell cell)
 		{
