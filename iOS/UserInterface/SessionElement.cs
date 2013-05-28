@@ -137,12 +137,5 @@ namespace Monospace11
 			dvc.ActivateController (svc);
 		}
 
-	}
-
-	// A root element that styles the controller to use Plain grouping instead of the default Group
-	public class PlainStyleRootElement : RootElement {
-		public PlainStyleRootElement (string caption) : base (caption)
-		{
-		}
-	}
+	}	
 }
