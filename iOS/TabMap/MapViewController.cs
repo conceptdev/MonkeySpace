@@ -25,8 +25,7 @@ namespace Monospace11
 		public MapViewController (MapFlipViewController mfvc):base()
 		{
 			mapFlipViewController = mfvc;
-			//var l = Constants.Locations [0];
-			ConferenceLocation = Constants.Locations [0];//l.Location.To2D();
+			ConferenceLocation = Constants.Locations [0]; 
 		}
 		
 		public void SetLocation (MonkeySpace.Core.MapLocation toLocation)
@@ -35,11 +34,9 @@ namespace Monospace11
 			if (toLocation.Location.X == 0 && toLocation.Location.Y == 0)
 			{
 				// use the 'location manager' current coordinate
-				if (locationManager.Location == null)
-				{
-					return;
-				}
-				{	// catch a possible null reference that i saw once [CD]
+				if (locationManager.Location == null) {
+					return; // catch a possible null reference that i saw once [CD]
+				} else {	
 					targetLocation = locationManager.Location.Coordinate;
 					ConferenceAnnotation a = new ConferenceAnnotation(targetLocation, "My location", "");
 					mapView.AddAnnotationObject(a); 
@@ -141,6 +138,7 @@ namespace Monospace11
 			
 			locationManager = new CLLocationManager();
 			locationManager.Delegate = new LocationManagerDelegate(mapView, this);
+			locationManager.Purpose = "Show distance on map"; // also Info.plist
 			locationManager.StartUpdatingLocation();
 			
             // Add the table view as a subview
@@ -169,8 +167,7 @@ namespace Monospace11
 
 			public override MKAnnotationView GetViewForAnnotation (MKMapView mapView, NSObject annotation)
 			{
-				try
-				{
+				try {
 					var ca = (ConferenceAnnotation)annotation;
 					var aview = (MKPinAnnotationView)mapView.DequeueReusableAnnotation("pin");
 					if (aview == null)
@@ -185,18 +182,8 @@ namespace Monospace11
 					aview.PinColor = MKPinAnnotationColor.Purple;
 					aview.CanShowCallout = true;
 
-//					UIButton rightCallout = UIButton.FromType(UIButtonType.DetailDisclosure);
-//					rightCallout.Frame = new RectangleF(250,8f,25f,25f);
-//					rightCallout.TouchDown += delegate 
-//					{
-//						NSUrl url = new NSUrl("http://maps.google.com/maps?q=" + ca.Coordinate.ToLL()  );
-//						UIApplication.SharedApplication.OpenUrl(url);
-//					};
-//					aview.RightCalloutAccessoryView = rightCallout;
-
 					return aview;
-				} catch (Exception)
-				{
+				} catch (Exception) {
 					return null;
 				}
 			}
@@ -206,11 +193,11 @@ namespace Monospace11
 		/// </summary>
 		private class LocationManagerDelegate: CLLocationManagerDelegate
 		{
-			private MapViewController _appd;
+			private MapViewController mapVC;
 
 			public LocationManagerDelegate(MKMapView mapview, MapViewController mapvc):base()
 			{
-				_appd = mapvc;
+				mapVC = mapvc;
 			}
 			/// <summary>
 			/// Whenever the GPS sends a new location, update text in label
@@ -218,13 +205,9 @@ namespace Monospace11
 			/// </summary>
 			public override void UpdatedLocation (CLLocationManager manager, CLLocation newLocation, CLLocation oldLocation)
 			{
-				//MKCoordinateSpan span = new MKCoordinateSpan(0.2,0.2);
-				//MKCoordinateRegion region = new MKCoordinateRegion(newLocation.Coordinate,span);
-				//_appd.mylocation = newLocation;
-				//_mapview.SetRegion(region, true);
-				double distanceToConference = MapHelper.Distance (new Coordinate(_appd.ConferenceLocation.Location.To2D()), new Coordinate(newLocation.Coordinate), UnitsOfLength.Miles);
-				_appd.labelDistance.TextAlignment = UITextAlignment.Center;
-				_appd.labelDistance.Text = String.Format("{0} miles from MonkeySpace!", Math.Round(distanceToConference,0));
+				double distanceToConference = MapHelper.Distance (new Coordinate(mapVC.ConferenceLocation.Location.To2D()), new Coordinate(newLocation.Coordinate), UnitsOfLength.Miles);
+				mapVC.labelDistance.TextAlignment = UITextAlignment.Center;
+				mapVC.labelDistance.Text = String.Format("{0} miles from MonkeySpace!", Math.Round(distanceToConference,0));
 				Debug.WriteLine("Distance: {0}", distanceToConference);
 				
 				// only use the first result

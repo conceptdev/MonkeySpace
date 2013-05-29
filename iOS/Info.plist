@@ -29,5 +29,7 @@
 	<string>com.confapp.monkeyspace</string>
 	<key>CFBundleVersion</key>
 	<string>2.0</string>
+	<key>NSLocationUsageDescription</key>
+	<string>Calculates distance for map only</string>
 </dict>
 </plist>

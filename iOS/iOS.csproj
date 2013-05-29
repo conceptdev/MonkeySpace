@@ -32,7 +32,7 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <MtouchI18n />
-    <MtouchSdkVersion>6.0</MtouchSdkVersion>
+    <MtouchSdkVersion>6.1</MtouchSdkVersion>
     <AssemblyName>MonkeySpace</AssemblyName>
     <MtouchArch>ARMv7</MtouchArch>
   </PropertyGroup>
@@ -44,15 +44,15 @@
     <DefineConstants>DEBUG</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
-    <CodesignKey>iPhone Developer: Craig Dunn (6Q937X2U43)</CodesignKey>
+    <CodesignKey>iPhone Developer</CodesignKey>
     <MtouchDebug>True</MtouchDebug>
     <MtouchI18n />
-    <MtouchSdkVersion>6.0</MtouchSdkVersion>
+    <MtouchSdkVersion>6.1</MtouchSdkVersion>
     <IpaPackageName />
     <CrashReportingApiKey />
     <AssemblyName>Monospace11</AssemblyName>
     <MtouchArch>ARMv7</MtouchArch>
-    <CodesignProvision>5304C771-2458-4326-B09C-E656F3318CE8</CodesignProvision>
+    <CodesignProvision>641D8175-37A9-476E-BFF2-E97742AE50CF</CodesignProvision>
     <CodesignEntitlements>Entitlements.plist</CodesignEntitlements>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|iPhone' ">
@@ -61,12 +61,12 @@
     <OutputPath>bin\iPhone\Release</OutputPath>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
-    <CodesignKey>iPhone Developer: Craig Dunn (6Q937X2U43)</CodesignKey>
+    <CodesignKey>iPhone Developer</CodesignKey>
     <MtouchI18n />
-    <MtouchSdkVersion>6.0</MtouchSdkVersion>
+    <MtouchSdkVersion>6.1</MtouchSdkVersion>
     <AssemblyName>Monospace11</AssemblyName>
     <MtouchArch>ARMv7</MtouchArch>
-    <CodesignProvision>3F0D1957-1C46-4BFE-B3B6-26DA8D12A2B3</CodesignProvision>
+    <CodesignProvision>7893F4C1-43B6-493B-8A6F-923B67013DE1</CodesignProvision>
     <IpaPackageName />
     <CodesignEntitlements>Entitlements.plist</CodesignEntitlements>
   </PropertyGroup>
