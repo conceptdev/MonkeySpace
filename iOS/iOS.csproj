@@ -76,14 +76,14 @@
     <OutputPath>bin\iPhone\Distribution</OutputPath>
     <WarningLevel>4</WarningLevel>
     <CodesignKey>iPhone Distribution</CodesignKey>
-    <CodesignProvision>0C6ABADA-F77C-404F-B7A1-6CBEF39A6A8D</CodesignProvision>
     <MtouchI18n />
-    <MtouchSdkVersion>4.2</MtouchSdkVersion>
+    <MtouchSdkVersion>6.1</MtouchSdkVersion>
     <AssemblyName>Monospace11</AssemblyName>
     <MtouchArch>ARMv7</MtouchArch>
     <IpaPackageName />
     <CrashReportingApiKey />
     <CodesignEntitlements>Entitlements.plist</CodesignEntitlements>
+    <CodesignProvision>03AB8056-620F-4937-B83B-F5D404F03C53</CodesignProvision>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
