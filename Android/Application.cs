@@ -28,7 +28,7 @@ namespace MonkeySpace
             base.OnCreate();
 
 			docFolder = Environment.GetFolderPath(Environment.SpecialFolder.Personal);
-            var confFolder = System.IO.Path.Combine(docFolder, "monkeyspace12");
+            var confFolder = System.IO.Path.Combine(docFolder, "monkeyspace13");
             if (!System.IO.Directory.Exists(confFolder))
                 System.IO.Directory.CreateDirectory(confFolder);
 
@@ -76,7 +76,7 @@ namespace MonkeySpace
 
         public string CurrentConferenceCode
         {
-            get { return "monkeyspace12"; }
+            get { return "monkeyspace13"; }
         }
 
         /// <summary>
@@ -129,8 +129,8 @@ namespace MonkeySpace
         void DeserializeConferenceFile(string xmlPath)
         {
 			ConfItem = new ConferenceInfo () {
-				StartDate = new DateTime(2012,10, 17),
-				EndDate = new DateTime(2012,10,19), 
+				StartDate = new DateTime(2013,07, 22),
+				EndDate = new DateTime(2013,07,25), 
 			};
 
             //
@@ -153,7 +153,7 @@ namespace MonkeySpace
             var now = DateTime.Now;
 #if DEBUG
             // TEST: this for testing only
-            //now = new DateTime(2011, 3, 8, 15, 51, 0);
+            //now = new DateTime(2013, 7, 8, 15, 51, 0);
 #endif
             //
             // #####  Find out what's up next  ######
