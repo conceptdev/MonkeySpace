@@ -11,7 +11,7 @@ using System.Resources;
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("ConceptDevelopment.net")]
 [assembly: AssemblyProduct("MonkeySpace")]
-[assembly: AssemblyCopyright("Copyright © Craig Dunn 2011-2012")]
+[assembly: AssemblyCopyright("Copyright © Craig Dunn 2011-2013")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 

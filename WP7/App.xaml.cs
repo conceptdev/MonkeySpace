@@ -101,12 +101,12 @@ namespace MonkeySpace
                     
 
                     var ci = new ConferenceInfo {
-                        Code = "monkeyspace12",
-                        DisplayLocation = "Boston",
+                        Code = "monkeyspace13",
+                        DisplayLocation = "Chicago",
                         DisplayName = "MonkeySpace"
                                                     ,
-                        StartDate = new DateTime(2012, 10, 17),
-                        EndDate = new DateTime(2012, 10, 19)
+                        StartDate = new DateTime(2013, 07, 22),
+                        EndDate = new DateTime(2013, 07, 25)
                     };
                     App.ViewModel.ConfItem = ci;
 
