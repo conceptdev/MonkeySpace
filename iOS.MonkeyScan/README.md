@@ -7,11 +7,11 @@ It stores all scans and attendees in a local SQLite database, and attempts to sy
 
 A scan result (failed in this case) looks like this:
 
-![screenshot](https://raw.github.com/conceptdev/MonkeySpace/master/iOS.MonkeyScan/Screenshots/MonkeyScan/01_scan_377x695.png "Scan result")
+![screenshot](https://raw.github.com/conceptdev/MonkeySpace/master/Screenshots/MonkeyScan/01_scan_377x695.png "Scan result")
 
 The other screens of the app are shown below:
 
-![screenshot](https://raw.github.com/conceptdev/MonkeySpace/master/iOS.MonkeyScan/Screenshots/MonkeyScan/00_all_500x239.png "Screenshots")
+![screenshot](https://raw.github.com/conceptdev/MonkeySpace/master/Screenshots/MonkeyScan/00_all_500x239.png "Screenshots")
 
 The app uses Xamarin's Windows Azure Mobile Services [component](https://components.xamarin.com/view/azure-mobile-services/) for iOS. You'd need to establish an account on [windows.azure.com](http://windows.azure.com) and create `ConfScan` and `ConfAttendee` tables for this bit to work. Also - check the code - some Azure functionality is currently commented out!
 
