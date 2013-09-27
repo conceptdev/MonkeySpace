@@ -7,8 +7,6 @@ using MonoTouch.CoreFoundation;
 using MonoTouch.AVFoundation;
 using MonoTouch.CoreVideo;
 using MonoTouch.CoreMedia;
-using com.google.zxing;
-using com.google.zxing.common;
 using Microsoft.WindowsAzure.MobileServices;
 using System.Threading.Tasks;
 namespace MonkeyScan

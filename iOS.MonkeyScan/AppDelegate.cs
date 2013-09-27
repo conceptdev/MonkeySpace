@@ -5,9 +5,6 @@ using System.Linq;
 using MonoTouch.Foundation;
 using MonoTouch.UIKit;
 
-using com.google.zxing;
-using com.google.zxing.common;
-
 namespace MonkeyScan
 {
 	public class Application
@@ -29,7 +26,6 @@ namespace MonkeyScan
 
 		public static SQLite.DataManager UserData {get; private set;} 
 
-		// http://stackoverflow.com/questions/11332855/monotouch-zxing-camera-wont-open
 		public override void OnResignActivation (UIApplication application)
 		{
 			UIApplication.SharedApplication.PerformSelector(new MonoTouch.ObjCRuntime.Selector("terminateWithSuccess"), null, 0f);
