@@ -46,9 +46,10 @@ namespace Monospace11
 		public override void ViewDidLoad ()
         {
             base.ViewDidLoad ();
-			basedir = Environment.GetFolderPath (System.Environment.SpecialFolder.Personal);
-			basedir = System.IO.Path.Combine(basedir, "..", "iOS.app"); // HACK: bad bad bad
-			Console.WriteLine ("~~~"+System.Environment.CurrentDirectory);
+//			basedir = Environment.GetFolderPath (System.Environment.SpecialFolder.Personal);
+//			basedir = System.IO.Path.Combine(basedir, "..", "iOS.app"); // HACK: bad bad bad
+			basedir = NSBundle.MainBundle.BundlePath; // this should fix the hack above!
+			Console.WriteLine ("~~~"+basedir);
 			// no XIB !
 			webView = new UIWebView()
 			{
